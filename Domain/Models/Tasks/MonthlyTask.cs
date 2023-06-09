@@ -1,4 +1,4 @@
-﻿using FastSchedule.Domain.Models.Core;
+﻿using FastSchedule.Domain.Models.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,10 +27,15 @@ namespace FastSchedule.Domain.Models
 
         private IEnumerable<int> eventDaysOfMonth;
 
-        public MonthlyTask(string label, User user, TimeSpan? preNotifyTime, string? description = null, TimeOnly? eventTime = null, params int[] eventDaysOfMonth)
-    : base(label, user, preNotifyTime, description, eventTime)
+        public MonthlyTask(Guid guid, string label, int userId, TimeSpan? preNotifyTime = null, string? description = null, TimeOnly? eventTime = null, params int[] eventDaysOfMonth)
+    : base(guid, label, userId, preNotifyTime, description, eventTime)
         {
             EventDaysOfMonth = eventDaysOfMonth;
+        }
+
+        protected MonthlyTask()
+        {
+            
         }
     }
 }

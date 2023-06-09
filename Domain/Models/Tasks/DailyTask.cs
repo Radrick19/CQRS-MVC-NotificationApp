@@ -1,4 +1,5 @@
-﻿using FastSchedule.Domain.Models.Core;
+﻿using FastSchedule.Domain.Models.Tasks;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace FastSchedule.Domain.Models
 {
@@ -6,10 +7,15 @@ namespace FastSchedule.Domain.Models
     {
         public DateOnly EventDay { get; set; }
 
-        public DailyTask(string label, User user, DateOnly eventDay, TimeSpan? preNotifyTime, string? description = null, TimeOnly? eventTime = null)
-            : base(label, user, preNotifyTime, description, eventTime)
+        public DailyTask(Guid guid, string label, int userId, DateOnly eventDay, TimeSpan? preNotifyTime = null, string? description = null, TimeOnly? eventTime = null)
+            : base(guid, label, userId, preNotifyTime, description, eventTime)
         {
             EventDay = eventDay;
+        }
+
+        protected DailyTask()
+        {
+            
         }
     }
 }

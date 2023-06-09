@@ -7,7 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastSchedule.MVC", "FastSch
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastSchedule.Domain", "Domain\FastSchedule.Domain.csproj", "{FCEF1376-9906-4722-A68D-6BEA16EE49E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastSchedule.Application", "FastSchedule.Application\FastSchedule.Application.csproj", "{08690D90-06E2-40CB-960D-EB3307F32106}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastSchedule.Application", "FastSchedule.Application\FastSchedule.Application.csproj", "{08690D90-06E2-40CB-960D-EB3307F32106}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{93577C2D-6E8E-424B-8028-03A130CE9625}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4423DBDD-6D96-43D4-B36C-36151720F648}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastSchedule.Tests", "FastSchedule.Tests\FastSchedule.Tests.csproj", "{D7B289C4-78E2-41D6-B025-3FC5139F22BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,9 +33,19 @@ Global
 		{08690D90-06E2-40CB-960D-EB3307F32106}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08690D90-06E2-40CB-960D-EB3307F32106}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08690D90-06E2-40CB-960D-EB3307F32106}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7B289C4-78E2-41D6-B025-3FC5139F22BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7B289C4-78E2-41D6-B025-3FC5139F22BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7B289C4-78E2-41D6-B025-3FC5139F22BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7B289C4-78E2-41D6-B025-3FC5139F22BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BCE645FD-9BA0-443A-8DAA-326A97DB1AFB} = {93577C2D-6E8E-424B-8028-03A130CE9625}
+		{FCEF1376-9906-4722-A68D-6BEA16EE49E6} = {93577C2D-6E8E-424B-8028-03A130CE9625}
+		{08690D90-06E2-40CB-960D-EB3307F32106} = {93577C2D-6E8E-424B-8028-03A130CE9625}
+		{D7B289C4-78E2-41D6-B025-3FC5139F22BF} = {4423DBDD-6D96-43D4-B36C-36151720F648}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D68BD6F7-F150-47B5-BFC5-C726504F8984}

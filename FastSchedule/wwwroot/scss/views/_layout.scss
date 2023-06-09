@@ -1,0 +1,35 @@
+@import "../_vars.scss";
+
+body{
+    font-family: Cambria;
+}
+
+.content {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0px 20px;
+}
+
+    header {
+        background-color: $header-background-color;
+        padding: 5px 0px;
+
+        .account-data {
+            display: flex;
+
+            p {
+                display: flex;
+                align-items: center;
+                margin: 0px;
+                margin-left: 10px;
+                font-size: 16px;
+                color: white;
+            }
+
+            img {
+                height: 35px;
+                width: 35px;
+                border-radius: 50px;
+            }
+        }
+    }
