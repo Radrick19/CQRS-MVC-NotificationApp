@@ -1,54 +1,13 @@
-﻿@{
+﻿@using FastSchedule.MVC.ViewModels;
+@model HomeViewModel
+@{
     ViewData["Title"] = "Главная";
     Layout = "_layout";
 }
-<div class="base-background">
-    <div class="background">
+<div class="background">
+    <div class="content">
         <div class="todaytasks-and-calendar">
-            <div class="todaytasks">
-                <div class="content">
-                    <input placeholder="Поиск" />
-                    <div class="date-and-addnew">
-                        <p>24 июня, 2023</p>
-                        <a>+</a>
-                    </div>
-                    <div class="tasks">
-                        @for(int i =0; i < 5; i++)
-                        {
-                            <div class="task">
-                                <p>Оплата воды</p>
-                            </div>
-                        }
-                    </div>
-                </div>
-            </div>
-            <div class="calendar-and-info">
-                <div class="month-info">
-                    <p>Июнь 2023</p>
-                </div>
-                <div class="calendar">
-                    <div class="days-of-week-row">
-                        <p>ПН</p>
-                        <p>ВТ</p>
-                        <p>СР</p>
-                        <p>ЧТ</p>
-                        <p>ПТ</p>
-                        <p>СБ</p>
-                        <p>ВС</p>
-                    </div>
-                    <div class="calendar-grid">
-                        @for(int i = 1; i <= 42; i++)
-                        {
-                            <div class="grid-item">
-                                @if(i <= 31)
-                                {
-                                    <p>@i</p>
-                                }
-                            </div>
-                        }
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
+<script src="/scripts/taskscontrol.js" asp-append-version="true"></script>

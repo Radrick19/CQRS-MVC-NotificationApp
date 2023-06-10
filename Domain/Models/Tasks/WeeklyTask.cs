@@ -1,4 +1,5 @@
-﻿using FastSchedule.Domain.Models.Tasks;
+﻿using FastSchedule.Domain.Interfaces;
+using FastSchedule.Domain.Models.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FastSchedule.Domain.Models
 {
-    public class WeeklyTask : BaseTask
+    public class WeeklyTask : BaseTask, ITask
     {
         public IEnumerable<DayOfWeek> EventDaysOfWeek { get; set; }
 

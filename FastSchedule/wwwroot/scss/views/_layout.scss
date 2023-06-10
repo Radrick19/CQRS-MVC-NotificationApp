@@ -7,29 +7,27 @@ body{
 .content {
     margin-left: auto;
     margin-right: auto;
-    padding: 0px 20px;
 }
 
-    header {
-        background-color: $header-background-color;
-        padding: 5px 0px;
+header {
+    background-color: $main-color;
+    padding: 8px 30px;
 
-        .account-data {
+    .account-data {
+        display: flex;
+
+        p {
             display: flex;
+            align-items: center;
+            margin-left: 10px;
+            font-size: 16px;
+            color: white;
+        }
 
-            p {
-                display: flex;
-                align-items: center;
-                margin: 0px;
-                margin-left: 10px;
-                font-size: 16px;
-                color: white;
-            }
-
-            img {
-                height: 35px;
-                width: 35px;
-                border-radius: 50px;
-            }
+        img {
+            height: $header-avatar-size;
+            width: $header-avatar-size;
+            border-radius: 50px;
         }
     }
+}

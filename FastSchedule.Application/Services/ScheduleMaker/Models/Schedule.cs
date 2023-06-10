@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FastSchedule.Application.Services.Models
+namespace FastSchedule.Application.Services.ScheduleMaker.Models
 {
     public class Schedule
     {

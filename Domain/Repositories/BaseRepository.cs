@@ -14,7 +14,7 @@ namespace FastSchedule.Domain.Repositories
     {
         private FastScheduleContext context => _unitOfWork.GetContext();
         private readonly IUnitOfWork _unitOfWork;
-        private readonly DbSet<TEntity> _dbSet;
+        protected readonly DbSet<TEntity> _dbSet;
 
         public BaseRepository(IUnitOfWork unitOfWork)
         {
@@ -23,32 +23,32 @@ namespace FastSchedule.Domain.Repositories
         }
 
 
-        public async Task AddAsync(TEntity entity)
+        public virtual async Task AddAsync(TEntity entity)
         {
             await _dbSet.AddAsync(entity);
         }
 
-        public void Delete(TEntity entity)
+        public virtual void Delete(TEntity entity)
         {
             _dbSet.Remove(entity);
         }
 
-        public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> func)
+        public virtual async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> func)
         {
             return await _dbSet.FirstOrDefaultAsync(func);
         }
 
-        public IEnumerable<TEntity> Get()
+        public virtual IEnumerable<TEntity> Get()
         {
             return _dbSet;
         }
 
-        public async Task<TEntity> GetByIdAsync(int entityId)
+        public virtual async Task<TEntity> GetByIdAsync(int entityId)
         {
             return await _dbSet.FindAsync(entityId);
         }
 
-        public void Update(TEntity entity)
+        public virtual void Update(TEntity entity)
         {
             _dbSet.Update(entity);
         }

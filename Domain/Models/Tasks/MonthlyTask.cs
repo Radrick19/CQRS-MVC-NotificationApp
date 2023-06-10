@@ -1,4 +1,5 @@
-﻿using FastSchedule.Domain.Models.Tasks;
+﻿using FastSchedule.Domain.Interfaces;
+using FastSchedule.Domain.Models.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FastSchedule.Domain.Models
 {
-    public class MonthlyTask : BaseTask
+    public class MonthlyTask : BaseTask, ITask
     {
         public IEnumerable<int> EventDaysOfMonth
         {

@@ -1,7 +1,9 @@
 using FastSchedule.Application.AutoMapper;
+using FastSchedule.Application.Services.ScheduleMaker;
 using FastSchedule.Domain;
 using FastSchedule.Domain.Infrastucture;
 using FastSchedule.Domain.Interfaces;
+using FastSchedule.Domain.Models;
 using FastSchedule.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +30,14 @@ builder.Services.AddDbContext<FastScheduleContext>(
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
+
+builder.Services.AddTransient<IRepository<DailyTask>, DailyTaskRepository>();
+
+builder.Services.AddTransient<IRepository<WeeklyTask>, WeeklyTaskRepository>();
+
+builder.Services.AddTransient<IRepository<MonthlyTask>, MonthlyTaskRepository>();
+
+builder.Services.AddTransient<IScheduleMaker, ScheduleMaker>();
 
 var app = builder.Build();
 

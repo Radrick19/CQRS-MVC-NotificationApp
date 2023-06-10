@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using FastSchedule.Application.Dto;
+using FastSchedule.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,10 @@ namespace FastSchedule.Application.AutoMapper
     {
         public AppMappingProfile()
         {
-            
+            CreateMap<DailyTask, DailyTaskDto>().ReverseMap();
+            CreateMap<WeeklyTask, WeeklyTaskDto>().ReverseMap();
+            CreateMap<MonthlyTask, MonthlyTaskDto>().ReverseMap();
+            CreateMap<User, User>().ReverseMap();
         }
     }
 }

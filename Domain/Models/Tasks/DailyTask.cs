@@ -1,9 +1,10 @@
-﻿using FastSchedule.Domain.Models.Tasks;
+﻿using FastSchedule.Domain.Interfaces;
+using FastSchedule.Domain.Models.Tasks;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace FastSchedule.Domain.Models
 {
-    public class DailyTask : BaseTask
+    public class DailyTask : BaseTask, ITask
     {
         public DateOnly EventDay { get; set; }
 

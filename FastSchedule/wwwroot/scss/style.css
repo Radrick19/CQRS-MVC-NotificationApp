@@ -10,6 +10,15 @@ html {
   -webkit-text-size-adjust: 100%; /* 2 */
 }
 
+a {
+  cursor: pointer;
+}
+
+p {
+  margin: 0px;
+  padding: 0px;
+}
+
 /* Sections
    ========================================================================== */
 /**
@@ -307,109 +316,127 @@ template {
   display: none;
 }
 
-.base-background {
-  background-color: #938f8c;
-  width: 100%;
-  min-height: 1000px;
+.content {
+  max-width: 1500px;
 }
-.base-background .background {
+
+.background {
   width: 100%;
   min-height: 1000px;
-  border-radius: 35px;
   background-color: #f7f3f0;
 }
-.base-background .todaytasks-and-calendar {
+
+.todaytasks-and-calendar {
   display: grid;
-  grid-template-columns: 6fr 10fr;
+  grid-template-columns: 4fr 10fr;
+  padding-top: 80px;
 }
-.base-background .todaytasks-and-calendar .todaytasks {
-  border-radius: 30px 0px 0px 0px;
-  width: 100%;
-  min-height: 1000px;
-  background-color: #e1dcd8;
+.todaytasks-and-calendar .todaytasks {
+  border-radius: 20px;
+  border: 5px solid #545262;
+  border-width: 12px 6px;
+  padding: 10px 40px;
+  margin-top: 50px;
 }
-.base-background .todaytasks-and-calendar .todaytasks .content {
-  padding-top: 20px;
-}
-.base-background .todaytasks-and-calendar .todaytasks .content input {
+.todaytasks-and-calendar .todaytasks input {
   width: 100%;
   padding: 8px;
   font-size: 20px;
-  border-style: none;
+  border: 3px solid #545262;
+  background-color: #f7f3f0;
   border-radius: 35px;
   padding-left: 30px;
   margin: 20px 0px;
 }
-.base-background .todaytasks-and-calendar .todaytasks .content .date-and-addnew {
+.todaytasks-and-calendar .todaytasks .date-and-addnew {
   display: flex;
   justify-content: space-between;
+  font-size: 23px;
 }
-.base-background .todaytasks-and-calendar .todaytasks .content .date-and-addnew p {
-  color: #726e6b;
-  font-size: 20px;
-  line-height: 30px;
-}
-.base-background .todaytasks-and-calendar .todaytasks .content .date-and-addnew a {
-  line-height: 30px;
-  font-size: 30px;
-  color: #726e6b;
-  margin-right: 25px;
+.todaytasks-and-calendar .todaytasks .date-and-addnew a {
+  font-size: 27px;
+  margin-right: 10px;
   cursor: pointer;
 }
-.base-background .todaytasks-and-calendar .todaytasks .content .tasks {
-  width: 100%;
+.todaytasks-and-calendar .todaytasks .tasks {
   display: grid;
   grid-row-gap: 30px;
+  margin-top: 20px;
 }
-.base-background .todaytasks-and-calendar .todaytasks .content .tasks .task {
-  width: 100%;
-  background-color: #f7f3f0;
+.todaytasks-and-calendar .todaytasks .tasks .task {
+  line-height: 30px;
+  background-color: #e1dcd8;
   border-radius: 15px;
-}
-.base-background .todaytasks-and-calendar .todaytasks .content .tasks .task p {
-  margin: 0px;
   display: flex;
+  justify-content: space-between;
   font-size: 18px;
   color: #726e6b;
-  padding: 15px;
+  padding: 10px 15px;
 }
-.base-background .todaytasks-and-calendar .calendar-and-info {
-  width: 100%;
-  min-height: 500px;
-  display: flex;
-  flex-direction: column;
+.todaytasks-and-calendar .calendar-and-info {
+  width: 700px;
+  margin-right: auto;
+  margin-left: auto;
   padding-left: 20px;
   padding-right: 20px;
 }
-.base-background .todaytasks-and-calendar .calendar-and-info .month-info {
-  padding-top: 10px;
+.todaytasks-and-calendar .calendar-and-info .month-info {
+  padding-bottom: 20px;
   font-size: 20px;
+  font-weight: 600;
 }
-.base-background .todaytasks-and-calendar .calendar-and-info .calendar .days-of-week-row {
+.todaytasks-and-calendar .calendar-and-info .calendar .days-of-week-row {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  background-color: #545262;
+  margin: 0px 20px;
 }
-.base-background .todaytasks-and-calendar .calendar-and-info .calendar .days-of-week-row p {
+.todaytasks-and-calendar .calendar-and-info .calendar .days-of-week-row p {
   text-align: center;
+  color: white;
 }
-.base-background .todaytasks-and-calendar .calendar-and-info .calendar .calendar-grid {
+.todaytasks-and-calendar .calendar-and-info .calendar .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-auto-rows: 125px;
-  grid-gap: 1px;
-  background-color: black;
+  grid-auto-rows: 90px;
+  grid-gap: 2px;
+  padding: 2px;
+  background-color: #726e6b;
 }
-.base-background .todaytasks-and-calendar .calendar-and-info .calendar .calendar-grid .grid-item {
-  height: auto;
-  width: auto;
+.todaytasks-and-calendar .calendar-and-info .calendar .calendar-grid .grid-item {
   background-color: #f7f3f0;
+  height: 100%;
 }
-.base-background .todaytasks-and-calendar .calendar-and-info .calendar .calendar-grid .grid-item p {
+.todaytasks-and-calendar .calendar-and-info .calendar .calendar-grid .grid-item a {
+  display: block;
+  text-decoration: none;
+  color: black;
+  height: 100%;
+}
+.todaytasks-and-calendar .calendar-and-info .calendar .calendar-grid .grid-item p {
   font-size: 22px;
-  padding: 10px;
+  padding: 5px 10px 0px 0px;
   display: flex;
   justify-content: flex-end;
-  align-items: flex-start;
+}
+.todaytasks-and-calendar .calendar-and-info .calendar .calendar-grid .grid-item .event-dots {
+  background-color: #e1dcd8;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 20px;
+  width: 80%;
+  margin-right: auto;
+  margin-left: auto;
+  border-radius: 20px;
+}
+.todaytasks-and-calendar .calendar-and-info .calendar .calendar-grid .grid-item .event-dots p {
+  border-radius: 10px;
+  background-color: #a9be85;
+  padding: 5px;
+}
+.todaytasks-and-calendar .calendar-and-info .calendar .calendar-grid .selected-day {
+  background-color: #d8d5d0;
 }
 
 body {
@@ -419,12 +446,11 @@ body {
 .content {
   margin-left: auto;
   margin-right: auto;
-  padding: 0px 20px;
 }
 
 header {
-  background-color: #938f8c;
-  padding: 5px 0px;
+  background-color: #545262;
+  padding: 8px 30px;
 }
 header .account-data {
   display: flex;
@@ -432,7 +458,6 @@ header .account-data {
 header .account-data p {
   display: flex;
   align-items: center;
-  margin: 0px;
   margin-left: 10px;
   font-size: 16px;
   color: white;
