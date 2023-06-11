@@ -1,6 +1,6 @@
 ﻿@using FastSchedule.MVC.ViewModels;
 @model HomeViewModel
-<div class="todaytasks">
+@*<div class="todaytasks">
     <input placeholder="Поиск" />
     <div class="date-and-addnew">
         <p>@Model.SelectedDate</p>
@@ -21,82 +21,69 @@
             }
         }
     </div>
-</div>
+</div>*@
 <div class="calendar-and-info">
     <div class="month-info">
         <p>Июнь 2023</p>
     </div>
-    <div class="calendar">
-        <div class="days-of-week-row">
-            <p>ПН</p>
-            <p>ВТ</p>
-            <p>СР</p>
-            <p>ЧТ</p>
-            <p>ПТ</p>
-            <p>СБ</p>
-            <p>ВС</p>
-        </div>
-        <div class="calendar-grid">
-            @{
-                int weekGap = 0;
-                if ((int)Model.Schedule.StartDayOfWeek == 0)
-                    weekGap = 6;
-                else
-                    weekGap = (int)Model.Schedule.StartDayOfWeek - 1;
+    <div class="days-of-week-row">
+        <p>ПН</p>
+        <p>ВТ</p>
+        <p>СР</p>
+        <p>ЧТ</p>
+        <p>ПТ</p>
+        <p>СБ</p>
+        <p>ВС</p>
+    </div>
+    <div class="calendar-grid">
+        @{
+            int weekGap = 0;
+            if ((int)Model.Schedule.StartDayOfWeek == 0)
+                weekGap = 6;
+            else
+                weekGap = (int)Model.Schedule.StartDayOfWeek - 1;
 
-                int cellsCount = 0;
-                int date = 1;
-                while (true)
+            int cellsCount = 0;
+            int date = 1;
+            while (true)
+            {
+                if (cellsCount >= 72)
                 {
-                    if (cellsCount >= 42)
-                    {
-                        break;
-                    }
-                    if (cellsCount < weekGap || date > Model.Schedule.Days.Count())
-                    {
-                        <div class="grid-item">
-                        </div>
-                        cellsCount++;
-                        continue;
-                    }
-                    if (Model.SelectedDate.Day == date)
-                    {
-                        <div class="grid-item selected-day">
-                            <a onclick="GetTasks(@Model.SelectedDate.Year, @Model.SelectedDate.Month, @date)">
-                                <p>@date</p>
-                                @if (Model.Schedule.Days.FirstOrDefault(day => day.Date.Day == date).Tasks != null)
-                                {
-                                    <div class="event-dots" style="background-color: #f7f2ef;">
-                                        @foreach (var item in Model.Schedule.Days.FirstOrDefault(day => day.Date.Day == date).Tasks)
-                                        {
-                                            <p></p>
-                                        }
-                                    </div>
-                                }
-                            </a>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="grid-item">
-                            <a onclick="GetTasks(@Model.SelectedDate.Year, @Model.SelectedDate.Month, @date)">
-                                <p>@date</p>
-                                @if (Model.Schedule.Days.FirstOrDefault(day => day.Date.Day == date).Tasks != null)
-                                {
-                                    <div class="event-dots">
-                                        @foreach (var item in Model.Schedule.Days.FirstOrDefault(day => day.Date.Day == date).Tasks)
-                                        {
-                                            <p></p>
-                                        }
-                                    </div>
-                                }
-                            </a>
-                        </div>
-                    }
-                    date++;
-                    cellsCount++;
+                    break;
                 }
+                if (cellsCount < weekGap || date > Model.Schedule.Days.Count())
+                {
+                    <div class="grid-item">
+                    </div>
+                    cellsCount++;
+                    continue;
+                }
+                <div class="grid-item @(Model.SelectedDate.Day == date ? "selected-day" : "")">
+                    <a onclick="GetTasks(@Model.SelectedDate.Year, @Model.SelectedDate.Month, @date)">
+                        <p>@date</p>
+                        @if (Model.Schedule.Days.FirstOrDefault(day => day.Date.Day == date).Tasks != null)
+                        {
+                            <div class="events")">
+                                @foreach (var item in Model.Schedule.Days.FirstOrDefault(day => day.Date.Day == date).Tasks)
+                                {
+                                    <div class="task">
+                                        <p class="event-circle"></p>
+                                        <p class="event-label">@item.Label</p>
+                                        @if (item.EventTime != null)
+                                        {
+                                            <p class="event-time">@item.EventTime</p>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </a>
+                </div>
+                date++;
+                cellsCount++;
             }
-        </div>
+        }
     </div>
 </div>
+
+@*                                        style="background-color: @(Model.SelectedDate.Day == date ? "#f7f2ef;" : "#d8d5d0;"*@

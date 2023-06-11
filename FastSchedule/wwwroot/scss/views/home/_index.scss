@@ -4,143 +4,104 @@
     max-width: $content-max-width;
 }
 
+.background {
+    width: 100%;
+    min-height: $home-page-min-size;
+    background-color: $main-bg-color;
+}
 
-    .background {
+.calendar-handler {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+
+    .calendar-and-info {
+        min-width: 700px;
+        max-width: 1400px;
         width: 100%;
-        min-height: $home-page-min-size;
-        background-color: $main-bg-color;
-    }
 
-    .todaytasks-and-calendar {
-        display: grid;
-        grid-template-columns: 4fr 10fr;
-        padding-top: 80px;
+        .month-info {
+            padding-bottom: 20px;
+            font-size: 20px;
+            font-weight: 600;
+        }
 
-        .todaytasks {
-            border-radius: 20px;
-            border: 5px solid $main-color;
-            border-width: 12px 6px;
-            padding: 10px 40px;
-            margin-top: 50px;
+        .days-of-week-row {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            background-color: $main-color;
+            margin: 0px 20px;
 
-            input {
-                width: 100%;
-                padding: 8px;
-                font-size: 20px;
-                border: 3px solid $main-color;
-                background-color: $main-bg-color;
-                border-radius: 35px;
-                padding-left: 30px;
-                margin: 20px 0px;
+            p {
+                text-align: center;
+                color: white;
             }
+        }
 
-            .date-and-addnew {
-                display: flex;
-                justify-content: space-between;
-                font-size: 23px;
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-gap: 2px;
+            padding: 2px;
+            overflow-y: scroll;
+            background-color: $dark-font-color;
+            max-height: 80vh;
+
+            .grid-item {
+                background-color: $main-bg-color;
+                min-height: 100px;
+                height: 13vh;
 
                 a {
-                    font-size: 27px;
-                    margin-right: 10px;
-                    cursor: pointer;
+                    display: block;
+                    text-decoration: none;
+                    color: black;
+                    height: 100%;
                 }
-            }
 
-            .tasks {
-                display: grid;
-                grid-row-gap: 30px;
-                margin-top: 20px;
-
-                .task {
-                    line-height: 30px;
-                    background-color: #e1dcd8;
-                    border-radius: 15px;
+                p {
+                    font-size: 22px;
+                    padding: 5px 10px 0px 0px;
                     display: flex;
-                    justify-content: space-between;
-                    font-size: 18px;
-                    color: $dark-font-color;
-                    padding: 10px 15px;
+                    justify-content: flex-end;
                 }
+
+                .events {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    grid-row-gap: 10px;
+                    padding: 10px 10px;
+
+                    .task {
+                        display: flex;
+                        align-items: baseline;
+                        line-height: 16px;
+
+                        .event-circle {
+                            background-color: red;
+                            border-radius: 50px;
+                            height: 5px;
+                            padding: 5px;
+                        }
+
+                        .event-label {
+                            font-size: 16px;
+                            padding-left: 10px;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                        }
+
+                        .event-time {
+                            font-size: 14px;
+                            font-weight: 600;
+                        }
+                    }
+                }
+            }
+
+            .selected-day {
+                background-color: #d8d5d0;
             }
         }
-
-        .calendar-and-info {
-            width: 700px;
-            margin-right: auto;
-            margin-left: auto;
-            padding-left: 20px;
-            padding-right: 20px;
-
-            .month-info {
-                padding-bottom: 20px;
-                font-size: 20px;
-                font-weight: 600;
-            }
-
-            .calendar {
-
-                .days-of-week-row {
-                    display: grid;
-                    grid-template-columns: repeat(7, 1fr);
-                    background-color: $main-color;
-                    margin: 0px 20px;
-
-                    p {
-                        text-align: center;
-                        color: white;
-                    }
-                }
-
-                .calendar-grid {
-                    display: grid;
-                    grid-template-columns: repeat(7, 1fr);
-                    grid-auto-rows: 90px;
-                    grid-gap: 2px;
-                    padding: 2px;
-                    background-color: $dark-font-color;
-
-                    .grid-item {
-                        background-color: $main-bg-color;
-                        height: 100%;
-
-                        a {
-                            display: block;
-                            text-decoration: none;
-                            color: black;
-                            height: 100%;
-                        }
-
-                        p {
-                            font-size: 22px;
-                            padding: 5px 10px 0px 0px;
-                            display: flex;
-                            justify-content: flex-end;
-                        }
-
-                        .event-dots {
-                            background-color: #e1dcd8;
-                            display: flex;
-                            justify-content: space-evenly;
-                            align-items: center;
-                            height: 20px;
-                            width: 80%;
-                            margin-right: auto;
-                            margin-left: auto;
-                            border-radius: 20px;
-
-                            p {
-                                border-radius: 10px;
-                                background-color: #a9be85;
-                                padding: 5px;
-                            }
-                        }
-                    }
-
-                    .selected-day {
-                        background-color: #d8d5d0;
-                    }
-                }
-            }
-        }
-    
+    }
 }

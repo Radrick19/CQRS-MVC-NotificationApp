@@ -11,17 +11,35 @@ document.addEventListener('DOMContentLoaded', function () {
 function GetTasks(year, month, day) {
 	let url;
 	if (day != null && day != '') {
-		url = '/tasks/' + year + '/' + month + '/' + day
+		url = '/tasks/' + year + '/' + month + '/' + day;
 	}
 	else {
-		url = '/tasks/' + year + '/' + month
+		url = '/tasks/' + year + '/' + month;
 	}
+	urlNextMonth = '/tasks/' + year + '/' + (Number(month) + 1);
+	urlPrevMonth = '/tasks/' + year + '/' + (Number(month) - 1);
+	$.ajax({
+		type: 'GET',
+		dataType: 'html',
+		url: urlNextMonth,
+		success: function (data) {
+			document.querySelector('.calendar-handler').innerHTML += data;
+		}
+	})
 	$.ajax({
 		type: 'GET',
 		dataType: 'html',
 		url: url,
 		success: function (data) {
-			document.querySelector('.todaytasks-and-calendar').innerHTML = data;
+			document.querySelector('.calendar-handler').innerHTML += data;
+		}
+	})
+	$.ajax({
+		type: 'GET',
+		dataType: 'html',
+		url: urlNextMonth,
+		success: function (data) {
+			document.querySelector('.calendar-handler').innerHTML += data;
 		}
 	})
 }
