@@ -1,0 +1,125 @@
+﻿@using FastSchedule.Application.Services.ScheduleMaker.Models;
+@model Day
+
+<div class="edit-tasks-window">
+    <div class="content">
+        <input name="year" type="hidden" value="@Model.Date.Year"/>
+        <input name="month" type="hidden" value="@Model.Date.Month" />
+        <input name="day" type="hidden" value="@Model.Date.Day" />
+        <div class="top-bar">
+            <div class="date-and-dayofweek">
+                <h3>@Model.Date</h3>
+                <h4>@Model.Date.DayOfWeek</h4>
+            </div>
+            <img class="close-button" src="/images/icons/close.png" />
+        </div>
+        <div class="today-tasks">
+            @if(Model.Tasks != null)
+            {
+                @foreach (var task in Model.Tasks)
+                {
+                    if(task.EventTime != null)
+                    {
+                        <hr />
+                        <div class="task">
+                            <div class="main-info">
+                                <p style="background-color:#@task.Color" class="color-dot"></p>
+                                <p>@task.Label</p>
+                                <small>@task.EventTime</small>
+                                <input type="checkbox" />
+                                <img src="/images/icons/editing.png" />
+                            </div>
+                                @if (string.IsNullOrWhiteSpace(@task.Description))
+                                {
+                                    <small>@task.Description</small>
+                                }
+                        </div>
+                        <hr />
+                    }
+                    else
+                    {
+                        <hr />
+                        <div class="notime-task">
+                            <div class="main-info">
+                                <p style="background-color:#@task.Color" class="color-dot"></p>
+                                <p>@task.Label</p>
+                                <input type="checkbox" />
+                                <img src="/images/icons/editing.png" />
+                            </div>
+                            @if (string.IsNullOrWhiteSpace(@task.Description))
+                            {
+                                <small>@task.Description</small>
+                            }
+                        </div>
+                        <hr />
+                    }
+                }
+            }
+        </div>
+        <div class="add-new-task">
+            <div class="task-settings-line">
+                <div class="setting">
+                    <label>Цвет события</label>
+                    <div class="color-picker">
+                        <a class="color purple" id="#928ad7"></a>
+                        <a class="color red" id="#ed524e"</a>
+                        <a class="color green" id="#afb87f"></a>
+                        <a class="color yellow" id="#f4d078"></a>
+                        <a class="color gray" id="#8b8784"></a>
+                        <a class="color pink" id="#ecb2ff"></a>
+                    </div>
+                </div>
+                <div class="setting">
+                    <input name="label" type="text" placeholder="Название" />
+                </div>
+                <div class="setting">
+                    <input name="time" type="time" />
+                </div>
+                <div class="setting">
+                    <label>Напомнить?</label>
+                    <select name="reminder">
+                        <option value="0">Нет</option>
+                        <option value="1">За 15 минут</option>
+                        <option value="2">За пол часа</option>
+                        <option value="3">За час</option>
+                        <option value="4">За 6 часов</option>
+                        <option value="5">За сутки</option>
+                    </select>
+                </div>
+                <div class="setting">
+                    <label>Повторять?</label>
+                    <select name="repeat">
+                        <option value="0">Нет</option>
+                        <option value="1">Каждый день</option>
+                        <option value="2">Каждую неделю</option>
+                        <option value="3">Каждый месяц</option>
+                    </select>
+                </div>
+                <div class="setting">
+                    <img src="~/images/icons/add.png" class="add-button"/>
+                </div>
+            </div>
+            <div class="decription-line">
+                <textarea name="description"></textarea>
+            </div>
+        </div>
+@*        <h4>Выполненные</h4>
+        <div class="today-completed-tasks">
+            <div class="task">
+                <div class="main-info">
+                    <p class="color-dot"></p>
+                    <p>Label</p>
+                    <small>16:00</small>
+                </div>
+            </div>
+            <hr />
+            <div class="notime-task">
+                <div class="main-info">
+                    <p class="color-dot"></p>
+                    <p>Label</p>
+                </div>
+                <small> description descriptiondescriptiondescriptiondescriptiondescription descriptiondescriptiondescription descriptiondescriptiondescriptiondescription</small>
+            </div>
+        </div>*@
+    </div>
+</div>

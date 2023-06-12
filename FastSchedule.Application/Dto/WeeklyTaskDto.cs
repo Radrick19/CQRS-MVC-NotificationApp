@@ -7,6 +7,7 @@ namespace FastSchedule.Application.Dto
     public class WeeklyTaskDto : ITask
     {
         public int Id { get; set; }
+        public string Color { get; set; }
         public Guid Guid { get; set; }
         public string Label { get; set; }
         public int UserId { get; set; }
@@ -15,6 +16,6 @@ namespace FastSchedule.Application.Dto
         public string? Description { get; set; }
         public TimeOnly? EventTime { get; set; }
         public TimeSpan? PreNotifyTime { get; set; }
-        public IEnumerable<DayOfWeek> EventDaysOfWeek { get; set; }
+        public DayOfWeek EventDayOfWeek { get; set; }
     }
 }

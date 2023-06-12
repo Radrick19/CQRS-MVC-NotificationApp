@@ -12,23 +12,23 @@ using System.Threading.Tasks;
 
 namespace FastSchedule.Application.Handlers.TaskControlHandlers
 {
-    internal class GetDailyTasksQueryHandler : IRequestHandler<GetDailyTasksQuery, IEnumerable<DailyTaskDto>>
+    internal class GetDailyTasksQueryHandler : IRequestHandler<GetDailyTasksQuery, IEnumerable<OnetimeTaskDto>>
     {
-        private readonly IRepository<DailyTask> _dailyTasksRepository;
+        private readonly IRepository<OnetimeTask> _dailyTasksRepository;
         private readonly IMapper _mapper;
 
-        public GetDailyTasksQueryHandler(IRepository<DailyTask> dailyTasksRepository, IMapper mapper)
+        public GetDailyTasksQueryHandler(IRepository<OnetimeTask> dailyTasksRepository, IMapper mapper)
         {
             _dailyTasksRepository = dailyTasksRepository;
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<DailyTaskDto>> Handle(GetDailyTasksQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<OnetimeTaskDto>> Handle(GetDailyTasksQuery request, CancellationToken cancellationToken)
         {
             return await Task.FromResult(_dailyTasksRepository
                 .Get()
                 .Where(task=> task.UserId == request.UserId)
-                .Select(task => _mapper.Map<DailyTaskDto>(task)));
+                .Select(task => _mapper.Map<OnetimeTaskDto>(task)));
         }
     }
 }

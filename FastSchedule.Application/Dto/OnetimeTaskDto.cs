@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FastSchedule.Application.Dto
 {
-    public class MonthlyTaskDto : ITask
+    public class OnetimeTaskDto : ITask
     {
         public int Id { get; set; }
         public string Color { get; set; }
@@ -21,6 +21,6 @@ namespace FastSchedule.Application.Dto
         public string? Description { get; set; }
         public TimeOnly? EventTime { get; set; }
         public TimeSpan? PreNotifyTime { get; set; }
-        public int EventDayOfMonth { get; set; }
+        public DateOnly EventDay { get; set; }
     }
 }

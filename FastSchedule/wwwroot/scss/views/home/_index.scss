@@ -1,12 +1,12 @@
 @import "../../_vars.scss";
 
+
 .content {
     max-width: $content-max-width;
 }
 
 .background {
     width: 100%;
-    min-height: $home-page-min-size;
     background-color: $main-bg-color;
 }
 
@@ -14,23 +14,48 @@
     display: flex;
     justify-content: center;
     padding-top: 20px;
+    width: 100%;
 
     .calendar-and-info {
-        min-width: 700px;
-        max-width: 1400px;
-        width: 100%;
 
-        .month-info {
-            padding-bottom: 20px;
-            font-size: 20px;
-            font-weight: 600;
+        .info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 30px;
+            padding: 20px 0px;
+
+            .month-info {
+                display: flex;
+                font-weight: 600;
+            }
+
+            .year-info {
+                display: flex;
+                margin-right: 20px;
+
+                p {
+                    margin: 0px 20px;
+                }
+
+                img {
+                    height: 30px;
+                    width: auto;
+                }
+
+                .next-year {
+                    img {
+                        transform: rotate(180deg);
+                    }
+                }
+            }
         }
 
         .days-of-week-row {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             background-color: $main-color;
-            margin: 0px 20px;
+            margin: 0px 10px;
 
             p {
                 text-align: center;
@@ -40,17 +65,22 @@
 
         .calendar-grid {
             display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            grid-gap: 2px;
-            padding: 2px;
+            grid-template-columns: repeat(7, 10vw);
+            padding: 0px;
+            height: 80vh;
             overflow-y: scroll;
-            background-color: $dark-font-color;
-            max-height: 80vh;
+            background-color: $main-color;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
 
             .grid-item {
-                background-color: $main-bg-color;
-                min-height: 100px;
-                height: 13vh;
+                margin: 1px;
+                background-color: #e5e5eb;
+                min-height: 150px;
+                max-width: 200px;
+                max-height: 200px;
 
                 a {
                     display: block;
@@ -59,35 +89,74 @@
                     height: 100%;
                 }
 
-                p {
-                    font-size: 22px;
-                    padding: 5px 10px 0px 0px;
+                .manage-and-date {
                     display: flex;
-                    justify-content: flex-end;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    padding: 10px 15px 0px 10px;
+                    line-height: 20px;
+
+                    img {
+                        height: 30px;
+                        width: auto;
+                        cursor: pointer;
+                        visibility: hidden;
+                    }
+
+                    p {
+                        font-size: 26px;
+                        font-weight: 600;
+                    }
                 }
 
                 .events {
                     display: grid;
                     grid-template-columns: 1fr;
                     grid-row-gap: 10px;
-                    padding: 10px 10px;
+                    padding: 20px 10px;
+
+                    .small-block-of-tasks {
+                        margin-left: auto;
+                        margin-right: auto;
+                        width: 70%;
+                        border: 2px solid #555262;
+                        background-color: #f6f6f6;
+                        border-radius: 10px;
+                        padding: 4px;
+                        display: grid;
+                        justify-content: center;
+                        grid-template-columns: repeat(4, 5px);
+                        grid-gap: 15px;
+                        margin-top: 10px;
+
+                        .event-circle {
+                            border: 1px solid #555262;
+                            border-radius: 50px;
+                            height: 5px;
+                            padding: 5px;
+                        }
+                    }
 
                     .task {
-                        display: flex;
+                        display: grid;
+                        grid-template-columns: 1fr 12fr 2fr;
                         align-items: baseline;
                         line-height: 16px;
 
                         .event-circle {
-                            background-color: red;
+                            border: 1px solid #555262;
+                            background-color: #9fba83;
                             border-radius: 50px;
                             height: 5px;
                             padding: 5px;
                         }
 
                         .event-label {
+                            font-weight: 400;
                             font-size: 16px;
                             padding-left: 10px;
                             text-overflow: ellipsis;
+                            overflow: hidden;
                             white-space: nowrap;
                         }
 
@@ -99,8 +168,232 @@
                 }
             }
 
+            .total-month {
+                background-color: $main-bg-color;
+            }
+
+            .weekend-day {
+                background-color: #d7d7e4;
+            }
+
+            .total-month.weekend-day {
+                background-color: #f2e2e6;
+            }
+
             .selected-day {
-                background-color: #d8d5d0;
+                background-color: #cccad6 !important;
+            }
+        }
+    }
+}
+
+.edit-tasks-window {
+    position: fixed;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    background-color: white;
+
+    .content {
+        padding: 20px 40px;
+
+        p {
+            font-size: 20px;
+        }
+
+        input {
+            height: 20px;
+            width: 20px;
+            background-color: black;
+        }
+
+        img {
+            cursor: pointer;
+            height: 25px;
+            width: 25px;
+        }
+
+        small {
+            font-size: 14px;
+        }
+
+        .color-dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50px;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+
+            .date-and-dayofweek {
+                display: flex;
+                align-items: baseline;
+
+                h4 {
+                    margin-left: 20px;
+                }
+            }
+
+            img {
+                height: 25px;
+                width: auto;
+            }
+        }
+        /*        .today-completed-tasks {
+            display: grid;
+            line-height: 17px;
+            grid-template-columns: 1fr;
+            margin-top: 20px;
+            margin-bottom: 50px;
+
+            .notime-task {
+                display: grid;
+                line-height: 17px;
+                grid-template-rows: 5fr 2fr;
+
+                .main-info {
+                    display: grid;
+                    align-items: center;
+                    grid-template-columns: 1fr 5fr 3fr;
+                }
+            }
+
+            .task {
+                display: grid;
+                line-height: 17px;
+                grid-template-rows: 5fr 2fr;
+
+                .main-info {
+                    display: grid;
+                    align-items: center;
+                    grid-template-columns: 1fr 3fr 2fr 3fr;
+                }
+            }
+        }*/
+
+        .today-tasks {
+            display: grid;
+            line-height: 30px;
+            grid-template-columns: 1fr;
+            margin-top: 20px;
+            margin-bottom: 50px;
+
+
+            .notime-task {
+                display: grid;
+                grid-template-rows: 5fr 2fr;
+
+                .main-info {
+                    line-height: 30px;
+                    display: grid;
+                    grid-template-columns: 1fr 5fr 3fr 1fr 1fr;
+                    align-items: center;
+                }
+            }
+
+            .task {
+                display: grid;
+                grid-template-rows: 5fr 2fr;
+
+                .main-info {
+                    line-height: 30px;
+                    display: grid;
+                    grid-template-columns: 1fr 3fr 2fr 3fr 1fr 1fr;
+                    align-items: center;
+                }
+            }
+        }
+    }
+
+    .add-new-task {
+        display: flex;
+        flex-direction: column;
+
+        .task-settings-line {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            margin-bottom: 20px;
+
+            input {
+                background-color: white;
+                min-height: 35px;
+                padding: 10px;
+            }
+
+            input[type=text] {
+                width: 15vw;
+            }
+
+            input[type=time] {
+                min-width: 100px;
+            }
+
+            .color-picker {
+                margin-top: 10px;
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-column-gap: 20px;
+                grid-row-gap: 15px;
+                align-items: center;
+                justify-items: center;
+
+                .color {
+                    border-radius: 50px;
+                    border: 2px none black;
+                    height: 22px;
+                    width: 22px;
+                }
+
+                .color.purple {
+                    background-color: #928ad7;
+                }
+
+                .color.red {
+                    background-color: #ed524e;
+                }
+
+                .color.green {
+                    background-color: #afb87f;
+                }
+
+                .color.yellow {
+                    background-color: #f4d078;
+                }
+
+                .color.gray {
+                    background-color: #8b8784;
+                }
+
+                .color.pink {
+                    background-color: #ecb2ff;
+                }
+            }
+
+            .setting {
+                .add-button {
+                    display: block;
+                    width: 40px;
+                    height: 40px;
+                }
+
+                label {
+                    font-size: 20px;
+                    margin-right: 10px;
+                }
+            }
+        }
+
+        .decription-line {
+
+            textarea {
+                width: 100%;
+                min-height: 100px;
+                padding: 15px;
             }
         }
     }

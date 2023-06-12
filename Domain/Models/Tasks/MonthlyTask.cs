@@ -10,28 +10,25 @@ namespace FastSchedule.Domain.Models
 {
     public class MonthlyTask : BaseTask, ITask
     {
-        public IEnumerable<int> EventDaysOfMonth
+        public int EventDayOfMonth
         {
-            get { return eventDaysOfMonth; }
+            get { return eventDayOfMonth; }
             set
             {
-                foreach(var day in value)
+                if (value < 1 || value > 31)
                 {
-                    if (day < 1 || day > 31)
-                    {
-                        throw new ArgumentException("Wrong data for event days of month");
-                    }
+                    throw new ArgumentException("Wrong data for event days of month");
                 }
-                eventDaysOfMonth = value;
+                eventDayOfMonth = value;
             }
         }
 
-        private IEnumerable<int> eventDaysOfMonth;
+        private int eventDayOfMonth;
 
-        public MonthlyTask(Guid guid, string label, int userId, TimeSpan? preNotifyTime = null, string? description = null, TimeOnly? eventTime = null, params int[] eventDaysOfMonth)
+        public MonthlyTask(Guid guid, string label, int userId, int eventDayOfMonth, TimeSpan? preNotifyTime = null, string? description = null, TimeOnly? eventTime = null)
     : base(guid, label, userId, preNotifyTime, description, eventTime)
         {
-            EventDaysOfMonth = eventDaysOfMonth;
+            EventDayOfMonth = eventDayOfMonth;
         }
 
         protected MonthlyTask()

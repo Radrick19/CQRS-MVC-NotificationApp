@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace FastSchedule.Application.Dto
 {
-    public class DailyTaskDto : ITask
+    public class EverydayTaskDto : ITask
     {
-        public int Id { get; set; }
         public Guid Guid { get; set; }
+        public string Color { get; set; }
         public string Label { get; set; }
         public int UserId { get; set; }
         [ForeignKey("UserId")]
@@ -20,6 +20,5 @@ namespace FastSchedule.Application.Dto
         public string? Description { get; set; }
         public TimeOnly? EventTime { get; set; }
         public TimeSpan? PreNotifyTime { get; set; }
-        public DateOnly EventDay { get; set; }
     }
 }

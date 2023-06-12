@@ -29,4 +29,8 @@
     <ProjectReference Include="..\FastSchedule.Application\FastSchedule.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Components\" />
+  </ItemGroup>
+
 </Project>

@@ -1,89 +1,73 @@
 ﻿@using FastSchedule.MVC.ViewModels;
 @model HomeViewModel
-@*<div class="todaytasks">
-    <input placeholder="Поиск" />
-    <div class="date-and-addnew">
-        <p>@Model.SelectedDate</p>
-        <a>+</a>
-    </div>
-    <div class="tasks">
-        @if (Model.SelectedDayTasks != null)
-        {
-            @foreach (var item in Model.SelectedDayTasks)
-            {
-                <div class="task">
-                    <p>@item.Label</p>
-                    @if (item.EventTime != null)
-                    {
-                        <small>@item.EventTime</small>
-                    }
-                </div>
-            }
-        }
-    </div>
-</div>*@
-<div class="calendar-and-info">
-    <div class="month-info">
-        <p>Июнь 2023</p>
-    </div>
-    <div class="days-of-week-row">
-        <p>ПН</p>
-        <p>ВТ</p>
-        <p>СР</p>
-        <p>ЧТ</p>
-        <p>ПТ</p>
-        <p>СБ</p>
-        <p>ВС</p>
-    </div>
-    <div class="calendar-grid">
-        @{
-            int weekGap = 0;
-            if ((int)Model.Schedule.StartDayOfWeek == 0)
-                weekGap = 6;
-            else
-                weekGap = (int)Model.Schedule.StartDayOfWeek - 1;
 
-            int cellsCount = 0;
-            int date = 1;
-            while (true)
-            {
-                if (cellsCount >= 72)
-                {
-                    break;
-                }
-                if (cellsCount < weekGap || date > Model.Schedule.Days.Count())
-                {
-                    <div class="grid-item">
-                    </div>
-                    cellsCount++;
-                    continue;
-                }
-                <div class="grid-item @(Model.SelectedDate.Day == date ? "selected-day" : "")">
-                    <a onclick="GetTasks(@Model.SelectedDate.Year, @Model.SelectedDate.Month, @date)">
-                        <p>@date</p>
-                        @if (Model.Schedule.Days.FirstOrDefault(day => day.Date.Day == date).Tasks != null)
+@{
+    @if (Model.StartWeekGap != null)
+    {
+        for (int i = 0; i < Model.StartWeekGap; i++)
+        {
+            <div class="grid-item empty-grid">
+            </div>
+        }
+    }
+    Dictionary<int, string> intDayRusString = new()
+    {
+        {1, "Январь"},
+        {2, "Февраль"},
+        {3, "Март"},
+        {4, "Апрель"},
+        {5, "Май"},
+        {6, "Июнь"},
+        {7, "Июль"},
+        {8, "Август"},
+        {9, "Сентябрь"},
+        {10, "Октябрь"},
+        {11, "Ноябрь"},
+        {12, "Декабрь"},
+    };
+
+    foreach (var day in Model.Schedule.Days)
+    {
+        <div id="@intDayRusString[day.Date.Month]" class="grid-item @((int)day.Date.DayOfWeek == 6 || (int)day.Date.DayOfWeek == 0 ? "weekend-day" : "") 
+        @(Model.TodayDate == day.Date ? "selected-day" : "")">
+                <input name="year" value="@day.Date.Year" type="hidden"/>
+                <input name="month" value="@day.Date.Month" type="hidden" />
+                <input name="day" value="@day.Date.Day" type="hidden" />
+                <div class="manage-and-date">
+                <img class="manage-grid" src="/images/icons/info.png" />
+                    <p style="@(Model.TodayDate == day.Date ? "text-decoration: underline;" : "")">@day.Date.Day</p>
+                </div>
+                    @if (day.Tasks != null && day.Tasks.Count() != 0)
+                    {
+                        <div class="events" )">
+                    @{
+                        int countOfTasks = 0;
+                    }
+                        @foreach (var item in day.Tasks)
                         {
-                            <div class="events")">
-                                @foreach (var item in Model.Schedule.Days.FirstOrDefault(day => day.Date.Day == date).Tasks)
+                        countOfTasks++;
+                        <div class="task">
+                                <p style="background-color:#@item.Color" class="event-circle"></p>
+                                <p class="event-label">@item.Label</p>
+                                @if (item.EventTime != null)
                                 {
-                                    <div class="task">
-                                        <p class="event-circle"></p>
-                                        <p class="event-label">@item.Label</p>
-                                        @if (item.EventTime != null)
-                                        {
-                                            <p class="event-time">@item.EventTime</p>
-                                        }
-                                    </div>
+                                    <p class="event-time">@item.EventTime</p>
                                 }
+                        </div>
+                        if (countOfTasks >= 2)
+                            break;
+                        }
+                        @if(@day.Tasks.Count() > 2){
+                            <div class="small-block-of-tasks">
+                        @for (int i = countOfTasks; i < day.Tasks.Count(); i++)
+                        {
+                            <p class="event-circle"></p>
+                        }
                             </div>
                         }
-                    </a>
-                </div>
-                date++;
-                cellsCount++;
-            }
+                        </div>
+                    }
+            </div>
         }
-    </div>
-</div>
 
-@*                                        style="background-color: @(Model.SelectedDate.Day == date ? "#f7f2ef;" : "#d8d5d0;"*@
+}

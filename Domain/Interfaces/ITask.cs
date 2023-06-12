@@ -11,6 +11,7 @@ namespace FastSchedule.Domain.Interfaces
     public interface ITask
     {
         Guid Guid { get; set; }
+        string Color { get; set; }
         string Label { get; set; }
         int UserId { get; set; }
         [ForeignKey("UserId")]

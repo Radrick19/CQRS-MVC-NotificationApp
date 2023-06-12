@@ -4,6 +4,7 @@ using FastSchedule.Domain;
 using FastSchedule.Domain.Infrastucture;
 using FastSchedule.Domain.Interfaces;
 using FastSchedule.Domain.Models;
+using FastSchedule.Domain.Models.Tasks;
 using FastSchedule.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,7 +32,9 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
 
-builder.Services.AddTransient<IRepository<DailyTask>, DailyTaskRepository>();
+builder.Services.AddTransient<IRepository<EverydayTask>, EverydayTaskRepository>();
+
+builder.Services.AddTransient<IRepository<OnetimeTask>, DailyTaskRepository>();
 
 builder.Services.AddTransient<IRepository<WeeklyTask>, WeeklyTaskRepository>();
 

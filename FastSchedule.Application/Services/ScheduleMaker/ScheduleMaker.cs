@@ -26,6 +26,7 @@ namespace FastSchedule.Application.Services.ScheduleMaker
             DayOfWeek startDayOfWeek = new DateTime(year, month, 1).DayOfWeek;
             List<Day> days = new List<Day>();
 
+            var everydayTasks = await _mediator.Send(new GetEverydayTasksQuery(userId));
             var dailyTasks = await _mediator.Send(new GetDailyTasksQuery(userId));
             var weeklyTasks = await _mediator.Send(new GetWeeklyTasksQuery(userId));
             var monthlyTasks = await _mediator.Send(new GetMonthlyTasksQuery(userId));
@@ -47,11 +48,12 @@ namespace FastSchedule.Application.Services.ScheduleMaker
                             .Where(task => task.EventDay == day)
                             .Cast<ITask>());
                 daySchedule.Tasks.AddRange(weeklyTasks
-                            .Where(task => task.EventDaysOfWeek.Any(dayOfWeek => dayOfWeek == day.DayOfWeek))
+                            .Where(task => task.EventDayOfWeek == day.DayOfWeek)
                             .Cast<ITask>());
                 daySchedule.Tasks.AddRange(monthlyTasks
-                            .Where(task => task.EventDaysOfMonth.Any(daysOfMonth => daysOfMonth == day.Day))
+                            .Where(task => task.EventDayOfMonth == day.Day)
                             .Cast<ITask>());
+                daySchedule.Tasks.AddRange(everydayTasks.Cast<ITask>());
 
                 if(daySchedule.Tasks.Count == 0)
                 {

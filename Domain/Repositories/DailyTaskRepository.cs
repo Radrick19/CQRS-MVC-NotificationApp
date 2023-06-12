@@ -9,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace FastSchedule.Domain.Repositories
 {
-    public class DailyTaskRepository : BaseRepository<DailyTask>
+    public class DailyTaskRepository : BaseRepository<OnetimeTask>
     {
         public DailyTaskRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
 
-        public override IEnumerable<DailyTask> Get()
+        public override IEnumerable<OnetimeTask> Get()
         {
             return _dbSet.Include(task => task.User);
         }
 
-        public override async Task<DailyTask> GetByIdAsync(int entityId)
+        public override async Task<OnetimeTask> GetByIdAsync(int entityId)
         {
             return await _dbSet.Include(task => task.User).FirstOrDefaultAsync(task=> task.Id == entityId);
         }

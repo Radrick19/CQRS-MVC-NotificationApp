@@ -11,6 +11,7 @@ namespace FastSchedule.Domain.Models.Tasks
     public abstract class BaseTask : Entity
     {
         public Guid Guid { get; set; }
+        public string Color { get; set; }
         public string Label { get; set; }
         public int UserId { get; set; }
         [ForeignKey("UserId")]

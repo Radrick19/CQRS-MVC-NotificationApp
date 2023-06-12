@@ -10,12 +10,12 @@ namespace FastSchedule.Domain.Models
 {
     public class WeeklyTask : BaseTask, ITask
     {
-        public IEnumerable<DayOfWeek> EventDaysOfWeek { get; set; }
+        public DayOfWeek EventDayOfWeek { get; set; }
 
-        public WeeklyTask(Guid guid, string label, int userId, TimeSpan? preNotifyTime = null, string? description = null, TimeOnly? eventTime = null, params DayOfWeek[] eventDaysOfWeek)
+        public WeeklyTask(Guid guid, string label, int userId, DayOfWeek eventDayOfWeek, TimeSpan? preNotifyTime = null, string? description = null, TimeOnly? eventTime = null)
             : base(guid, label, userId, preNotifyTime, description, eventTime)
         {
-            EventDaysOfWeek = eventDaysOfWeek;
+            EventDayOfWeek = eventDayOfWeek;
         }
 
         protected WeeklyTask()

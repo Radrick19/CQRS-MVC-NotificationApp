@@ -23,20 +23,29 @@ namespace FastSchedule.MVC.Controllers
             _scheduleMaker = scheduleMaker;
         }
 
+        //[HttpPost]
+        //public async Task<OnetimeTaskDto> TestMethod()
+        //{
+        //    var command = new AddDailyTaskCommand(new OnetimeTaskDto{
+        //        Guid = Guid.NewGuid(),
+        //        Label = "newTesik",
+        //        UserId = 1,
+        //        EventDay = new DateOnly(2023, 6, 9)
+        //    });
+        //    var addedTask = await _mediator.Send(command);
+        //    return addedTask;
+        //}
+
         [HttpPost]
-        public async Task<DailyTaskDto> TestMethod()
+        public async Task<UserDto> AddUser()
         {
-            var command = new AddDailyTaskCommand(new DailyTaskDto{
-                Guid = Guid.NewGuid(),
-                Label = "newTesik",
-                UserId = 1,
-                EventDay = new DateOnly(2023, 6, 9)
-            });
+            var command = new AddUserCommand("radrick", "radricksh@gmail.com", "259");
             var addedTask = await _mediator.Send(command);
             return addedTask;
         }
+
         [HttpGet]
-        public async Task<IEnumerable<DailyTaskDto>> TestMethodGet()
+        public async Task<IEnumerable<OnetimeTaskDto>> TestMethodGet()
         {
             var query = new GetDailyTasksQuery(1);
             var tasks = await _mediator.Send(query);

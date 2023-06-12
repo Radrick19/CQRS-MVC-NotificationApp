@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace FastSchedule.Application.Commands.TaskCommands
 {
-    public class AddDailyTaskCommand : IRequest<DailyTaskDto>
+    public class AddDailyTaskCommand : IRequest<OnetimeTaskDto>
     {
-        public DailyTaskDto DailyTask { get; set; }
+        public OnetimeTaskDto DailyTask { get; set; }
 
-        public AddDailyTaskCommand(DailyTaskDto dailyTask)
+        public AddDailyTaskCommand(OnetimeTaskDto dailyTask)
         {
             DailyTask = dailyTask;
         }

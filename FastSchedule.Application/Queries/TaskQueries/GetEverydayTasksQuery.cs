@@ -1,5 +1,5 @@
 ﻿using FastSchedule.Application.Dto;
-using FastSchedule.Domain.Models;
+using FastSchedule.Domain.Models.Tasks;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace FastSchedule.Application.Queries.TaskQueries
 {
-    public class GetDailyTasksQuery : IRequest<IEnumerable<OnetimeTaskDto>>
+    public class GetEverydayTasksQuery : IRequest<IEnumerable<EverydayTaskDto>>
     {
         public int UserId { get; set; }
 
-        public GetDailyTasksQuery(int userId)
+        public GetEverydayTasksQuery(int userId)
         {
             UserId = userId;
         }

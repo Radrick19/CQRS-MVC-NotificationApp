@@ -1,14 +1,14 @@
 ﻿using FastSchedule.Domain.Models;
+using FastSchedule.Domain.Models.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace FastSchedule.Domain
 {
     public class FastScheduleContext : DbContext
     {
-        public DbSet<DailyTask> DailyTasks { get; set; }
+        public DbSet<EverydayTask> EverydayTasks { get; set; }
+        public DbSet<OnetimeTask> OnetimeTasks { get; set; }
         public DbSet<WeeklyTask> WeeklyTasks { get; set; }
         public DbSet<MonthlyTask> MonthlyTasks { get; set; }
         public DbSet<User> Users { get; set; }
@@ -18,10 +18,10 @@ namespace FastSchedule.Domain
             base.OnModelCreating(modelBuilder);
 
             modelBuilder
-                .Entity<DailyTask>()
+                .Entity<OnetimeTask>()
                 .HasIndex(task => task.Guid)
                 .IsUnique();
-            modelBuilder.Entity<DailyTask>()
+            modelBuilder.Entity<OnetimeTask>()
                 .Property(task => task.EventDay)
                 .HasConversion(date => date.ToShortDateString(), date => DateOnly.FromDateTime(Convert.ToDateTime(date)));
 
@@ -33,11 +33,15 @@ namespace FastSchedule.Domain
                 .Property(task => task.EventTime)
                 .HasConversion(time => time.ToString(), time => TimeOnly.FromDateTime(Convert.ToDateTime(time)));
 
-            modelBuilder.Entity<DailyTask>()
+            modelBuilder.Entity<OnetimeTask>()
                 .Property(task => task.EventTime)
                 .HasConversion(time => time.ToString(), time => TimeOnly.FromDateTime(Convert.ToDateTime(time)));
 
-            modelBuilder.Entity<DailyTask>()
+            modelBuilder.Entity<EverydayTask>()
+                .Property(task => task.EventTime)
+                .HasConversion(time => time.ToString(), time => TimeOnly.FromDateTime(Convert.ToDateTime(time)));
+
+            modelBuilder.Entity<OnetimeTask>()
                 .Property(task => task.PreNotifyTime)
                 .HasConversion(new TimeSpanToTicksConverter());
 
@@ -48,14 +52,6 @@ namespace FastSchedule.Domain
             modelBuilder.Entity<MonthlyTask>()
                 .Property(task => task.PreNotifyTime)
                 .HasConversion(new TimeSpanToTicksConverter());
-
-            modelBuilder.Entity<MonthlyTask>()
-                .Property(task => task.EventDaysOfMonth)
-                .HasConversion(days => JsonConvert.SerializeObject(days), days => JsonConvert.DeserializeObject<IEnumerable<int>>(days));
-
-            modelBuilder.Entity<WeeklyTask>()
-                .Property(task => task.EventDaysOfWeek)
-                .HasConversion(days => JsonConvert.SerializeObject(days), days => JsonConvert.DeserializeObject<IEnumerable<DayOfWeek>>(days));
 
             modelBuilder
                 .Entity<User>()
