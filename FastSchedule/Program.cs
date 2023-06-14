@@ -17,7 +17,7 @@ builder.Services.AddMvc().AddRazorRuntimeCompilation();
 
 builder.Services.AddMediatR(cfg=> cfg.RegisterServicesFromAssembly(typeof(ApplicationMediatREntrypoint).Assembly));
 
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(typeof(AppMappingProfile));
 
@@ -44,15 +44,14 @@ builder.Services.AddTransient<IScheduleMaker, ScheduleMaker>();
 
 var app = builder.Build();
 
-app.UseSwagger();
+//app.UseSwagger();
 
-app.UseSwaggerUI(config =>
-{
-    config.RoutePrefix = string.Empty;
-    config.SwaggerEndpoint("swagger/v1/swagger.json", "Schedule API");
-});
+//app.UseSwaggerUI(config =>
+//{
+//    config.RoutePrefix = string.Empty;
+//    config.SwaggerEndpoint("swagger/v1/swagger.json", "Schedule API");
+//});
 
-app.UseStaticFiles();
 
 app.UseRouting();
 
@@ -60,5 +59,7 @@ app.UseEndpoints(endponints =>
 {
     endponints.MapControllerRoute("Default", "{controller=home}/{action=index}/{id?}");
 });
+
+app.UseStaticFiles();
 
 app.Run();

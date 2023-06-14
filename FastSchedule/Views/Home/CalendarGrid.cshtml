@@ -1,0 +1,59 @@
+﻿@using FastSchedule.Application.Services.ScheduleMaker.Models;
+@model Day
+@{
+    Dictionary<int, string> intDayRusString = new()
+    {
+        {1, "Январь"},
+        {2, "Февраль"},
+        {3, "Март"},
+        {4, "Апрель"},
+        {5, "Май"},
+        {6, "Июнь"},
+        {7, "Июль"},
+        {8, "Август"},
+        {9, "Сентябрь"},
+        {10, "Октябрь"},
+        {11, "Ноябрь"},
+        {12, "Декабрь"},
+    };
+}
+<div id="@intDayRusString[Model.Date.Month]" class="grid-item @((int)Model.Date.DayOfWeek == 6 || (int)Model.Date.DayOfWeek == 0 ? "weekend-day" : "")">
+        <input name="year" value="@Model.Date.Year" type="hidden" />
+        <input name="month" value="@Model.Date.Month" type="hidden" />
+        <input name="day" value="@Model.Date.Day" type="hidden" />
+    <div class="manage-and-date">
+        <img class="manage-grid" src="/images/icons/info.png" />
+            <p>@Model.Date.Day</p>
+    </div>
+        @if (Model.Tasks != null && Model.Tasks.Count() != 0)
+    {
+        <div class="events" )">
+            @{
+                int countOfTasks = 0;
+            }
+                @foreach (var item in Model.Tasks)
+            {
+                countOfTasks++;
+                <div class="task">
+                    <p style="background-color:#@item.Color" class="event-circle"></p>
+                    <p class="event-label">@item.Label</p>
+                    @if (item.EventTime != null)
+                    {
+                        <p class="event-time">@item.EventTime</p>
+                    }
+                </div>
+                if (countOfTasks >= 2)
+                    break;
+            }
+                @if (@Model.Tasks.Count() > 2)
+            {
+                <div class="small-block-of-tasks">
+                        @for (int i = countOfTasks; i < Model.Tasks.Count(); i++)
+                    {
+                            <p style="background-color:#@Model.Tasks[i].Color" class="event-circle"></p>
+                    }
+                </div>
+            }
+        </div>
+    }
+</div>

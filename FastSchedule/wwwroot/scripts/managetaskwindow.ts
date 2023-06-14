@@ -37,7 +37,7 @@ async function AddTask() {
 			}
 		}
 		await AsyncAjaxPost(url);
-		await GetStartedMonthes(year, month, day);
+		calendarGrid = new CalendarGrid(year, month);
 		OpenManageWindow(year, month, day);
 	}
 }

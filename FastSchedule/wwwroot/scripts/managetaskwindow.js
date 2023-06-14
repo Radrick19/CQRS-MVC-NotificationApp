@@ -48,7 +48,7 @@ function AddTask() {
                 }
             }
             yield AsyncAjaxPost(url);
-            yield GetStartedMonthes(year, month, day);
+            calendarGrid = new CalendarGrid(year, month);
             OpenManageWindow(year, month, day);
         }
     });

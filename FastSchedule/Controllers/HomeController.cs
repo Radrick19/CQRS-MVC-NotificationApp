@@ -26,8 +26,7 @@ namespace FastSchedule.MVC.Controllers
 
         [HttpGet("tasks/{year}/{month}")]
         [HttpGet("tasks/{year}/{month}/{isStartMonth:bool}")]
-        [HttpGet("tasks/{year}/{month}/{day}")]
-        public async Task<IActionResult> TasksCalendar(int year, int month, int? day = null, bool isStartMonth = false)
+        public async Task<IActionResult> TasksCalendar(int year, int month, bool isStartMonth = false)
         {
             Schedule schedule = await _mediator.Send(new GetScheduleQuery(year, month, 2));
             int? weekGap = null;

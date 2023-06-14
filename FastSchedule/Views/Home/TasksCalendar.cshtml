@@ -10,25 +10,25 @@
             </div>
         }
     }
-    Dictionary<int, string> intDayRusString = new()
-    {
-        {1, "Январь"},
-        {2, "Февраль"},
-        {3, "Март"},
-        {4, "Апрель"},
-        {5, "Май"},
-        {6, "Июнь"},
-        {7, "Июль"},
-        {8, "Август"},
-        {9, "Сентябрь"},
-        {10, "Октябрь"},
-        {11, "Ноябрь"},
-        {12, "Декабрь"},
-    };
+    //Dictionary<int, string> intDayRusString = new()
+    //{
+    //    {1, "Январь"},
+    //    {2, "Февраль"},
+    //    {3, "Март"},
+    //    {4, "Апрель"},
+    //    {5, "Май"},
+    //    {6, "Июнь"},
+    //    {7, "Июль"},
+    //    {8, "Август"},
+    //    {9, "Сентябрь"},
+    //    {10, "Октябрь"},
+    //    {11, "Ноябрь"},
+    //    {12, "Декабрь"},
+    //};
 
     foreach (var day in Model.Schedule.Days)
     {
-        <div id="@intDayRusString[day.Date.Month]" class="grid-item @((int)day.Date.DayOfWeek == 6 || (int)day.Date.DayOfWeek == 0 ? "weekend-day" : "") 
+        <div id="@day.Date.Year.@day.Date.Month.@day.Date.Day" class="grid-item @((int)day.Date.DayOfWeek == 6 || (int)day.Date.DayOfWeek == 0 ? "weekend-day" : "")
         @(Model.TodayDate == day.Date ? "selected-day" : "")">
                 <input name="year" value="@day.Date.Year" type="hidden"/>
                 <input name="month" value="@day.Date.Month" type="hidden" />
