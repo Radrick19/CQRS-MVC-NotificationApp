@@ -23,13 +23,14 @@
                         <hr />
                         <div class="task">
                             <div class="main-info">
-                                <p style="background-color:#@task.Color" class="color-dot"></p>
-                                <p>@task.Label</p>
-                                <small>@task.EventTime</small>
+                                <div class="info">
+                                    <p style="background-color:#@task.Color" class="color-dot"></p>
+                                    <p>@task.Label</p>
+                                    <small>@task.EventTime</small>
+                                </div>
                                 <input type="checkbox" />
-                                <img src="/images/icons/editing.png" />
                             </div>
-                                @if (string.IsNullOrWhiteSpace(@task.Description))
+                                @if (!string.IsNullOrWhiteSpace(@task.Description))
                                 {
                                     <small>@task.Description</small>
                                 }
@@ -39,14 +40,15 @@
                     else
                     {
                         <hr />
-                        <div class="notime-task">
+                        <div class="task">
                             <div class="main-info">
-                                <p style="background-color:#@task.Color" class="color-dot"></p>
-                                <p>@task.Label</p>
+                                <div class="info">
+                                    <p style="background-color:#@task.Color" class="color-dot"></p>
+                                    <p>@task.Label</p>
+                                </div>
                                 <input type="checkbox" />
-                                <img src="/images/icons/editing.png" />
                             </div>
-                            @if (string.IsNullOrWhiteSpace(@task.Description))
+                            @if (!string.IsNullOrWhiteSpace(@task.Description))
                             {
                                 <small>@task.Description</small>
                             }

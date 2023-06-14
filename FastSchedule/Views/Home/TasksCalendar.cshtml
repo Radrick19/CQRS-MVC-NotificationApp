@@ -61,7 +61,7 @@
                             <div class="small-block-of-tasks">
                         @for (int i = countOfTasks; i < day.Tasks.Count(); i++)
                         {
-                            <p class="event-circle"></p>
+                                <p style="background-color:#@day.Tasks[i].Color" class="event-circle"></p>
                         }
                             </div>
                         }
