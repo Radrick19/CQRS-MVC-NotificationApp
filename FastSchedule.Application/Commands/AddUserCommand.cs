@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FastSchedule.Application.Commands.TaskCommands
+namespace FastSchedule.Application.Commands
 {
     public class AddUserCommand : IRequest<UserDto>
     {

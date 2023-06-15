@@ -18,10 +18,10 @@ document.addEventListener('DOMContentLoaded', function () {
     nowYear = todayDate.getFullYear();
     calendarGrid = new CalendarGrid(nowYear, nowMonth);
     document.querySelector('.previous-year').addEventListener('click', function () {
-        calendarGrid = new CalendarGrid(calendarGrid.SelectedYear - 1, 6);
+        calendarGrid = new CalendarGrid(Number(calendarGrid.SelectedYear) - 1, 6);
     });
     document.querySelector('.next-year').addEventListener('click', function () {
-        calendarGrid = new CalendarGrid(calendarGrid.SelectedYear + 1, 6);
+        calendarGrid = new CalendarGrid(Number(calendarGrid.SelectedYear) + 1, 6);
     });
 });
 function OpenManageWindow(year, month, day) {
@@ -31,7 +31,7 @@ function OpenManageWindow(year, month, day) {
 }
 function TaskAddEvent(year, month, day) {
     return __awaiter(this, void 0, void 0, function* () {
-        calendarGrid = new CalendarGrid(nowYear, nowMonth);
+        calendarGrid = new CalendarGrid(year, month, day);
         OpenManageWindow(year, month, day);
     });
 }

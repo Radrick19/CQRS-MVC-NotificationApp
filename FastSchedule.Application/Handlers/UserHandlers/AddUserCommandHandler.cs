@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using FastSchedule.Application.Commands.TaskCommands;
+using FastSchedule.Application.Commands;
 using FastSchedule.Application.Dto;
 using FastSchedule.Domain.Interfaces;
 using FastSchedule.Domain.Models;

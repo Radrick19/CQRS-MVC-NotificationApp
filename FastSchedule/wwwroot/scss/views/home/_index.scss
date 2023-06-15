@@ -146,16 +146,9 @@
 
                     .task {
                         display: grid;
-                        grid-template-columns: 4fr 2fr;
+                        grid-template-columns: 3fr 1fr;
                         align-items: baseline;
                         line-height: 16px;
-                        /*                        .event-circle {
-                            border: 1px solid #555262;
-                            background-color: #9fba83;
-                            border-radius: 50px;
-                            height: 5px;
-                            padding: 5px;
-                        }*/
 
                         .event-label {
                             font-weight: 400;

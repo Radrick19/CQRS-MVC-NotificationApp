@@ -16,19 +16,19 @@ document.addEventListener('DOMContentLoaded', function () {
 	calendarGrid = new CalendarGrid(nowYear, nowMonth);
 
 	document.querySelector('.previous-year').addEventListener('click', function () {
-		calendarGrid = new CalendarGrid(calendarGrid.SelectedYear - 1, 6);
+		calendarGrid = new CalendarGrid(Number(calendarGrid.SelectedYear) - 1, 6);
 	})
 	document.querySelector('.next-year').addEventListener('click', function () {
-		calendarGrid = new CalendarGrid(calendarGrid.SelectedYear + 1, 6);
+		calendarGrid = new CalendarGrid(Number(calendarGrid.SelectedYear) + 1, 6);
 	})
 })
 
-async function OpenManageWindow(year, month, day) {
+async function OpenManageWindow(year: number, month: number, day: number) {
 	manageWindow = new TaskWindow(year, month, day);
 }
 
-async function TaskAddEvent(year, month, day) {
-	calendarGrid = new CalendarGrid(nowYear, nowMonth);
+async function TaskAddEvent(year: number, month: number, day?: number) {
+	calendarGrid = new CalendarGrid(year, month, day);
 	OpenManageWindow(year, month, day);
 }
 

@@ -1,6 +1,6 @@
-﻿using FastSchedule.Application.Commands.TaskCommands;
+﻿using FastSchedule.Application.Commands;
 using FastSchedule.Application.Dto;
-using FastSchedule.Application.Queries.TaskQueries;
+using FastSchedule.Application.Queries;
 using FastSchedule.Application.Services.ScheduleMaker;
 using FastSchedule.Application.Services.ScheduleMaker.Models;
 using FastSchedule.Domain.Models;
@@ -23,18 +23,6 @@ namespace FastSchedule.MVC.Controllers
             _scheduleMaker = scheduleMaker;
         }
 
-        //[HttpPost]
-        //public async Task<OnetimeTaskDto> TestMethod()
-        //{
-        //    var command = new AddDailyTaskCommand(new OnetimeTaskDto{
-        //        Guid = Guid.NewGuid(),
-        //        Label = "newTesik",
-        //        UserId = 1,
-        //        EventDay = new DateOnly(2023, 6, 9)
-        //    });
-        //    var addedTask = await _mediator.Send(command);
-        //    return addedTask;
-        //}
 
         [HttpPost]
         public async Task<UserDto> AddUser()
@@ -45,9 +33,9 @@ namespace FastSchedule.MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<OnetimeTaskDto>> TestMethodGet()
+        public async Task<IEnumerable<ScheduleTaskDto>> TestMethodGet()
         {
-            var query = new GetDailyTasksQuery(1);
+            var query = new GetTasksQuery(2);
             var tasks = await _mediator.Send(query);
             return tasks;
         }
@@ -56,7 +44,7 @@ namespace FastSchedule.MVC.Controllers
         [Route("MakeSchedule")]
         public async Task<Schedule> MakeSchedule()
         {
-            return await _scheduleMaker.GenerateMonthlySchedule(2023, 6, 1);
+            return await _scheduleMaker.GenerateMonthlySchedule(2023, 6, 2);
         }
     }
 }

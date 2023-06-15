@@ -14,10 +14,7 @@ namespace FastSchedule.Application.AutoMapper
     {
         public AppMappingProfile()
         {
-            CreateMap<OnetimeTask, OnetimeTaskDto>().ReverseMap();
-            CreateMap<WeeklyTask, WeeklyTaskDto>().ReverseMap();
-            CreateMap<MonthlyTask, MonthlyTaskDto>().ReverseMap();
-            CreateMap<EverydayTask, EverydayTaskDto>().ReverseMap();
+            CreateMap<ScheduleTask, ScheduleTaskDto>().ReverseMap();
             CreateMap<User, UserDto>().ReverseMap();
         }
     }

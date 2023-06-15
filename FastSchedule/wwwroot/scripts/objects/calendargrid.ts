@@ -31,12 +31,12 @@ class CalendarGrid {
 		}
     }
 
-	constructor(year: number, month: number) {
+	constructor(year: number, month: number, day?: number) {
 		let oldElementsWithListeners = document.querySelector('.calendar-grid');
 		let newElement = oldElementsWithListeners.cloneNode(true);
 		oldElementsWithListeners.parentNode.replaceChild(newElement, oldElementsWithListeners);
 		this.CalendarHandler = document.querySelector('.calendar-grid');
-		this.GetStartedMonthes(year, month);
+		this.GetStartedMonthes(year, month, day);
 	}
 
 	public async OnScrollCheck() {
@@ -54,10 +54,10 @@ class CalendarGrid {
 
 	}
 
-    private async GetStartedMonthes(year: number, month: number) {
+	private async GetStartedMonthes(year: number, month: number, day?: number) {
 		isLoading = true;
 
-		if (year == nowYear) {
+		if (year == nowYear && day == null) {
 			month = nowMonth;
 		}
 		this.SelectedYear = year;
@@ -67,16 +67,25 @@ class CalendarGrid {
 		this.minOpenedMonth = Number(month) - 1;
 
 		this.CalendarHandler.innerHTML = "";
-		if (this.minOpenedMonth != 1) {
+		if (month != 1) {
 			await this.AddMonth(year, this.minOpenedMonth, true);
 		}
 		await this.AddMonth(year, month, false);
 
-		if (this.maxOpenedMonth != 12) {
+		if (month != 12) {
 			await this.AddMonth(year, this.maxOpenedMonth, false);
 		}
 
-		let selectedDay = document.querySelector('.selected-day');
+		let selectedDay;
+		if (day == null) {
+			selectedDay = document.querySelector('.selected-day');
+		}
+		else {
+			selectedDay = document.querySelector('.selected-day');
+			selectedDay.classList.remove('selected-day')
+			selectedDay = this.Dates.find(date => date.Year == year && date.Month == month && date.Day == day).Element;
+		}
+
 		if (selectedDay != null) {
 			await this.SelectDay(selectedDay);
 		}

@@ -1,4 +1,5 @@
-﻿using FastSchedule.Application.Dto;
+﻿using Azure.Core;
+using FastSchedule.Application.Dto;
 using FastSchedule.Domain.Models;
 using MediatR;
 using System;
@@ -7,13 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FastSchedule.Application.Queries.TaskQueries
+namespace FastSchedule.Application.Queries
 {
-    public class GetMonthlyTasksQuery : IRequest<IEnumerable<MonthlyTaskDto>>
+    public class GetUserByIdQuery : IRequest<UserDto>
     {
         public int UserId { get; set; }
 
-        public GetMonthlyTasksQuery(int userId)
+        public GetUserByIdQuery(int userId)
         {
             UserId = userId;
         }

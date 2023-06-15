@@ -1,4 +1,5 @@
 using FastSchedule.Application.AutoMapper;
+using FastSchedule.Application.Dto;
 using FastSchedule.Application.Services.ScheduleMaker;
 using FastSchedule.Domain;
 using FastSchedule.Domain.Infrastucture;
@@ -32,13 +33,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
 
-builder.Services.AddTransient<IRepository<EverydayTask>, EverydayTaskRepository>();
-
-builder.Services.AddTransient<IRepository<OnetimeTask>, DailyTaskRepository>();
-
-builder.Services.AddTransient<IRepository<WeeklyTask>, WeeklyTaskRepository>();
-
-builder.Services.AddTransient<IRepository<MonthlyTask>, MonthlyTaskRepository>();
+builder.Services.AddTransient<IRepository<ScheduleTask>, TaskRepository>();
 
 builder.Services.AddTransient<IScheduleMaker, ScheduleMaker>();
 

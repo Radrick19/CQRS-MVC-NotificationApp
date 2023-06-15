@@ -1,6 +1,8 @@
-﻿using FastSchedule.Application.Queries.TaskQueries;
+﻿using FastSchedule.Application.Dto;
+using FastSchedule.Application.Queries;
 using FastSchedule.Application.Services.ScheduleMaker;
 using FastSchedule.Application.Services.ScheduleMaker.Models;
+using FastSchedule.Domain.Infrastucture.Enums;
 using FastSchedule.Domain.Interfaces;
 using FastSchedule.Domain.Models.Tasks;
 using MediatR;
@@ -26,10 +28,7 @@ namespace FastSchedule.Application.Services.ScheduleMaker
             DayOfWeek startDayOfWeek = new DateTime(year, month, 1).DayOfWeek;
             List<Day> days = new List<Day>();
 
-            var everydayTasks = await _mediator.Send(new GetEverydayTasksQuery(userId));
-            var dailyTasks = await _mediator.Send(new GetDailyTasksQuery(userId));
-            var weeklyTasks = await _mediator.Send(new GetWeeklyTasksQuery(userId));
-            var monthlyTasks = await _mediator.Send(new GetMonthlyTasksQuery(userId));
+            var tasks = await _mediator.Send(new GetTasksQuery(userId));
 
             IEnumerable<DateOnly> daysOfMonth = Enumerable
                 .Range(1, DateTime.DaysInMonth(year, month))
@@ -42,24 +41,35 @@ namespace FastSchedule.Application.Services.ScheduleMaker
                 Day daySchedule = new Day
                 {
                     Date = day,
-                    Tasks = new List<ITask>()
+                    Tasks = new List<ScheduleTaskDto>()
                 };
-                daySchedule.Tasks.AddRange(dailyTasks
-                            .Where(task => task.EventDay == day)
-                            .Cast<ITask>());
-                daySchedule.Tasks.AddRange(weeklyTasks
-                            .Where(task => task.EventDayOfWeek == day.DayOfWeek)
-                            .Cast<ITask>());
-                daySchedule.Tasks.AddRange(monthlyTasks
-                            .Where(task => task.EventDayOfMonth == day.Day)
-                            .Cast<ITask>());
-                daySchedule.Tasks.AddRange(everydayTasks.Cast<ITask>());
+
+                daySchedule.Tasks
+                    .AddRange(tasks
+                    .Where(task => task.EventDate == day && task.TaskType == TaskType.Onetime));
+
+                daySchedule.Tasks
+                    .AddRange(tasks
+                    .Where(task => task.TaskType == TaskType.Daily && task.EventDate <= day));
+
+                daySchedule.Tasks
+                    .AddRange(tasks
+                    .Where(task => task.EventDate.DayOfWeek == day.DayOfWeek && task.TaskType == TaskType.Weekly && task.EventDate <= day));
+
+                daySchedule.Tasks
+                    .AddRange(tasks
+                    .Where(task => task.EventDate.Day == day.Day && task.TaskType == TaskType.Monthly && task.EventDate <= day));
+
+                daySchedule.Tasks
+                    .AddRange(tasks
+                    .Where(task => task.EventDate.Month == day.Month && task.EventDate.Day == day.Day && task.TaskType == TaskType.Yearly && task.EventDate <= day));
 
                 if(daySchedule.Tasks.Count == 0)
                 {
                     days.Add(new Day() { Date = day});
                     continue;
                 }
+                daySchedule.Tasks = daySchedule.Tasks.OrderBy(task=> task.EventTime == null).ThenBy(task => task.EventTime).ToList();
                 days.Add(daySchedule);
             }
             return new Schedule(startDayOfWeek, days);

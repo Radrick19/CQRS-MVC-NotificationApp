@@ -1,7 +1,8 @@
-﻿using FastSchedule.Application.Commands.TaskCommands;
+﻿using FastSchedule.Application.Commands;
 using FastSchedule.Application.Dto;
 using FastSchedule.Application.Queries;
 using FastSchedule.Application.Services.ScheduleMaker.Models;
+using FastSchedule.Domain.Infrastucture.Enums;
 using FastSchedule.Domain.Interfaces;
 using FastSchedule.Domain.Models;
 using FastSchedule.Domain.Models.Tasks;
@@ -54,65 +55,52 @@ namespace FastSchedule.MVC.Controllers
         [HttpPost("addtaskwithdesc/{year}/{month}/{day}/{label}/{reminder}/{repeat}/{color}/{description}")]
         [HttpPost("addtask/{year}/{month}/{day}/{label}/{reminder}/{repeat}/{color}/{time}")]
         [HttpPost("addtaskwithdesc/{year}/{month}/{day}/{label}/{reminder}/{repeat}/{color}/{description}/{time}")]
-        public async Task<bool> AddTask(int year, int month, int day, string label, int reminder, int repeat, string color, string? description = null, string? time = null)
+        public async Task<bool> AddTask(int year, int month, int day, string label, int reminder, int repeat, string color, 
+            string? description = null, string? time = null)
         {
             try
             {
-                RepeatType repeatType = (RepeatType)repeat;
-                RemindType remindType = (RemindType)reminder;
-                ITask task;
-                if (repeatType == RepeatType.None)
+                ScheduleTaskDto task = new ScheduleTaskDto()
                 {
-                    var onetimeTaskDto = new OnetimeTaskDto();
-                    onetimeTaskDto.EventDay = new DateOnly(year, month, day);
-                    task = onetimeTaskDto;
-                }
-                else if (repeatType == RepeatType.EveryDay)
-                {
-                    task = new EverydayTaskDto();
-                }
-                else if (repeatType == RepeatType.EveryWeek)
-                {
-                    var weeklyTaskDto = new WeeklyTaskDto();
-                    weeklyTaskDto.EventDayOfWeek = new DateTime(year, month, day).DayOfWeek;
-                    task = weeklyTaskDto;
-                }
-                else
-                {
-                    var monthlyTaskDto = new MonthlyTaskDto();
-                    monthlyTaskDto.EventDayOfMonth = day;
-                    task = monthlyTaskDto;
-                }
-                task.Label = label;
-                task.Color = color;
-                task.Guid = Guid.NewGuid();
-                task.UserId = 2;
-                if (description != null)
-                {
-                    task.Description = description;
-                }
+                    Guid = Guid.NewGuid(),
+                    EventDate = new DateOnly(year, month, day),
+                    Label = label,
+                    TaskType = (TaskType)repeat,
+                    Color = color,
+                    Description = description,
+                    UserId = 2,
+                };
+
                 if (time != null)
                 {
                     var splitedTime = time.Split(':').Select(number => Convert.ToInt32(number)).ToArray();
                     task.EventTime = new TimeOnly(splitedTime[0], splitedTime[1]);
                 }
 
-                if (repeatType == RepeatType.None)
+                RemindType remindType = (RemindType)reminder;
+
+                if(remindType == RemindType.FifteenMinutes)
                 {
-                    await _mediator.Send(new AddDailyTaskCommand(task as OnetimeTaskDto));
+                    task.PreNotifyTime = TimeSpan.FromMinutes(15);
                 }
-                else if (repeatType == RepeatType.EveryDay)
+                else if(remindType == RemindType.HalfHour)
                 {
-                    await _mediator.Send(new AddEverydayTaskCommand(task as EverydayTaskDto));
+                    task.PreNotifyTime = TimeSpan.FromMinutes(30);
                 }
-                else if (repeatType == RepeatType.EveryWeek)
+                else if(remindType == RemindType.Hour)
                 {
-                    await _mediator.Send(new AddWeeklyTaskCommand(task as WeeklyTaskDto));
+                    task.PreNotifyTime = TimeSpan.FromHours(1);
                 }
-                else
+                else if (remindType == RemindType.SixHour)
                 {
-                    await _mediator.Send(new AddMonthlyTaskCommand(task as MonthlyTaskDto));
+                    task.PreNotifyTime = TimeSpan.FromHours(6);
                 }
+                else if (remindType == RemindType.Day)
+                {
+                    task.PreNotifyTime = TimeSpan.FromDays(1);
+                }
+
+                await _mediator.Send(new AddTaskCommand(task));
                 return true;
             }
             catch

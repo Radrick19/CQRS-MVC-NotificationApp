@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FastSchedule.Application.Dto;
-using FastSchedule.Application.Queries.UserQueries;
+using FastSchedule.Application.Queries;
 using FastSchedule.Domain.Interfaces;
 using FastSchedule.Domain.Models;
 using MediatR;

@@ -37,13 +37,13 @@ class CalendarGrid {
             this._minOpenedMonth = value;
         }
     }
-    constructor(year, month) {
+    constructor(year, month, day) {
         this.Dates = new Array;
         let oldElementsWithListeners = document.querySelector('.calendar-grid');
         let newElement = oldElementsWithListeners.cloneNode(true);
         oldElementsWithListeners.parentNode.replaceChild(newElement, oldElementsWithListeners);
         this.CalendarHandler = document.querySelector('.calendar-grid');
-        this.GetStartedMonthes(year, month);
+        this.GetStartedMonthes(year, month, day);
     }
     OnScrollCheck() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -59,10 +59,10 @@ class CalendarGrid {
             }
         });
     }
-    GetStartedMonthes(year, month) {
+    GetStartedMonthes(year, month, day) {
         return __awaiter(this, void 0, void 0, function* () {
             isLoading = true;
-            if (year == nowYear) {
+            if (year == nowYear && day == null) {
                 month = nowMonth;
             }
             this.SelectedYear = year;
@@ -70,14 +70,22 @@ class CalendarGrid {
             this.maxOpenedMonth = Number(month) + 1;
             this.minOpenedMonth = Number(month) - 1;
             this.CalendarHandler.innerHTML = "";
-            if (this.minOpenedMonth != 1) {
+            if (month != 1) {
                 yield this.AddMonth(year, this.minOpenedMonth, true);
             }
             yield this.AddMonth(year, month, false);
-            if (this.maxOpenedMonth != 12) {
+            if (month != 12) {
                 yield this.AddMonth(year, this.maxOpenedMonth, false);
             }
-            let selectedDay = document.querySelector('.selected-day');
+            let selectedDay;
+            if (day == null) {
+                selectedDay = document.querySelector('.selected-day');
+            }
+            else {
+                selectedDay = document.querySelector('.selected-day');
+                selectedDay.classList.remove('selected-day');
+                selectedDay = this.Dates.find(date => date.Year == year && date.Month == month && date.Day == day).Element;
+            }
             if (selectedDay != null) {
                 yield this.SelectDay(selectedDay);
             }
