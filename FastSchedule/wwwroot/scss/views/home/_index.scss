@@ -11,6 +11,12 @@
 }
 
 .calendar-handler {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
     display: flex;
     justify-content: center;
     padding-top: 20px;
@@ -114,7 +120,7 @@
                     display: grid;
                     grid-template-columns: 1fr;
                     grid-row-gap: 10px;
-                    padding: 20px 10px;
+                    padding: 10px 5px;
 
                     .small-block-of-tasks {
                         margin-left: auto;
@@ -140,17 +146,16 @@
 
                     .task {
                         display: grid;
-                        grid-template-columns: 1fr 12fr 2fr;
+                        grid-template-columns: 4fr 2fr;
                         align-items: baseline;
                         line-height: 16px;
-
-                        .event-circle {
+                        /*                        .event-circle {
                             border: 1px solid #555262;
                             background-color: #9fba83;
                             border-radius: 50px;
                             height: 5px;
                             padding: 5px;
-                        }
+                        }*/
 
                         .event-label {
                             font-weight: 400;
@@ -331,33 +336,33 @@
 
                     .color {
                         border-radius: 50px;
-                        border: 2px none black;
+                        border: 1px none black;
                         height: 22px;
                         width: 22px;
                     }
 
                     .color.purple {
-                        background-color: #928ad7;
+                        background-color: #d6b1e3;
                     }
 
                     .color.red {
-                        background-color: #ed524e;
+                        background-color: #c27b7b
                     }
 
                     .color.green {
-                        background-color: #afb87f;
+                        background-color: #d6e9ce;
                     }
 
                     .color.yellow {
-                        background-color: #f4d078;
+                        background-color: #f7dd8b;
                     }
 
                     .color.gray {
-                        background-color: #8b8784;
+                        background-color: #ccd2e0;
                     }
 
                     .color.pink {
-                        background-color: #ecb2ff;
+                        background-color: #fce2c7;
                     }
                 }
 

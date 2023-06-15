@@ -37,6 +37,14 @@ class CalendarGrid {
             this._minOpenedMonth = value;
         }
     }
+    constructor(year, month) {
+        this.Dates = new Array;
+        let oldElementsWithListeners = document.querySelector('.calendar-grid');
+        let newElement = oldElementsWithListeners.cloneNode(true);
+        oldElementsWithListeners.parentNode.replaceChild(newElement, oldElementsWithListeners);
+        this.CalendarHandler = document.querySelector('.calendar-grid');
+        this.GetStartedMonthes(year, month);
+    }
     OnScrollCheck() {
         return __awaiter(this, void 0, void 0, function* () {
             if (this.maxOpenedMonth < 12 && isLoading == false && this.CalendarHandler.scrollTop >= this.CalendarHandler.scrollHeight - window.innerHeight - 150) {
@@ -74,6 +82,10 @@ class CalendarGrid {
                 yield this.SelectDay(selectedDay);
             }
             this.CalendarHandler.scrollTop = this.CalendarHandler.scrollHeight / 4;
+            let self = this;
+            this.CalendarHandler.addEventListener('scroll', function () {
+                self.OnScrollCheck();
+            });
             isLoading = false;
         });
     }
@@ -121,9 +133,9 @@ class CalendarGrid {
                 url = '/tasks/' + year + '/' + (Number(month));
                 this.CalendarHandler.insertAdjacentHTML("beforeend", yield AsyncAjaxGet(url));
             }
-            for (let day = 1; day <= this.DaysInMonth(year, Number(month)); day++) {
-                let gridToAdd = document.getElementById(year + '.' + (Number(month)) + '.' + day);
-                let dateGrid = new DateGrid(year, (Number(month) - 1), day, gridToAdd);
+            for (let day = 1; day <= this.DaysInMonth(year, month); day++) {
+                let gridToAdd = document.getElementById(year + '.' + month + '.' + day);
+                let dateGrid = new DateGrid(year, (month), day, gridToAdd);
                 $(gridToAdd).data("year", dateGrid.Year.toString());
                 $(gridToAdd).data("month", dateGrid.Month.toString());
                 $(gridToAdd).data("day", dateGrid.Day.toString());
@@ -156,15 +168,16 @@ class CalendarGrid {
                 grid.classList.add('selected-day');
                 grid.querySelector('.manage-grid').style.visibility = 'visible';
                 let manageGridButton = grid.querySelector('.manage-grid');
-                if (manageGridButton != null) {
+                if (manageGridButton != null && manageGridButton.getAttribute('listener') !== 'true') {
                     manageGridButton.addEventListener('click', function () {
                         return __awaiter(this, void 0, void 0, function* () {
-                            let year = grid.querySelector("[name='year']").value;
-                            let month = grid.querySelector("[name='month']").value;
-                            let day = grid.querySelector("[name='day']").value;
+                            let year = $(grid).data('year');
+                            let month = $(grid).data('month');
+                            let day = $(grid).data('day');
                             yield OpenManageWindow(year, month, day);
                         });
                     });
+                    manageGridButton.setAttribute('listener', 'true');
                 }
                 this.SelectedDayGrid = grid;
                 let selectedDayYear = $(grid).data("year");
@@ -211,11 +224,6 @@ class CalendarGrid {
     }
     DaysInMonth(year, month) {
         return new Date(year, month, 0).getDate();
-    }
-    constructor(year, month) {
-        this.Dates = new Array;
-        this.CalendarHandler = document.querySelector('.calendar-grid');
-        this.GetStartedMonthes(year, month);
     }
 }
 //# sourceMappingURL=calendargrid.js.map

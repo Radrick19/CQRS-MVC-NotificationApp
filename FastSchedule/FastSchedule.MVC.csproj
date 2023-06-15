@@ -9,12 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Remove="wwwroot\scripts\managetaskwindow.ts" />
     <TypeScriptCompile Remove="wwwroot\scripts\taskscontrol.ts" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\scripts\managetaskwindow.ts" />
     <Content Include="wwwroot\scripts\taskscontrol.ts" />
   </ItemGroup>
 

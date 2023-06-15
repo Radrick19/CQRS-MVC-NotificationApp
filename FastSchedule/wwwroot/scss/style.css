@@ -318,6 +318,12 @@ template {
   background-color: #ffffff; }
 
 .calendar-handler {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
   display: flex;
   justify-content: center;
   padding-top: 20px;
@@ -388,7 +394,7 @@ template {
         display: grid;
         grid-template-columns: 1fr;
         grid-row-gap: 10px;
-        padding: 20px 10px; }
+        padding: 10px 5px; }
         .calendar-handler .calendar-and-info .calendar-grid .grid-item .events .small-block-of-tasks {
           margin-left: auto;
           margin-right: auto;
@@ -409,15 +415,16 @@ template {
             padding: 5px; }
         .calendar-handler .calendar-and-info .calendar-grid .grid-item .events .task {
           display: grid;
-          grid-template-columns: 1fr 12fr 2fr;
+          grid-template-columns: 4fr 2fr;
           align-items: baseline;
-          line-height: 16px; }
-          .calendar-handler .calendar-and-info .calendar-grid .grid-item .events .task .event-circle {
-            border: 1px solid #555262;
-            background-color: #9fba83;
-            border-radius: 50px;
-            height: 5px;
-            padding: 5px; }
+          line-height: 16px;
+          /*                        .event-circle {
+                            border: 1px solid #555262;
+                            background-color: #9fba83;
+                            border-radius: 50px;
+                            height: 5px;
+                            padding: 5px;
+                        }*/ }
           .calendar-handler .calendar-and-info .calendar-grid .grid-item .events .task .event-label {
             font-weight: 400;
             font-size: 16px;
@@ -533,21 +540,21 @@ template {
         justify-items: center; }
         .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line .color-picker .color {
           border-radius: 50px;
-          border: 2px none black;
+          border: 1px none black;
           height: 22px;
           width: 22px; }
         .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line .color-picker .color.purple {
-          background-color: #928ad7; }
+          background-color: #d6b1e3; }
         .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line .color-picker .color.red {
-          background-color: #ed524e; }
+          background-color: #c27b7b; }
         .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line .color-picker .color.green {
-          background-color: #afb87f; }
+          background-color: #d6e9ce; }
         .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line .color-picker .color.yellow {
-          background-color: #f4d078; }
+          background-color: #f7dd8b; }
         .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line .color-picker .color.gray {
-          background-color: #8b8784; }
+          background-color: #ccd2e0; }
         .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line .color-picker .color.pink {
-          background-color: #ecb2ff; }
+          background-color: #fce2c7; }
       .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line .setting .add-button {
         display: block;
         width: 40px;

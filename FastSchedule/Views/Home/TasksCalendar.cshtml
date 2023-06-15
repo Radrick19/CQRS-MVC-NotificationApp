@@ -10,64 +10,43 @@
             </div>
         }
     }
-    //Dictionary<int, string> intDayRusString = new()
-    //{
-    //    {1, "Январь"},
-    //    {2, "Февраль"},
-    //    {3, "Март"},
-    //    {4, "Апрель"},
-    //    {5, "Май"},
-    //    {6, "Июнь"},
-    //    {7, "Июль"},
-    //    {8, "Август"},
-    //    {9, "Сентябрь"},
-    //    {10, "Октябрь"},
-    //    {11, "Ноябрь"},
-    //    {12, "Декабрь"},
-    //};
 
     foreach (var day in Model.Schedule.Days)
     {
         <div id="@day.Date.Year.@day.Date.Month.@day.Date.Day" class="grid-item @((int)day.Date.DayOfWeek == 6 || (int)day.Date.DayOfWeek == 0 ? "weekend-day" : "")
         @(Model.TodayDate == day.Date ? "selected-day" : "")">
-                <input name="year" value="@day.Date.Year" type="hidden"/>
-                <input name="month" value="@day.Date.Month" type="hidden" />
-                <input name="day" value="@day.Date.Day" type="hidden" />
-                <div class="manage-and-date">
+            <div class="manage-and-date">
+                <p style="@(Model.TodayDate == day.Date ? "text-decoration: underline;" : "")">@day.Date.Day</p>
                 <img class="manage-grid" src="/images/icons/info.png" />
-                    <p style="@(Model.TodayDate == day.Date ? "text-decoration: underline;" : "")">@day.Date.Day</p>
-                </div>
-                    @if (day.Tasks != null && day.Tasks.Count() != 0)
+            </div>
+            @if (day.Tasks != null && day.Tasks.Count() != 0)
+            {
+                int tasksCount = 0;
+                <div class="events">
+                @foreach(var task in day.Tasks)
                     {
-                        <div class="events" )">
-                    @{
-                        int countOfTasks = 0;
-                    }
-                        @foreach (var item in day.Tasks)
+                        if(tasksCount < 3)
                         {
-                        countOfTasks++;
-                        <div class="task">
-                                <p style="background-color:#@item.Color" class="event-circle"></p>
-                                <p class="event-label">@item.Label</p>
-                                @if (item.EventTime != null)
+                            <div style="background-color:#@task.Color" class="task">
+                                <p class="event-label">@task.Label</p>
+                                @if (task.EventTime != null)
                                 {
-                                    <p class="event-time">@item.EventTime</p>
+                                    <p class="event-time">@task.EventTime</p>
                                 }
-                        </div>
-                        if (countOfTasks >= 2)
+                            </div>
+                            tasksCount++;
+                        }
+                        else
+                        {
+                            int remainsTasks = day.Tasks.Count() - 3;
+                            <div style="background-color:#9ed7e6" class="task">
+                                <p class="event-label">И ещё @remainsTasks</p>
+                            </div>
                             break;
                         }
-                        @if(@day.Tasks.Count() > 2){
-                            <div class="small-block-of-tasks">
-                        @for (int i = countOfTasks; i < day.Tasks.Count(); i++)
-                        {
-                                <p style="background-color:#@day.Tasks[i].Color" class="event-circle"></p>
-                        }
-                            </div>
-                        }
-                        </div>
                     }
-            </div>
-        }
-
+                </div>
+            }
+        </div>
+    }
 }

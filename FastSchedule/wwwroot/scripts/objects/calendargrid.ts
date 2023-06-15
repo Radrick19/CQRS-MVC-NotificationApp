@@ -1,16 +1,15 @@
 class CalendarGrid {
 
-    public Dates: DateGrid[] = new Array<DateGrid>;
+    private Dates: DateGrid[] = new Array<DateGrid>;
 	public SelectedYear: number;
-	public SelectedDayGrid: any;
-
+	private SelectedDayGrid: any;
 	public CalendarHandler : any;
 
 	private _maxOpenedMonth : number;
     public get maxOpenedMonth() {
         return this._maxOpenedMonth;
     }
-    public set maxOpenedMonth(value) {
+	private set maxOpenedMonth(value) {
 		if (value > 12) {
 			this.maxOpenedMonth = 12;
 		}
@@ -23,7 +22,7 @@ class CalendarGrid {
     public get minOpenedMonth() {
         return this._minOpenedMonth;
     }
-    public set minOpenedMonth(value) {
+	private set minOpenedMonth(value) {
 		if (value < 1) {
 			this._minOpenedMonth = 1;
 		}
@@ -32,7 +31,15 @@ class CalendarGrid {
 		}
     }
 
-	async OnScrollCheck() {
+	constructor(year: number, month: number) {
+		let oldElementsWithListeners = document.querySelector('.calendar-grid');
+		let newElement = oldElementsWithListeners.cloneNode(true);
+		oldElementsWithListeners.parentNode.replaceChild(newElement, oldElementsWithListeners);
+		this.CalendarHandler = document.querySelector('.calendar-grid');
+		this.GetStartedMonthes(year, month);
+	}
+
+	public async OnScrollCheck() {
 		if (this.maxOpenedMonth < 12 && isLoading == false && this.CalendarHandler.scrollTop >= this.CalendarHandler.scrollHeight - window.innerHeight - 150) {
 			this.maxOpenedMonth += 1;
 			await this.AddMonth(this.SelectedYear, this.maxOpenedMonth, false);
@@ -47,7 +54,7 @@ class CalendarGrid {
 
 	}
 
-    async GetStartedMonthes(year: number, month: number) {
+    private async GetStartedMonthes(year: number, month: number) {
 		isLoading = true;
 
 		if (year == nowYear) {
@@ -76,10 +83,15 @@ class CalendarGrid {
 
 		this.CalendarHandler.scrollTop = this.CalendarHandler.scrollHeight / 4;
 
+		let self = this;
+		this.CalendarHandler.addEventListener('scroll', function () {
+			self.OnScrollCheck();
+		})
+
 		isLoading = false;
 	}
 
-	async AddMonth(year: number, month: number, isOnTop: boolean) {
+	private async AddMonth(year: number, month: number, isOnTop: boolean) {
 		isLoading = true;
 		let url;
 		if (isOnTop) {
@@ -97,11 +109,12 @@ class CalendarGrid {
 			this.CalendarHandler.insertAdjacentHTML("beforeend", await AsyncAjaxGet(url))
 		}
 
-		for (let day = 1; day <= this.DaysInMonth(year, Number(month)); day++) {
-			let gridToAdd = document.getElementById(year + '.' + (Number(month)) + '.' + day);
-			let dateGrid = new DateGrid(year, (Number(month) - 1), day, gridToAdd);
+
+		for (let day = 1; day <= this.DaysInMonth(year, month); day++) {
+			let gridToAdd = document.getElementById(year + '.' + month + '.' + day);
+			let dateGrid = new DateGrid(year, (month), day, gridToAdd);
 			$(gridToAdd).data("year", dateGrid.Year.toString());
-			$(gridToAdd).data("month", dateGrid.Month.toString());
+			$(gridToAdd).data("month", dateGrid.Month.toString()); 
 			$(gridToAdd).data("day", dateGrid.Day.toString());
 			this.Dates.push(dateGrid);
 		}
@@ -121,7 +134,7 @@ class CalendarGrid {
 		isLoading = false
 	}
 
-	async SelectDay(grid) {
+	private async SelectDay(grid) {
 		if (grid.id != '') {
 			if (this.SelectedDayGrid != null) {
 				this.SelectedDayGrid.querySelector('.manage-grid').style.visibility = 'hidden';
@@ -130,13 +143,14 @@ class CalendarGrid {
 			grid.classList.add('selected-day');
 			grid.querySelector('.manage-grid').style.visibility = 'visible';
 			let manageGridButton = grid.querySelector('.manage-grid');
-			if (manageGridButton != null) {
+			if (manageGridButton != null && manageGridButton.getAttribute('listener') !== 'true') {
 				manageGridButton.addEventListener('click', async function () {
-					let year = grid.querySelector("[name='year']").value;
-					let month = grid.querySelector("[name='month']").value;
-					let day = grid.querySelector("[name='day']").value;
+					let year = $(grid).data('year');
+					let month = $(grid).data('month');
+					let day = $(grid).data('day');
 					await OpenManageWindow(year, month, day);
 				})
+				manageGridButton.setAttribute('listener', 'true');
 			}
 			this.SelectedDayGrid = grid;
 			let selectedDayYear = $(grid).data("year");
@@ -145,7 +159,7 @@ class CalendarGrid {
 		}
 	}
 
-	async UpdateSelectedMonth(selectedYear: number, selectedMonth: number) {
+	private async UpdateSelectedMonth(selectedYear: number, selectedMonth: number) {
 		let selectedMonthGrids = this.Dates.filter(date => date.Month == selectedMonth && date.Year == selectedYear)
 		for await (const oldMonthGrid of document.querySelectorAll('.total-month')) {
 			oldMonthGrid.classList.remove('total-month')
@@ -157,10 +171,5 @@ class CalendarGrid {
 
     private DaysInMonth(year: number, month: number) : number {
         return new Date(year, month, 0).getDate();
-    }
-
-	constructor(year: number, month: number) {
-		this.CalendarHandler = document.querySelector('.calendar-grid');
-		this.GetStartedMonthes(year, month);
     }
 }
