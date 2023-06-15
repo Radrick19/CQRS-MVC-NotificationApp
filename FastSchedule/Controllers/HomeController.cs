@@ -6,7 +6,6 @@ using FastSchedule.Domain.Infrastucture.Enums;
 using FastSchedule.Domain.Interfaces;
 using FastSchedule.Domain.Models;
 using FastSchedule.Domain.Models.Tasks;
-using FastSchedule.MVC.Infrastructure.Enums;
 using FastSchedule.MVC.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -25,8 +24,8 @@ namespace FastSchedule.MVC.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("tasks/{year}/{month}")]
-        [HttpGet("tasks/{year}/{month}/{isStartMonth:bool}")]
+        [HttpGet("get/{year}/{month}")]
+        [HttpGet("get/{year}/{month}/{isStartMonth:bool}")]
         public async Task<IActionResult> TasksCalendar(int year, int month, bool isStartMonth = false)
         {
             Schedule schedule = await _mediator.Send(new GetScheduleQuery(year, month, 2));
@@ -43,7 +42,7 @@ namespace FastSchedule.MVC.Controllers
             return PartialView(viewModel);
         }
 
-        [HttpGet("task/{year}/{month}/{day}")]
+        [HttpGet("get/{year}/{month}/{day}")]
         public async Task<IActionResult> ManageTask(int year, int month, int day)
         {
             Day daySchdule = await _mediator.Send(new GetDailyScheduleQuery(year,month, day));
@@ -51,10 +50,68 @@ namespace FastSchedule.MVC.Controllers
             return PartialView(daySchdule);
         }
 
-        [HttpPost("addtask/{year}/{month}/{day}/{label}/{reminder}/{repeat}/{color}")]
-        [HttpPost("addtaskwithdesc/{year}/{month}/{day}/{label}/{reminder}/{repeat}/{color}/{description}")]
-        [HttpPost("addtask/{year}/{month}/{day}/{label}/{reminder}/{repeat}/{color}/{time}")]
-        [HttpPost("addtaskwithdesc/{year}/{month}/{day}/{label}/{reminder}/{repeat}/{color}/{description}/{time}")]
+        [HttpGet("update/{guid}")]
+        public async Task<IActionResult> UpdateTask(string guid)
+        {
+            var tasks = await _mediator.Send(new GetTasksQuery(2));
+            var task = tasks.FirstOrDefault(task=> task.Guid == new Guid(guid));
+            return PartialView(task);
+        }
+
+        [HttpPost("update/{guid}/{label}/{reminder}/{repeat}/{color}")]
+        [HttpPost("update/{guid}/{label}/{reminder}/{repeat}/{color}/{time}")]
+        [HttpPost("updatewithdesc/{guid}/{label}/{reminder}/{repeat}/{color}/{description}")]
+        [HttpPost("updatewithdesc/{guid}/{label}/{reminder}/{repeat}/{color}/{description}/{time}")]
+        public async Task<bool> UpdateTask(string guid, string label, int reminder, int repeat, string color,
+            string? description = null, string? time = null)
+        {
+            try
+            {
+                var task = await _mediator.Send(new GetTaskByGuidQuery(new Guid(guid),2));
+                task.Label = label;
+                task.TaskType = (TaskType)repeat;
+                task.Description = description;
+                task.Color = color;
+                if (time != null)
+                {
+                    var splitedTime = time.Split(':').Select(number => Convert.ToInt32(number)).ToArray();
+                    task.EventTime = new TimeOnly(splitedTime[0], splitedTime[1]);
+                }
+                RemindType remindType = (RemindType)reminder;
+                task.RemindType = remindType;
+                if (remindType == RemindType.FifteenMinutes)
+                {
+                    task.PreNotifyTime = TimeSpan.FromMinutes(15);
+                }
+                else if (remindType == RemindType.HalfHour)
+                {
+                    task.PreNotifyTime = TimeSpan.FromMinutes(30);
+                }
+                else if (remindType == RemindType.Hour)
+                {
+                    task.PreNotifyTime = TimeSpan.FromHours(1);
+                }
+                else if (remindType == RemindType.SixHour)
+                {
+                    task.PreNotifyTime = TimeSpan.FromHours(6);
+                }
+                else if (remindType == RemindType.Day)
+                {
+                    task.PreNotifyTime = TimeSpan.FromDays(1);
+                }
+                await _mediator.Send(new UpdateTaskCommand(task));
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        [HttpPost("add/{year}/{month}/{day}/{label}/{reminder}/{repeat}/{color}")]
+        [HttpPost("add/{year}/{month}/{day}/{label}/{reminder}/{repeat}/{color}/{time}")]
+        [HttpPost("addwithdesc/{year}/{month}/{day}/{label}/{reminder}/{repeat}/{color}/{description}")]
+        [HttpPost("addwithdesc/{year}/{month}/{day}/{label}/{reminder}/{repeat}/{color}/{description}/{time}")]
         public async Task<bool> AddTask(int year, int month, int day, string label, int reminder, int repeat, string color, 
             string? description = null, string? time = null)
         {
@@ -78,6 +135,7 @@ namespace FastSchedule.MVC.Controllers
                 }
 
                 RemindType remindType = (RemindType)reminder;
+                task.RemindType = remindType;
 
                 if(remindType == RemindType.FifteenMinutes)
                 {

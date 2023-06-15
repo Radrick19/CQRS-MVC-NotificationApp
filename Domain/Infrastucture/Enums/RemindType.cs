@@ -1,4 +1,4 @@
-﻿namespace FastSchedule.MVC.Infrastructure.Enums
+﻿namespace FastSchedule.Domain.Infrastucture.Enums
 {
     public enum RemindType
     {

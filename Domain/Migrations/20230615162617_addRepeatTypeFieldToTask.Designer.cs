@@ -4,6 +4,7 @@ using FastSchedule.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FastSchedule.Domain.Migrations
 {
     [DbContext(typeof(FastScheduleContext))]
-    partial class FastScheduleContextModelSnapshot : ModelSnapshot
+    [Migration("20230615162617_addRepeatTypeFieldToTask")]
+    partial class addRepeatTypeFieldToTask
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -44,6 +44,7 @@
 
   <ItemGroup>
     <Folder Include="Components\" />
+    <Folder Include="Infrastructure\Enums\" />
   </ItemGroup>
 
 </Project>

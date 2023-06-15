@@ -118,7 +118,7 @@ class CalendarGrid {
                     }
                     finally { if (e_1) throw e_1.error; }
                 }
-                url = '/tasks/' + year + '/' + (Number(month)) + '/' + true;
+                url = '/get/' + year + '/' + (Number(month)) + '/' + true;
                 this.CalendarHandler.insertAdjacentHTML("afterbegin", yield AsyncAjaxGet(url));
                 try {
                     for (var _k = true, _l = __asyncValues(document.querySelectorAll('.old-grid')), _m; _m = yield _l.next(), _d = _m.done, !_d; _k = true) {
@@ -138,7 +138,7 @@ class CalendarGrid {
             }
             else {
                 ;
-                url = '/tasks/' + year + '/' + (Number(month));
+                url = '/get/' + year + '/' + (Number(month));
                 this.CalendarHandler.insertAdjacentHTML("beforeend", yield AsyncAjaxGet(url));
             }
             for (let day = 1; day <= this.DaysInMonth(year, month); day++) {

@@ -7,6 +7,7 @@ class Task {
 	public ReminderType: ReminderType;
 	public RepeatType: RepeatType;
 	public Description: string;
+	public Guid: string;
 	private _Color: string;
     public get Color(): string {
         return this._Color;
@@ -20,7 +21,7 @@ class Task {
 		document.getElementById(value).setAttribute("style", "border-style:solid");
     }
 
-	constructor(year:number, month:number, day:number, label:string, reminderType:ReminderType, repeatType:RepeatType, color:string, time?:string, description?:string) {
+	constructor(year:number, month:number, day:number, label:string, reminderType:ReminderType, repeatType:RepeatType, color:string, time?:string, description?:string, guid?: string) {
 		this.Year = year;
 		this.Month = month;
 		this.Day = day;
@@ -30,5 +31,6 @@ class Task {
 		this.Color = color;
 		this.Time = time;
 		this.Description = description;
+		this.Guid = guid;
 	}
 }

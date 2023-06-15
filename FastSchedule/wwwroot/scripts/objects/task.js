@@ -10,7 +10,7 @@ class Task {
         this._Color = value;
         document.getElementById(value).setAttribute("style", "border-style:solid");
     }
-    constructor(year, month, day, label, reminderType, repeatType, color, time, description) {
+    constructor(year, month, day, label, reminderType, repeatType, color, time, description, guid) {
         this.Year = year;
         this.Month = month;
         this.Day = day;
@@ -20,6 +20,7 @@ class Task {
         this.Color = color;
         this.Time = time;
         this.Description = description;
+        this.Guid = guid;
     }
 }
 //# sourceMappingURL=task.js.map

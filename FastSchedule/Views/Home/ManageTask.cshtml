@@ -22,7 +22,7 @@
                             <div class="main-info">
                                 <div class="info">
                                     <p style="background-color:#@task.Color" class="color-dot"></p>
-                                    <p>@task.Label</p>
+                                    <a id="@task.Guid" class="update-link">@task.Label</a>
                                     <small>@task.EventTime</small>
                                 </div>
                                 <input type="checkbox" />
@@ -41,7 +41,7 @@
                             <div class="main-info">
                                 <div class="info">
                                     <p style="background-color:#@task.Color" class="color-dot"></p>
-                                    <p>@task.Label</p>
+                                    <a id="@task.Guid" class="update-link">@task.Label</a>
                                 </div>
                                 <input type="checkbox" />
                             </div>
@@ -55,54 +55,58 @@
                 }
             }
         </div>
-        <div class="add-new-task">
-            <div class="task-settings-line">
-                <div class="setting">
-                    <label>Цвет события</label>
-                    <div class="color-picker">
-                        <a class="color purple" id="d6b1e3"></a>
-                        <a class="color red" id="c27b7b"</a>
-                        <a class="color green" id="d6e9ce"></a>
-                        <a class="color yellow" id="f7dd8b"></a>
-                        <a class="color gray" id="ccd2e0"></a>
-                        <a class="color pink" id="fce2c7"></a>
+        @if (Model.Date >= DateOnly.FromDateTime(DateTime.Now))
+        {
+            <div class="add-new-task">
+                <div class="task-settings-line">
+                    <div class="setting">
+                        <label>Цвет события</label>
+                        <div class="color-picker">
+                            <a class="color purple" id="d6b1e3"></a>
+                            <a class="color red" id="c27b7b"></a>
+                            <a class="color green" id="d6e9ce"></a>
+                            <a class="color yellow" id="f7dd8b"></a>
+                            <a class="color gray" id="ccd2e0"></a>
+                            <a class="color pink" id="fce2c7"></a>
+                        </div>
+                    </div>
+                    <div class="setting">
+                        <input name="label" type="text" placeholder="Название" />
+                    </div>
+                    <div class="setting">
+                        <input name="time" type="time" />
+                    </div>
+                    <div class="setting">
+                        <label>Напомнить?</label>
+                        <select name="reminder">
+                            <option value="0">Нет</option>
+                            <option value="1">За 15 минут</option>
+                            <option value="2">За пол часа</option>
+                            <option value="3">За час</option>
+                            <option value="4">За 6 часов</option>
+                            <option value="5">За сутки</option>
+                        </select>
+                    </div>
+                    <div class="setting">
+                        <label>Повторять?</label>
+                        <select name="repeat">
+                            <option value="0">Нет</option>
+                            <option value="1">Каждый день</option>
+                            <option value="2">Каждую неделю</option>
+                            <option value="3">Каждый месяц</option>
+                            <option value="4">Каждый год</option>
+                        </select>
+                    </div>
+                    <div class="setting">
+                        <img src="~/images/icons/add.png" class="add-button" />
                     </div>
                 </div>
-                <div class="setting">
-                    <input name="label" type="text" placeholder="Название" />
-                </div>
-                <div class="setting">
-                    <input name="time" type="time" />
-                </div>
-                <div class="setting">
-                    <label>Напомнить?</label>
-                    <select name="reminder">
-                        <option value="0">Нет</option>
-                        <option value="1">За 15 минут</option>
-                        <option value="2">За пол часа</option>
-                        <option value="3">За час</option>
-                        <option value="4">За 6 часов</option>
-                        <option value="5">За сутки</option>
-                    </select>
-                </div>
-                <div class="setting">
-                    <label>Повторять?</label>
-                    <select name="repeat">
-                        <option value="0">Нет</option>
-                        <option value="1">Каждый день</option>
-                        <option value="2">Каждую неделю</option>
-                        <option value="3">Каждый месяц</option>
-                    </select>
-                </div>
-                <div class="setting">
-                    <img src="~/images/icons/add.png" class="add-button"/>
+                <div class="decription-line">
+                    <textarea name="description"></textarea>
                 </div>
             </div>
-            <div class="decription-line">
-                <textarea name="description"></textarea>
-            </div>
-        </div>
-@*        <h4>Выполненные</h4>
+        }
+        @*        <h4>Выполненные</h4>
         <div class="today-completed-tasks">
             <div class="task">
                 <div class="main-info">

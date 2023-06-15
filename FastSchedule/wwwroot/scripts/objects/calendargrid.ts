@@ -107,14 +107,14 @@ class CalendarGrid {
 			for await (const grid of document.querySelectorAll('.empty-grid')) {
 				grid.classList.add('old-grid')
 			}
-			url = '/tasks/' + year + '/' + (Number(month)) + '/' + true;
+			url = '/get/' + year + '/' + (Number(month)) + '/' + true;
 			this.CalendarHandler.insertAdjacentHTML("afterbegin", await AsyncAjaxGet(url));
 			for await (const grid of document.querySelectorAll('.old-grid')) {
 				grid.remove();
 			}
 		}
 		else {;
-			url = '/tasks/' + year + '/' + (Number(month));
+			url = '/get/' + year + '/' + (Number(month));
 			this.CalendarHandler.insertAdjacentHTML("beforeend", await AsyncAjaxGet(url))
 		}
 

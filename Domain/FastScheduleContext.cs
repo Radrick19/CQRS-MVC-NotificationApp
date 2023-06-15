@@ -40,6 +40,10 @@ namespace FastSchedule.Domain
                 .Property(task => task.TaskType)
                 .HasConversion(new EnumToStringConverter<TaskType>());
 
+            modelBuilder.Entity<ScheduleTask>()
+                .Property(task => task.RemindType)
+                .HasConversion(new EnumToStringConverter<RemindType>());
+
             modelBuilder
                 .Entity<User>()
                 .HasIndex(user => user.Guid)
