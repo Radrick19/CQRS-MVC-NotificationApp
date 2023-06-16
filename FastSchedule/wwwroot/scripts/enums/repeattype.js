@@ -5,4 +5,3 @@ var RepeatType;
     RepeatType[RepeatType["EveryWeek"] = 2] = "EveryWeek";
     RepeatType[RepeatType["EveryMonth"] = 3] = "EveryMonth";
 })(RepeatType || (RepeatType = {}));
-//# sourceMappingURL=repeattype.js.map

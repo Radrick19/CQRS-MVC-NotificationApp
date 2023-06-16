@@ -23,4 +23,3 @@ class Task {
         this.Guid = guid;
     }
 }
-//# sourceMappingURL=task.js.map

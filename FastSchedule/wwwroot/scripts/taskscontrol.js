@@ -11,12 +11,27 @@ let nowDay, nowMonth, nowYear;
 let calendarGrid;
 let manageWindow;
 let isLoading = false;
+let modalWindowOpened = false;
+const monthDictionary = {
+    1: 'Январь',
+    2: 'Февраль',
+    3: 'Март',
+    4: 'Апрель',
+    5: 'Май',
+    6: 'Июнь',
+    7: 'Июль',
+    8: 'Август',
+    9: 'Сентябрь',
+    10: 'Октябрь',
+    11: 'Ноябрь',
+    12: 'Декабрь',
+};
 document.addEventListener('DOMContentLoaded', function () {
     let todayDate = new Date();
     nowDay = todayDate.getDate();
     nowMonth = todayDate.getMonth() + 1;
     nowYear = todayDate.getFullYear();
-    calendarGrid = new CalendarGrid(nowYear, nowMonth);
+    calendarGrid = new CalendarGrid(nowYear, nowMonth, nowDay);
     document.querySelector('.previous-year').addEventListener('click', function () {
         calendarGrid = new CalendarGrid(Number(calendarGrid.SelectedYear) - 1, 6);
     });
@@ -26,10 +41,11 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 function OpenManageWindow(year, month, day) {
     return __awaiter(this, void 0, void 0, function* () {
+        modalWindowOpened = true;
         manageWindow = new TaskWindow(year, month, day);
     });
 }
-function TaskAddEvent(year, month, day) {
+function TasksUpdateEvent(year, month, day) {
     return __awaiter(this, void 0, void 0, function* () {
         calendarGrid = new CalendarGrid(year, month, day);
         OpenManageWindow(year, month, day);
@@ -65,4 +81,3 @@ function AsyncAjaxPost(url) {
         });
     });
 }
-//# sourceMappingURL=taskscontrol.js.map

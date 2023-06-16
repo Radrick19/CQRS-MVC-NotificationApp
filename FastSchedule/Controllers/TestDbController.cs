@@ -44,7 +44,7 @@ namespace FastSchedule.MVC.Controllers
         [Route("MakeSchedule")]
         public async Task<Schedule> MakeSchedule()
         {
-            return await _scheduleMaker.GenerateMonthlySchedule(2023, 6, 2);
+            return await _scheduleMaker.GetMonthlySchedule(2023, 6, 2);
         }
     }
 }

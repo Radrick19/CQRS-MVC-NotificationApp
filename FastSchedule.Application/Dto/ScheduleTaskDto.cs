@@ -19,6 +19,9 @@ namespace FastSchedule.Application.Dto
         public TaskType TaskType { get; set; }
         public RemindType RemindType { get; set; }
         public DateOnly EventDate { get; set; }
+        public IEnumerable<DateOnly>? CompletedDays { get; set; }
+        public IEnumerable<DateOnly>? DeletedDays { get; set; } = null;
+        public bool IsDeleted { get; set; } = false;
         [ForeignKey("UserId")]
         public User? User { get; set; }
         public string? Description { get; set; }

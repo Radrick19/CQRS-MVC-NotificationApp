@@ -18,6 +18,9 @@ namespace FastSchedule.Domain.Models.Tasks
         public TaskType TaskType { get; set; }
         public RemindType RemindType { get; set; }
         public DateOnly EventDate { get; set; }
+        public IEnumerable<DateOnly>? CompletedDays { get; set; } = null;
+        public IEnumerable<DateOnly>? DeletedDays { get; set; } = null;
+        public bool IsDeleted { get; set; } = false;
         [ForeignKey("UserId")]
         public User? User { get; set; }
         public string? Description { get; set; }

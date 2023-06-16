@@ -9,7 +9,8 @@ namespace FastSchedule.Application.Services.ScheduleMaker
 {
     public interface IScheduleMaker
     {
-        public Task<Schedule> GenerateMonthlySchedule(int year, int month, int userId);
+        public Task<Schedule> GetMonthlySchedule(int year, int month, int userId);
+        public Task<Day> GetDaySchedule(int year, int month, int day, int userId);
     }
 
 }

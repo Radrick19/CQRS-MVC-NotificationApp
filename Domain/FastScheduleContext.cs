@@ -3,6 +3,8 @@ using FastSchedule.Domain.Models;
 using FastSchedule.Domain.Models.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text.Json;
 
 namespace FastSchedule.Domain
 {
@@ -43,6 +45,14 @@ namespace FastSchedule.Domain
             modelBuilder.Entity<ScheduleTask>()
                 .Property(task => task.RemindType)
                 .HasConversion(new EnumToStringConverter<RemindType>());
+
+            modelBuilder.Entity<ScheduleTask>()
+                .Property(task => task.CompletedDays)
+                .HasConversion(cd=> JsonSerializer.Serialize(cd, JsonSerializerOptions.Default), cd=> JsonSerializer.Deserialize<IEnumerable<DateOnly>>(cd, JsonSerializerOptions.Default));
+
+            modelBuilder.Entity<ScheduleTask>()
+                .Property(task => task.DeletedDays)
+                .HasConversion(dd => JsonSerializer.Serialize(dd, JsonSerializerOptions.Default), dd => JsonSerializer.Deserialize<IEnumerable<DateOnly>>(dd, JsonSerializerOptions.Default));
 
             modelBuilder
                 .Entity<User>()

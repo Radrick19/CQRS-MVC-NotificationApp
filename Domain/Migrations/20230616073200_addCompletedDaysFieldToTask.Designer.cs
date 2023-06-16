@@ -4,6 +4,7 @@ using FastSchedule.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FastSchedule.Domain.Migrations
 {
     [DbContext(typeof(FastScheduleContext))]
-    partial class FastScheduleContextModelSnapshot : ModelSnapshot
+    [Migration("20230616073200_addCompletedDaysFieldToTask")]
+    partial class addCompletedDaysFieldToTask
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,9 +40,6 @@ namespace FastSchedule.Domain.Migrations
                     b.Property<string>("CompletedDays")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DeletedDays")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -52,9 +52,6 @@ namespace FastSchedule.Domain.Migrations
 
                     b.Property<Guid>("Guid")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Label")
                         .IsRequired()

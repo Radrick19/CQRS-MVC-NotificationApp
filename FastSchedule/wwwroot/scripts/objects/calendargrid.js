@@ -77,17 +77,11 @@ class CalendarGrid {
             if (month != 12) {
                 yield this.AddMonth(year, this.maxOpenedMonth, false);
             }
-            let selectedDay;
-            if (day == null) {
-                selectedDay = document.querySelector('.selected-day');
-            }
-            else {
-                selectedDay = document.querySelector('.selected-day');
-                selectedDay.classList.remove('selected-day');
-                selectedDay = this.Dates.find(date => date.Year == year && date.Month == month && date.Day == day).Element;
-            }
-            if (selectedDay != null) {
-                yield this.SelectDay(selectedDay);
+            if (day != null) {
+                let selectedDay = this.Dates.find(date => date.Year == year && date.Month == month && date.Day == day).Element;
+                if (selectedDay != null) {
+                    yield this.SelectDay(selectedDay);
+                }
             }
             this.CalendarHandler.scrollTop = this.CalendarHandler.scrollHeight / 4;
             let self = this;
@@ -150,15 +144,12 @@ class CalendarGrid {
                 this.Dates.push(dateGrid);
             }
             for (const grid of document.querySelectorAll('.grid-item')) {
-                if (grid.getAttribute('listener') !== 'true') {
+                if (grid.getAttribute('listener') != 'true') {
                     let self = this;
-                    grid.addEventListener('click', function () {
+                    grid.addEventListener('mouseover', function () {
                         return __awaiter(this, void 0, void 0, function* () {
                             yield self.SelectDay(grid);
                         });
-                    });
-                    grid.addEventListener('mouseover', function () {
-                        document.querySelector('.month-info').innerHTML = grid.id;
                     });
                     grid.setAttribute('listener', 'true');
                 }
@@ -168,7 +159,7 @@ class CalendarGrid {
     }
     SelectDay(grid) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (grid.id != '') {
+            if (grid.id != '' && !modalWindowOpened) {
                 if (this.SelectedDayGrid != null) {
                     this.SelectedDayGrid.querySelector('.manage-grid').style.visibility = 'hidden';
                     this.SelectedDayGrid.classList.remove('selected-day');
@@ -190,6 +181,7 @@ class CalendarGrid {
                 this.SelectedDayGrid = grid;
                 let selectedDayYear = $(grid).data("year");
                 let selectedDayMonth = $(grid).data("month");
+                document.querySelector('.month-info').innerHTML = monthDictionary[selectedDayMonth];
                 this.UpdateSelectedMonth(selectedDayYear, selectedDayMonth);
             }
         });
@@ -234,4 +226,3 @@ class CalendarGrid {
         return new Date(year, month, 0).getDate();
     }
 }
-//# sourceMappingURL=calendargrid.js.map

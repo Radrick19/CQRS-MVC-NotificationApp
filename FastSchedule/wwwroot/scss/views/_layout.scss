@@ -10,10 +10,11 @@ body{
 }
 
 header {
-    background-color: $main-color;
+    background-color: #f3f3f3;
     padding: 8px 30px;
     position: relative;
     z-index: 2;
+    border: 2px solid #f3f3f3;
 
     .account-data {
         display: flex;
@@ -23,7 +24,7 @@ header {
             align-items: center;
             margin-left: 10px;
             font-size: 16px;
-            color: white;
+            color: black;
         }
 
         img {

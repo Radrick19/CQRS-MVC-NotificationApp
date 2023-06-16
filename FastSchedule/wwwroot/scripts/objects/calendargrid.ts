@@ -3,7 +3,7 @@ class CalendarGrid {
     private Dates: DateGrid[] = new Array<DateGrid>;
 	public SelectedYear: number;
 	private SelectedDayGrid: any;
-	public CalendarHandler : any;
+	public CalendarHandler: any;
 
 	private _maxOpenedMonth : number;
     public get maxOpenedMonth() {
@@ -76,19 +76,13 @@ class CalendarGrid {
 			await this.AddMonth(year, this.maxOpenedMonth, false);
 		}
 
-		let selectedDay;
-		if (day == null) {
-			selectedDay = document.querySelector('.selected-day');
-		}
-		else {
-			selectedDay = document.querySelector('.selected-day');
-			selectedDay.classList.remove('selected-day')
-			selectedDay = this.Dates.find(date => date.Year == year && date.Month == month && date.Day == day).Element;
+		if (day != null) {
+			let selectedDay = this.Dates.find(date => date.Year == year && date.Month == month && date.Day == day).Element;
+			if (selectedDay != null) {
+				await this.SelectDay(selectedDay);
+			}
 		}
 
-		if (selectedDay != null) {
-			await this.SelectDay(selectedDay);
-		}
 
 		this.CalendarHandler.scrollTop = this.CalendarHandler.scrollHeight / 4;
 
@@ -129,13 +123,10 @@ class CalendarGrid {
 		}
 
 		for (const grid of document.querySelectorAll('.grid-item')) {
-			if (grid.getAttribute('listener') !== 'true') {
+			if (grid.getAttribute('listener') != 'true') {
 				let self = this;
-				grid.addEventListener('click', async function () {
+				grid.addEventListener('mouseover', async function () {
 					await self.SelectDay(grid);
-				})
-				grid.addEventListener('mouseover', function () {
-					document.querySelector('.month-info').innerHTML = grid.id;
 				})
 				grid.setAttribute('listener', 'true');
 			}
@@ -144,7 +135,7 @@ class CalendarGrid {
 	}
 
 	private async SelectDay(grid) {
-		if (grid.id != '') {
+		if (grid.id != '' && !modalWindowOpened) {
 			if (this.SelectedDayGrid != null) {
 				this.SelectedDayGrid.querySelector('.manage-grid').style.visibility = 'hidden';
 				this.SelectedDayGrid.classList.remove('selected-day')
@@ -164,6 +155,7 @@ class CalendarGrid {
 			this.SelectedDayGrid = grid;
 			let selectedDayYear = $(grid).data("year");
 			let selectedDayMonth = $(grid).data("month");
+			document.querySelector('.month-info').innerHTML = monthDictionary[selectedDayMonth];
 			this.UpdateSelectedMonth(selectedDayYear, selectedDayMonth);
 		}
 	}

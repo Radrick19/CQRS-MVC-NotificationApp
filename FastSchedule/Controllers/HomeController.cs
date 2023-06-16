@@ -10,6 +10,7 @@ using FastSchedule.MVC.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.Identity.Client;
 using System.Transactions;
 
@@ -58,17 +59,21 @@ namespace FastSchedule.MVC.Controllers
             return PartialView(task);
         }
 
-        [HttpPost("update/{guid}/{label}/{reminder}/{repeat}/{color}")]
-        [HttpPost("update/{guid}/{label}/{reminder}/{repeat}/{color}/{time}")]
-        [HttpPost("updatewithdesc/{guid}/{label}/{reminder}/{repeat}/{color}/{description}")]
-        [HttpPost("updatewithdesc/{guid}/{label}/{reminder}/{repeat}/{color}/{description}/{time}")]
-        public async Task<bool> UpdateTask(string guid, string label, int reminder, int repeat, string color,
+        [HttpPost("update/{guid}/{year}/{month}/{day}/{label}/{reminder}/{repeat}/{color}")]
+        [HttpPost("update/{guid}/{year}/{month}/{day}/{label}/{reminder}/{repeat}/{color}/{time}")]
+        [HttpPost("updatewithdesc/{guid}/{year}/{month}/{day}/{label}/{reminder}/{repeat}/{color}/{description}")]
+        [HttpPost("updatewithdesc/{guid}/{year}/{month}/{day}/{label}/{reminder}/{repeat}/{color}/{description}/{time}")]
+        public async Task<bool> UpdateTask(string guid, string year, string month, string day, string label, int reminder, int repeat, string color,
             string? description = null, string? time = null)
         {
             try
             {
                 var task = await _mediator.Send(new GetTaskByGuidQuery(new Guid(guid),2));
                 task.Label = label;
+                if(task.TaskType != (TaskType)repeat)
+                {
+                    task.EventDate = new DateOnly(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(day));
+                }
                 task.TaskType = (TaskType)repeat;
                 task.Description = description;
                 task.Color = color;
@@ -159,6 +164,91 @@ namespace FastSchedule.MVC.Controllers
                 }
 
                 await _mediator.Send(new AddTaskCommand(task));
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
+        [HttpPost("complete/{guid}/{year}/{month}/{day}")]
+        public async Task<bool> AddCompletedDay(string guid, int year, int month, int day)
+        {
+            try
+            {
+                var task = await _mediator.Send(new GetTaskByGuidQuery(new Guid(guid), 2));
+                var date = new DateOnly(year, month, day);
+                List<DateOnly> completedDays;
+                if (task.CompletedDays != null)
+                    completedDays = task.CompletedDays.ToList();
+                else
+                    completedDays = new List<DateOnly>();
+
+                completedDays.Add(date);
+                task.CompletedDays = completedDays.AsEnumerable();
+                await _mediator.Send(new UpdateTaskCommand(task));
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        [HttpPost("uncomplete/{guid}/{year}/{month}/{day}")]
+        public async Task<bool> RemoveCompletedDay(string guid, int year, int month, int day)
+        {
+            try
+            {
+                var task = await _mediator.Send(new GetTaskByGuidQuery(new Guid(guid), 2));
+                var date = new DateOnly(year, month, day);
+                List<DateOnly> completedDays = task.CompletedDays.ToList();
+                completedDays.Remove(date);
+                task.CompletedDays = completedDays.AsEnumerable();
+                await _mediator.Send(new UpdateTaskCommand(task));
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        [HttpPost("delete/{guid}/{year}/{month}/{day}")]
+        public async Task<bool> DeleteDay(string guid, int year, int month, int day)
+        {
+            try
+            {
+                var task = await _mediator.Send(new GetTaskByGuidQuery(new Guid(guid), 2));
+                var date = new DateOnly(year, month, day);
+                List<DateOnly> deletedDays;
+                if (task.DeletedDays != null)
+                    deletedDays = task.DeletedDays.ToList();
+                else
+                    deletedDays = new List<DateOnly>();
+
+                deletedDays.Add(date);
+                task.DeletedDays = deletedDays.AsEnumerable();
+                await _mediator.Send(new UpdateTaskCommand(task));
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
+        [HttpPost("delete/{guid}")]
+        public async Task<bool> DeleteTask(string guid)
+        {
+            try
+            {
+                var task = await _mediator.Send(new GetTaskByGuidQuery(new Guid(guid), 2));
+                task.IsDeleted = true;
+                await _mediator.Send(new UpdateTaskCommand(task));
                 return true;
             }
             catch

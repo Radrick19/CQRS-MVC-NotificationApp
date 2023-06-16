@@ -7,4 +7,3 @@ var ReminderType;
     ReminderType[ReminderType["SixHour"] = 4] = "SixHour";
     ReminderType[ReminderType["Day"] = 5] = "Day";
 })(ReminderType || (ReminderType = {}));
-//# sourceMappingURL=remindertype.js.map

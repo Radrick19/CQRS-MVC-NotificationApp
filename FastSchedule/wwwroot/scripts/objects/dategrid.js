@@ -6,4 +6,3 @@ class DateGrid {
         this.Element = element;
     }
 }
-//# sourceMappingURL=dategrid.js.map

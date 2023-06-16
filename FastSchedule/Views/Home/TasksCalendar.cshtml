@@ -13,36 +13,88 @@
 
     foreach (var day in Model.Schedule.Days)
     {
-        <div id="@day.Date.Year.@day.Date.Month.@day.Date.Day" class="grid-item @((int)day.Date.DayOfWeek == 6 || (int)day.Date.DayOfWeek == 0 ? "weekend-day" : "")
-        @(Model.TodayDate == day.Date ? "selected-day" : "")">
+        <div id="@day.Date.Year.@day.Date.Month.@day.Date.Day" class="grid-item @((int)day.Date.DayOfWeek == 6 || (int)day.Date.DayOfWeek == 0 ? "weekend-day" : ""))">
             <div class="manage-and-date">
-                <p style="@(Model.TodayDate == day.Date ? "text-decoration: underline;" : "")">@day.Date.Day</p>
+                <div class="date-and-symbol">
+                    <p style="@(Model.TodayDate == day.Date ? "font-weight: 600;" : "")">@day.Date.Day</p>
+                    <img style="@(day.OverdueTasks != null && day.OverdueTasks.Count() != 0 ? "display: block;" : "")" class="day-symbol" src="~/images/icons/overdue.png"/>
+                    <img style="@(day.IsDayComplete ? "display: block;" : "")" class="day-symbol" src="~/images/icons/complete.png" />
+                </div>
                 <img class="manage-grid" src="/images/icons/info.png" />
             </div>
-            @if (day.Tasks != null && day.Tasks.Count() != 0)
+            @if ((day.Tasks != null && day.Tasks.Count() != 0) || (day.OverdueTasks != null && day.OverdueTasks.Count() != 0) || 
+            (day.CompletedTasks != null && day.CompletedTasks.Count() != 0))
             {
                 int tasksCount = 0;
                 <div class="events">
-                @foreach(var task in day.Tasks)
+                    @if (day.OverdueTasks != null)
                     {
-                        if(tasksCount < 3)
+                        @foreach(var task in day.OverdueTasks)
                         {
-                            <div style="background-color:#@task.Color" class="task">
-                                <p class="event-label">@task.Label</p>
-                                @if (task.EventTime != null)
-                                {
-                                    <p class="event-time">@task.EventTime</p>
-                                }
-                            </div>
-                            tasksCount++;
+                            if (tasksCount < 3)
+                            {
+                                <div style="background-color:#f56969" class="task">
+                                    <p class="event-label">@task.Label</p>
+                                    @if (task.EventTime != null)
+                                    {
+                                        <p class="event-time">@task.EventTime</p>
+                                    }
+                                </div>
+                                tasksCount++;
+                            }
                         }
-                        else
+                    }
+                    @if (day.Tasks != null)
+                    {
+                        @foreach (var task in day.Tasks)
                         {
-                            int remainsTasks = day.Tasks.Count() - 3;
+                            if (tasksCount < 3)
+                            {
+                                <div style="background-color:#@task.Color" class="task">
+                                    <p class="event-label">@task.Label</p>
+                                    @if (task.EventTime != null)
+                                    {
+                                        <p class="event-time">@task.EventTime</p>
+                                    }
+                                </div>
+                                tasksCount++;
+                            }
+                        }
+                    }
+                    else if(day.CompletedTasks != null && day.IsDayComplete)
+                    {
+                        @foreach (var task in day.CompletedTasks)
+                        {
+                            if (tasksCount < 3)
+                            {
+                                <div style="background-color:#@task.Color" class="task">
+                                    <p class="event-label">@task.Label</p>
+                                    @if (task.EventTime != null)
+                                    {
+                                        <p class="event-time">@task.EventTime</p>
+                                    }
+                                </div>
+                                tasksCount++;
+                            }
+                        }
+                    }
+                    @if(tasksCount == 3)
+                    {
+                        int remainsTasks = 0;
+                        if(day.Tasks != null)
+                        {
+                            remainsTasks += day.Tasks.Count();
+                        }
+                        if(day.OverdueTasks != null)
+                        {
+                            remainsTasks += day.OverdueTasks.Count();
+                        }
+                        remainsTasks -= tasksCount;
+                        if(remainsTasks > 0)
+                        {
                             <div style="background-color:#9ed7e6" class="task">
                                 <p class="event-label">И ещё @remainsTasks</p>
                             </div>
-                            break;
                         }
                     }
                 </div>

@@ -1,57 +1,133 @@
 ﻿@using FastSchedule.Application.Services.ScheduleMaker.Models;
 @model Day
+@{
+    Dictionary<string, string> weekDictionary = new Dictionary<string, string>()
+    {
+        {"Monday", "Понедельник"},
+        {"Tuesday", "Вторник"},
+        {"Wednesday", "Среда"},
+        {"Thursday", "Четверг"},
+        {"Friday", "Пятница"},
+        {"Saturday", "Суббота"},
+        {"Sunday", "Воскресенье"},
+    };
+}
+
 
 <div class="edit-tasks-window">
     <div class="content">
         <div class="top-bar">
             <div class="date-and-dayofweek">
                 <h3>@Model.Date</h3>
-                <h4>@Model.Date.DayOfWeek</h4>
+                <h4>@weekDictionary[Model.Date.DayOfWeek.ToString()]</h4>
             </div>
             <img class="close-button" src="/images/icons/close.png" />
         </div>
         <div class="today-tasks">
-            @if(Model.Tasks != null)
+            @if (Model.OverdueTasks != null && Model.OverdueTasks.Count() > 0)
+            {
+                <h4>Просроченные задачи</h4>
+                @foreach (var task in Model.OverdueTasks)
+                {
+                    <div class="task overdue">
+                        <div class="main-info">
+                            <div class="info">
+                                <p style="background-color:#@task.Color" class="color-dot"></p>
+                                <a id="@task.Guid" class="update-link">@task.Label</a>
+                                @if (task.EventTime != null)
+                                {
+                                    <small>@task.EventTime</small>
+                                }
+                            </div>
+                            <input class="complete-task" value="@task.Guid" type="checkbox" />
+                            @if (task.TaskType == FastSchedule.Domain.Infrastucture.Enums.TaskType.Onetime)
+                            {
+                                <div id="@task.Guid" class="delete-selected-completed-day">
+                                </div>
+                            }
+                            else
+                            {
+                                <div id="@task.Guid" class="delete-button">
+                                    <div class="delete-type-choice">
+                                        <img class="close-type-choice" src="/images/icons/remove.png" />
+                                        <a class="delete-selected-day">Удалить выбранный день</a>
+                                        <a class="delete-all-tasks">Удалить все незавершённые задачи</a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        @if (!string.IsNullOrWhiteSpace(@task.Description))
+                        {
+                            <small>@task.Description</small>
+                        }
+                    </div>
+                }
+            }
+            @if (Model.Tasks != null)
             {
                 @foreach (var task in Model.Tasks)
                 {
-                    if(task.EventTime != null)
-                    {
-                        <hr />
-                        <div class="task">
-                            <div class="main-info">
-                                <div class="info">
-                                    <p style="background-color:#@task.Color" class="color-dot"></p>
-                                    <a id="@task.Guid" class="update-link">@task.Label</a>
-                                    <small>@task.EventTime</small>
-                                </div>
-                                <input type="checkbox" />
-                            </div>
-                                @if (!string.IsNullOrWhiteSpace(@task.Description))
+                    <div class="task">
+                        <div class="main-info">
+                            <div class="info">
+                                <p style="background-color:#@task.Color" class="color-dot"></p>
+                                <a id="@task.Guid" class="update-link">@task.Label</a>
+                                @if (task.EventTime != null)
                                 {
-                                    <small>@task.Description</small>
+                                    <small>@task.EventTime</small>
                                 }
-                        </div>
-                        <hr />
-                    }
-                    else
-                    {
-                        <hr />
-                        <div class="task">
-                            <div class="main-info">
-                                <div class="info">
-                                    <p style="background-color:#@task.Color" class="color-dot"></p>
-                                    <a id="@task.Guid" class="update-link">@task.Label</a>
-                                </div>
-                                <input type="checkbox" />
                             </div>
-                            @if (!string.IsNullOrWhiteSpace(@task.Description))
+                            <input class="complete-task" value="@task.Guid" type="checkbox" />
+                            @if(task.TaskType == FastSchedule.Domain.Infrastucture.Enums.TaskType.Onetime)
                             {
-                                <small>@task.Description</small>
+                                <div id="@task.Guid" class="delete-selected-completed-day">
+                                </div>
+                            }
+                            else
+                            {
+                                <div id="@task.Guid" class="delete-button">
+                                    <div class="delete-type-choice">
+                                        <img class="close-type-choice" src="/images/icons/remove.png" />
+                                        <a class="delete-selected-day">Удалить выбранный день</a>
+                                        <a class="delete-all-tasks">Удалить все незавершённые задачи</a>
+                                    </div>
+                                </div>
                             }
                         </div>
-                        <hr />
-                    }
+                        @if (!string.IsNullOrWhiteSpace(@task.Description))
+                        {
+                            <small>@task.Description</small>
+                        }
+                    </div>
+                }
+            }
+            @if(Model.CompletedTasks != null)
+            {
+                <h4>Выполненные</h4>
+                @foreach (var task in Model.CompletedTasks)
+                {
+                    <div class="task completed">
+                        <div class="main-info">
+                            <div class="info">
+                                <p style="background-color:#@task.Color" class="color-dot"></p>
+                                <a id="@task.Guid" class="update-link">@task.Label</a>
+                                @if (task.EventTime != null)
+                                {
+                                    <small>@task.EventTime</small>
+                                }
+                            </div>
+                            @if (!task.IsDeleted)
+                            {
+                                <input class="uncomplete-task" value="@task.Guid" type="checkbox" checked />
+                            }
+                            <div id="@task.Guid" class="delete-selected-completed-day">
+                            </div>
+                        </div>
+                        @if (!string.IsNullOrWhiteSpace(@task.Description))
+                        {
+                            <small>@task.Description</small>
+                        }
+                    </div>
                 }
             }
         </div>
@@ -76,7 +152,7 @@
                     <div class="setting">
                         <input name="time" type="time" />
                     </div>
-                    <div class="setting">
+                    <div class="setting remind">
                         <label>Напомнить?</label>
                         <select name="reminder">
                             <option value="0">Нет</option>
@@ -106,23 +182,5 @@
                 </div>
             </div>
         }
-        @*        <h4>Выполненные</h4>
-        <div class="today-completed-tasks">
-            <div class="task">
-                <div class="main-info">
-                    <p class="color-dot"></p>
-                    <p>Label</p>
-                    <small>16:00</small>
-                </div>
-            </div>
-            <hr />
-            <div class="notime-task">
-                <div class="main-info">
-                    <p class="color-dot"></p>
-                    <p>Label</p>
-                </div>
-                <small> description descriptiondescriptiondescriptiondescriptiondescription descriptiondescriptiondescription descriptiondescriptiondescriptiondescription</small>
-            </div>
-        </div>*@
     </div>
 </div>
