@@ -1,0 +1,47 @@
+﻿@using FastSchedule.Application.Dto;
+@using FastSchedule.Application.Infrastructure.Enums;
+@using FastSchedule.Application.Services.ScheduleMaker.Models;
+@using FastSchedule.MVC.ViewModels;
+@model Day
+@{
+    Dictionary<string, string> weekDictionary = new Dictionary<string, string>()
+    {
+        {"Monday", "Понедельник"},
+        {"Tuesday", "Вторник"},
+        {"Wednesday", "Среда"},
+        {"Thursday", "Четверг"},
+        {"Friday", "Пятница"},
+        {"Saturday", "Суббота"},
+        {"Sunday", "Воскресенье"},
+    };
+}
+
+<div class="edit-tasks-window">
+    <div class="content">
+        <div class="top-bar">
+            <div class="date-and-dayofweek">
+                <h3>@Model.Date</h3>
+                <h4>@weekDictionary[Model.Date.DayOfWeek.ToString()]</h4>
+            </div>
+            <img class="close-button" src="/images/icons/close.png" />
+        </div>
+        <div class="today-tasks">
+            @if (Model.OverdueTasks != null && Model.OverdueTasks.Count() > 0)
+            {
+                @await Html.PartialAsync("TasksList", new TasksListViewModel(Model.OverdueTasks, TasksCondition.Overdue))
+            }
+            @if (Model.Tasks != null)
+            {
+                @await Html.PartialAsync("TasksList", new TasksListViewModel(Model.Tasks, TasksCondition.InProgress))
+            }
+            @if(Model.CompletedTasks != null)
+            {
+                @await Html.PartialAsync("TasksList", new TasksListViewModel(Model.CompletedTasks, TasksCondition.Completed))
+            }
+        </div>
+        @if (Model.Date >= DateOnly.FromDateTime(DateTime.Now))
+        {
+            @await Html.PartialAsync("AddOrUpdateTask", new ModalWindowViewModel(new ScheduleTaskDto(), isAddWindow: true))
+        }
+    </div>
+</div>

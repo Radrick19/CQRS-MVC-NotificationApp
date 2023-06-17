@@ -16,6 +16,7 @@ class TaskWindow {
 	}
 
 	private async Open(year: number, month: number, day: number) {
+		document.querySelector('body').style.overflowY = 'scroll';
 		let url = '/get/' + year + '/' + month + '/' + day;
 		let self = this;
 		this.ModalWindowHandler.innerHTML = "";
@@ -29,6 +30,7 @@ class TaskWindow {
 		this.CloseButton.addEventListener('click', function () {
 			self.ModalWindowHandler.innerHTML = "";
 			document.querySelector('.background').setAttribute("style", "-webkit-filter:none");
+			document.querySelector('body').style.overflowY = 'hidden ';
 			modalWindowOpened = false;
 		})
 
@@ -98,15 +100,17 @@ class TaskWindow {
 
 		let timeInput: HTMLInputElement = this.ModalWindowHandler.querySelector("[name='time']");
 		let remindBlock: HTMLElement = this.ModalWindowHandler.querySelector('.remind');
-		timeInput.addEventListener('input', function () {
-			if (timeInput.value != null && timeInput.value != '') {
-				remindBlock.style.display = 'block';
-			}
-			else {
-				timeInput.value = null;
-				remindBlock.style.display = 'none';
-			}
-		})
+		if (timeInput != null) {
+			timeInput.addEventListener('input', function () {
+				if (timeInput.value != null && timeInput.value != '') {
+					remindBlock.style.display = 'block';
+				}
+				else {
+					timeInput.value = null;
+					remindBlock.style.display = 'none';
+				}
+			})
+		}
 	}
 
 	private async OpenUpdateWindow(guid: string) {

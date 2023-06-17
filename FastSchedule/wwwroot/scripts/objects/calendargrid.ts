@@ -46,7 +46,7 @@ class CalendarGrid {
 			this.OnScrollCheck();
 		}
 
-		else if (this.minOpenedMonth > 1 && isLoading == false && this.CalendarHandler.scrollTop < 300) {
+		else if (this.minOpenedMonth > 1 && isLoading == false && this.CalendarHandler.scrollTop < 400) {
 			this.minOpenedMonth -= 1;
 			await this.AddMonth(this.SelectedYear, this.minOpenedMonth, true);
 			this.OnScrollCheck();

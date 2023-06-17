@@ -1,0 +1,11 @@
+﻿@using FastSchedule.MVC.ViewModels;
+@model ModalWindowViewModel
+
+<div class="edit-tasks-window">
+    <div class="content">
+        <div class="top-bar">
+            <img class="back-button" src="/images/icons/arrow.png" />
+        </div>
+        @await Html.PartialAsync("AddOrUpdateTask", Model)
+    </div>
+</div>

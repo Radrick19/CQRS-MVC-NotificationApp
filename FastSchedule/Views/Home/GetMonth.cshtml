@@ -13,7 +13,7 @@
 
     foreach (var day in Model.Schedule.Days)
     {
-        <div id="@day.Date.Year.@day.Date.Month.@day.Date.Day" class="grid-item @((int)day.Date.DayOfWeek == 6 || (int)day.Date.DayOfWeek == 0 ? "weekend-day" : ""))">
+        <div id="@day.Date.Year.@day.Date.Month.@day.Date.Day" class="grid-item @((int)day.Date.DayOfWeek == 6 || (int)day.Date.DayOfWeek == 0 ? "weekend-day" : "")">
             <div class="manage-and-date">
                 <div class="date-and-symbol">
                     <p style="@(Model.TodayDate == day.Date ? "font-weight: 600;" : "")">@day.Date.Day</p>

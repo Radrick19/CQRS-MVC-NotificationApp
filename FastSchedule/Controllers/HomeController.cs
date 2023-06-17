@@ -27,7 +27,7 @@ namespace FastSchedule.MVC.Controllers
 
         [HttpGet("get/{year}/{month}")]
         [HttpGet("get/{year}/{month}/{isStartMonth:bool}")]
-        public async Task<IActionResult> TasksCalendar(int year, int month, bool isStartMonth = false)
+        public async Task<IActionResult> GetMonth(int year, int month, bool isStartMonth = false)
         {
             Schedule schedule = await _mediator.Send(new GetScheduleQuery(year, month, 2));
             int? weekGap = null;
@@ -44,7 +44,7 @@ namespace FastSchedule.MVC.Controllers
         }
 
         [HttpGet("get/{year}/{month}/{day}")]
-        public async Task<IActionResult> ManageTask(int year, int month, int day)
+        public async Task<IActionResult> ManageTasks(int year, int month, int day)
         {
             Day daySchdule = await _mediator.Send(new GetDailyScheduleQuery(year,month, day));
 
@@ -52,11 +52,12 @@ namespace FastSchedule.MVC.Controllers
         }
 
         [HttpGet("update/{guid}")]
-        public async Task<IActionResult> UpdateTask(string guid)
+        public async Task<IActionResult> UpdateTaskWindow(string guid)
         {
             var tasks = await _mediator.Send(new GetTasksQuery(2));
             var task = tasks.FirstOrDefault(task=> task.Guid == new Guid(guid));
-            return PartialView(task);
+            var viewModel = new ModalWindowViewModel(task, isAddWindow: false);
+            return PartialView(viewModel);
         }
 
         [HttpPost("update/{guid}/{year}/{month}/{day}/{label}/{reminder}/{repeat}/{color}")]

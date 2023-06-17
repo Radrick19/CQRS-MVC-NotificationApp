@@ -5,19 +5,63 @@ body{
 }
 
 .content {
+    padding: 0px 70px;
     margin-left: auto;
     margin-right: auto;
+    display: grid;
+    grid-template-columns: 1fr 7fr;
+    justify-content: space-between;
+
+    .info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 25px;
+        padding: 10px 0px;
+        line-height: 30px;
+
+        .month-info {
+            display: flex;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 30px;
+            width: 100px;
+        }
+
+        .year-info {
+            display: flex;
+            margin-right: 20px;
+            width: 140px;
+
+            p {
+                margin: 0px 15px;
+            }
+
+            img {
+                height: 17px;
+                width: auto;
+            }
+
+            .next-year {
+                img {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+    }
 }
 
 header {
     background-color: #f3f3f3;
-    padding: 8px 30px;
+    padding: 5px 0px;
     position: relative;
     z-index: 2;
     border: 2px solid #f3f3f3;
 
     .account-data {
         display: flex;
+        align-items: center;
+        line-height: 10px;
 
         p {
             display: flex;

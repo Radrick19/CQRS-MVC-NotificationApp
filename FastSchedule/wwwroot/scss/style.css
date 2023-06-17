@@ -316,12 +316,13 @@ template {
   display: none;
 }
 
-.content {
-  max-width: 1500px;
+body {
+  height: 100vh;
+  overflow: hidden;
 }
 
 .background {
-  width: 100%;
+  height: 100%;
   background-color: #ffffff;
 }
 
@@ -333,46 +334,19 @@ template {
   -o-user-select: none;
   user-select: none;
   display: flex;
-  justify-content: center;
-  padding-top: 20px;
+  height: 100%;
+}
+.calendar-handler .calendar-and-info {
+  height: 100%;
   width: 100%;
-}
-.calendar-handler .calendar-and-info .info {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  padding: 20px 0px;
-  line-height: 30px;
-}
-.calendar-handler .calendar-and-info .info .month-info {
-  display: flex;
-  justify-content: center;
-  font-weight: 600;
-  margin-right: 30px;
-  width: 100px;
-}
-.calendar-handler .calendar-and-info .info .year-info {
-  display: flex;
-  margin-right: 20px;
-  width: 140px;
-}
-.calendar-handler .calendar-and-info .info .year-info p {
-  margin: 0px 15px;
-}
-.calendar-handler .calendar-and-info .info .year-info img {
-  height: 22px;
-  width: auto;
-}
-.calendar-handler .calendar-and-info .info .year-info .next-year img {
-  transform: rotate(180deg);
 }
 .calendar-handler .calendar-and-info .days-of-week-row {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   background-color: #f3f3f3;
-  margin: 0px 10px;
-  padding: 5px;
+  padding-bottom: 15px;
+  border: 2px solid #9b9ca3;
+  border-width: 0px 0px 2px 0px;
 }
 .calendar-handler .calendar-and-info .days-of-week-row p {
   text-align: center;
@@ -382,11 +356,13 @@ template {
 }
 .calendar-handler .calendar-and-info .calendar-grid {
   display: grid;
-  grid-template-columns: repeat(7, 10vw);
+  grid-template-columns: repeat(7, 1fr);
   padding: 0px;
-  height: 80vh;
+  height: 88vh;
   overflow-y: scroll;
   background-color: #9b9ca3;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 .calendar-handler .calendar-and-info .calendar-grid::-webkit-scrollbar {
   display: none;
@@ -395,7 +371,6 @@ template {
   margin: 0.5px;
   background-color: #f3f3f3;
   min-height: 150px;
-  max-width: 200px;
   max-height: 200px;
 }
 .calendar-handler .calendar-and-info .calendar-grid .grid-item a {
@@ -501,6 +476,8 @@ template {
   background-color: white;
 }
 .manage-task-window-handler .edit-tasks-window .content {
+  display: block;
+  margin: 0px;
   padding: 20px 40px;
 }
 .manage-task-window-handler .edit-tasks-window .content p {
@@ -573,6 +550,7 @@ template {
 .manage-task-window-handler .edit-tasks-window .content .today-tasks .task .main-info .info {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   font-size: 18px;
 }
 .manage-task-window-handler .edit-tasks-window .content .today-tasks .task .main-info .info a {
@@ -740,19 +718,55 @@ body {
 }
 
 .content {
+  padding: 0px 70px;
   margin-left: auto;
   margin-right: auto;
+  display: grid;
+  grid-template-columns: 1fr 7fr;
+  justify-content: space-between;
+}
+.content .info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  padding: 10px 0px;
+  line-height: 30px;
+}
+.content .info .month-info {
+  display: flex;
+  justify-content: center;
+  font-weight: 600;
+  margin-right: 30px;
+  width: 100px;
+}
+.content .info .year-info {
+  display: flex;
+  margin-right: 20px;
+  width: 140px;
+}
+.content .info .year-info p {
+  margin: 0px 15px;
+}
+.content .info .year-info img {
+  height: 17px;
+  width: auto;
+}
+.content .info .year-info .next-year img {
+  transform: rotate(180deg);
 }
 
 header {
   background-color: #f3f3f3;
-  padding: 8px 30px;
+  padding: 5px 0px;
   position: relative;
   z-index: 2;
   border: 2px solid #f3f3f3;
 }
 header .account-data {
   display: flex;
+  align-items: center;
+  line-height: 10px;
 }
 header .account-data p {
   display: flex;

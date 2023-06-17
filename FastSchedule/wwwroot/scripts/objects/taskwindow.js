@@ -18,6 +18,7 @@ class TaskWindow {
     }
     Open(year, month, day) {
         return __awaiter(this, void 0, void 0, function* () {
+            document.querySelector('body').style.overflowY = 'scroll';
             let url = '/get/' + year + '/' + month + '/' + day;
             let self = this;
             this.ModalWindowHandler.innerHTML = "";
@@ -27,6 +28,7 @@ class TaskWindow {
             this.CloseButton.addEventListener('click', function () {
                 self.ModalWindowHandler.innerHTML = "";
                 document.querySelector('.background').setAttribute("style", "-webkit-filter:none");
+                document.querySelector('body').style.overflowY = 'hidden ';
                 modalWindowOpened = false;
             });
             for (const task of this.ModalWindowHandler.querySelectorAll('.update-link')) {
@@ -94,15 +96,17 @@ class TaskWindow {
             }
             let timeInput = this.ModalWindowHandler.querySelector("[name='time']");
             let remindBlock = this.ModalWindowHandler.querySelector('.remind');
-            timeInput.addEventListener('input', function () {
-                if (timeInput.value != null && timeInput.value != '') {
-                    remindBlock.style.display = 'block';
-                }
-                else {
-                    timeInput.value = null;
-                    remindBlock.style.display = 'none';
-                }
-            });
+            if (timeInput != null) {
+                timeInput.addEventListener('input', function () {
+                    if (timeInput.value != null && timeInput.value != '') {
+                        remindBlock.style.display = 'block';
+                    }
+                    else {
+                        timeInput.value = null;
+                        remindBlock.style.display = 'none';
+                    }
+                });
+            }
         });
     }
     OpenUpdateWindow(guid) {
