@@ -27,21 +27,6 @@ namespace FastSchedule.Domain.Models.Tasks
         public TimeOnly? EventTime { get; set; }
         public TimeSpan? PreNotifyTime { get; set; }
 
-        public ScheduleTask(Guid guid, string color, string label, int userId, TaskType taskType, DateOnly eventDate, RemindType remindType,
-            string? description = null, TimeOnly? eventTime = null, TimeSpan? preNotifyTime = null)
-        {
-            Guid = guid;
-            Color = color;
-            Label = label;
-            UserId = userId;
-            TaskType = taskType;
-            EventDate = eventDate;
-            Description = description;
-            EventTime = eventTime;
-            PreNotifyTime = preNotifyTime;
-            RemindType = remindType;
-        }
-
         protected ScheduleTask()
         {
 

@@ -28,15 +28,15 @@
         <div class="today-tasks">
             @if (Model.OverdueTasks != null && Model.OverdueTasks.Count() > 0)
             {
-                @await Html.PartialAsync("TasksList", new TasksListViewModel(Model.OverdueTasks, TasksCondition.Overdue))
+                @await Html.PartialAsync("DetailsTasksList", new TasksListViewModel(Model.OverdueTasks, TasksCondition.Overdue))
             }
             @if (Model.Tasks != null)
             {
-                @await Html.PartialAsync("TasksList", new TasksListViewModel(Model.Tasks, TasksCondition.InProgress))
+                @await Html.PartialAsync("DetailsTasksList", new TasksListViewModel(Model.Tasks, TasksCondition.InProgress))
             }
             @if(Model.CompletedTasks != null)
             {
-                @await Html.PartialAsync("TasksList", new TasksListViewModel(Model.CompletedTasks, TasksCondition.Completed))
+                @await Html.PartialAsync("DetailsTasksList", new TasksListViewModel(Model.CompletedTasks, TasksCondition.Completed))
             }
         </div>
         @if (Model.Date >= DateOnly.FromDateTime(DateTime.Now))

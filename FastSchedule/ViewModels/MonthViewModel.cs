@@ -3,7 +3,7 @@ using FastSchedule.Domain.Interfaces;
 
 namespace FastSchedule.MVC.ViewModels
 {
-    public class HomeViewModel
+    public class MonthViewModel
     {
         public int? StartWeekGap { get; set; }
         public DateOnly TodayDate { get; set; }

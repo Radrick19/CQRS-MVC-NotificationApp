@@ -1,48 +1,75 @@
-﻿@using FastSchedule.Application.Infrastructure.Enums;
-@using FastSchedule.MVC.ViewModels;
-@model TasksListViewModel
+﻿@using FastSchedule.Application.Services.ScheduleMaker.Models;
+@model Day
 @{
-    if(Model.Status == TasksCondition.Overdue)
+    if ((Model.Tasks != null) || (Model.OverdueTasks != null) ||
+           (Model.CompletedTasks != null))
     {
-        <h4>Просроченные задачи</h4>
-    }
-    else if(Model.Status == TasksCondition.Completed)
-    {
-        <h4>Выполненные</h4>
-    }
-    foreach (var task in Model.Tasks)
-    {
-        <div class="task @(Model.Status == TasksCondition.Overdue ? "overdue" : "")@(Model.Status == TasksCondition.Completed ? "completed" : "")">
-            <div class="main-info">
-                <div class="info">
-                    <p style="background-color:#@task.Color" class="color-dot"></p>
-                    <a id="@task.Guid" class="update-link">@task.Label</a>
-                    @if (task.EventTime != null)
-                    {
-                        <small>@task.EventTime</small>
-                    }
-                </div>
-                <input class="@(Model.Status == TasksCondition.Completed ? "uncomplete-task" : "complete-task")" value="@task.Guid" type="checkbox" @(Model.Status == TasksCondition.Completed ? "checked" : "") />
-                @if (task.TaskType == FastSchedule.Domain.Infrastucture.Enums.TaskType.Onetime)
-                {
-                    <div id="@task.Guid" class="delete-selected-completed-day">
-                    </div>
-                }
-                else
-                {
-                    <div id="@task.Guid" class="delete-button">
-                        <div class="delete-type-choice">
-                            <img class="close-type-choice" src="/images/icons/remove.png" />
-                            <a class="delete-selected-day">Удалить выбранный день</a>
-                            <a class="delete-all-tasks">Удалить все незавершённые задачи</a>
-                        </div>
-                    </div>
-                }
-            </div>
-            @if (!string.IsNullOrWhiteSpace(@task.Description))
+        int tasksCount = 0;
+        <div class="events">
+            @if (Model.OverdueTasks != null)
             {
-                <small>@task.Description</small>
+                @foreach (var task in Model.OverdueTasks)
+                {
+                    if (tasksCount == 3)
+                        break;
+                    <div style="background-color:#f56969" class="task">
+                        <p class="event-label">@task.Label</p>
+                        @if (task.EventTime != null)
+                        {
+                            <p class="event-time">@task.EventTime</p>
+                        }
+                    </div>
+                    tasksCount++;
+                }
+            }
+            @if (Model.Tasks != null)
+            {
+                @foreach (var task in Model.Tasks)
+                {
+                    if (tasksCount == 3)
+                        break;
+                    <div style="background-color:#@task.Color" class="task">
+                        <p class="event-label">@task.Label</p>
+                        @if (task.EventTime != null)
+                        {
+                            <p class="event-time">@task.EventTime</p>
+                        }
+                    </div>
+                    tasksCount++;
+                }
+            }
+            @if (Model.IsDayComplete && Model.CompletedTasks != null)
+            {
+                @foreach (var task in Model.CompletedTasks)
+                {
+                    if (tasksCount == 3)
+                        break;
+                    <div style="background-color:#@task.Color" class="task">
+                        <p class="event-label">@task.Label</p>
+                        @if (task.EventTime != null)
+                        {
+                            <p class="event-time">@task.EventTime</p>
+                        }
+                    </div>
+                    tasksCount++;
+                }
+            }
+            @if (tasksCount == 3)
+            {
+                int? remainsTasks = 0;
+                if (Model.IsDayComplete)
+                    remainsTasks += Model.CompletedTasks?.Count();
+                remainsTasks += Model.Tasks?.Count();
+                remainsTasks += Model.OverdueTasks?.Count();
+                remainsTasks -= tasksCount;
+                if (remainsTasks > 0)
+                {
+                    <div style="background-color:#dddddd" class="task">
+                        <p class="event-label">И ещё @remainsTasks</p>
+                    </div>
+                }
             }
         </div>
     }
+
 }

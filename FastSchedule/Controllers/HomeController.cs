@@ -34,7 +34,7 @@ namespace FastSchedule.MVC.Controllers
             if (isStartMonth)
                 weekGap = schedule.StartDayOfWeek == 0 ? 6 : (int)schedule.StartDayOfWeek - 1;
 
-            HomeViewModel viewModel = new HomeViewModel()
+            MonthViewModel viewModel = new MonthViewModel()
             {
                 Schedule = schedule,
                 StartWeekGap = weekGap,
@@ -44,7 +44,7 @@ namespace FastSchedule.MVC.Controllers
         }
 
         [HttpGet("get/{year}/{month}/{day}")]
-        public async Task<IActionResult> ManageTasks(int year, int month, int day)
+        public async Task<IActionResult> TasksWindow(int year, int month, int day)
         {
             Day daySchdule = await _mediator.Send(new GetDailyScheduleQuery(year,month, day));
 
@@ -173,7 +173,6 @@ namespace FastSchedule.MVC.Controllers
             }
         }
 
-
         [HttpPost("complete/{guid}/{year}/{month}/{day}")]
         public async Task<bool> AddCompletedDay(string guid, int year, int month, int day)
         {
@@ -240,7 +239,6 @@ namespace FastSchedule.MVC.Controllers
                 return false;
             }
         }
-
 
         [HttpPost("delete/{guid}")]
         public async Task<bool> DeleteTask(string guid)

@@ -1,5 +1,5 @@
 ﻿@using FastSchedule.MVC.ViewModels;
-@model HomeViewModel
+@model MonthViewModel
 
 @{
     @if (Model.StartWeekGap != null)
@@ -22,83 +22,7 @@
                 </div>
                 <img class="manage-grid" src="/images/icons/info.png" />
             </div>
-            @if ((day.Tasks != null && day.Tasks.Count() != 0) || (day.OverdueTasks != null && day.OverdueTasks.Count() != 0) || 
-            (day.CompletedTasks != null && day.CompletedTasks.Count() != 0))
-            {
-                int tasksCount = 0;
-                <div class="events">
-                    @if (day.OverdueTasks != null)
-                    {
-                        @foreach(var task in day.OverdueTasks)
-                        {
-                            if (tasksCount < 3)
-                            {
-                                <div style="background-color:#f56969" class="task">
-                                    <p class="event-label">@task.Label</p>
-                                    @if (task.EventTime != null)
-                                    {
-                                        <p class="event-time">@task.EventTime</p>
-                                    }
-                                </div>
-                                tasksCount++;
-                            }
-                        }
-                    }
-                    @if (day.Tasks != null)
-                    {
-                        @foreach (var task in day.Tasks)
-                        {
-                            if (tasksCount < 3)
-                            {
-                                <div style="background-color:#@task.Color" class="task">
-                                    <p class="event-label">@task.Label</p>
-                                    @if (task.EventTime != null)
-                                    {
-                                        <p class="event-time">@task.EventTime</p>
-                                    }
-                                </div>
-                                tasksCount++;
-                            }
-                        }
-                    }
-                    else if(day.CompletedTasks != null && day.IsDayComplete)
-                    {
-                        @foreach (var task in day.CompletedTasks)
-                        {
-                            if (tasksCount < 3)
-                            {
-                                <div style="background-color:#@task.Color" class="task">
-                                    <p class="event-label">@task.Label</p>
-                                    @if (task.EventTime != null)
-                                    {
-                                        <p class="event-time">@task.EventTime</p>
-                                    }
-                                </div>
-                                tasksCount++;
-                            }
-                        }
-                    }
-                    @if(tasksCount == 3)
-                    {
-                        int remainsTasks = 0;
-                        if(day.Tasks != null)
-                        {
-                            remainsTasks += day.Tasks.Count();
-                        }
-                        if(day.OverdueTasks != null)
-                        {
-                            remainsTasks += day.OverdueTasks.Count();
-                        }
-                        remainsTasks -= tasksCount;
-                        if(remainsTasks > 0)
-                        {
-                            <div style="background-color:#9ed7e6" class="task">
-                                <p class="event-label">И ещё @remainsTasks</p>
-                            </div>
-                        }
-                    }
-                </div>
-            }
+            @await Html.PartialAsync("TasksList", day)
         </div>
     }
 }

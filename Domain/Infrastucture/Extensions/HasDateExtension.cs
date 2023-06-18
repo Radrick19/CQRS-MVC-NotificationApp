@@ -8,7 +8,7 @@ namespace FastSchedule.Domain.Infrastucture.Extensions
 {
     public static class HasDateExtension
     {
-        public static bool HasDate(this IEnumerable<DateOnly> enumerable, DateOnly lookingDate)
+        public static bool HasDate(this IEnumerable<DateOnly>? enumerable, DateOnly lookingDate)
         {
             if (enumerable != null)
             {

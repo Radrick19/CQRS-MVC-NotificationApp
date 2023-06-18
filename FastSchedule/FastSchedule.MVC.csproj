@@ -42,9 +42,4 @@
     <ProjectReference Include="..\FastSchedule.Application\FastSchedule.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Components\" />
-    <Folder Include="Infrastructure\Enums\" />
-  </ItemGroup>
-
 </Project>
