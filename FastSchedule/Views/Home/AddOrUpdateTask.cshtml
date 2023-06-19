@@ -32,22 +32,22 @@
         <div class="setting remind">
             <label>Напомнить?</label>
             <select name="reminder">
-                <option @((int)Model.Task.RemindType == 0 ? "selected" : "") value="0">Нет</option>
-                <option @((int)Model.Task.RemindType == 1 ? "selected" : "") value="1">За 15 минут</option>
-                <option @((int)Model.Task.RemindType == 2 ? "selected" : "") value="2">За пол часа</option>
-                <option @((int)Model.Task.RemindType == 3 ? "selected" : "") value="3">За час</option>
-                <option @((int)Model.Task.RemindType == 4 ? "selected" : "") value="4">За 6 часов</option>
-                <option @((int)Model.Task.RemindType == 5 ? "selected" : "") value="5">За сутки</option>
+                <!option @((int)Model.Task.RemindType == 0 ? "selected" : "") value="0">Нет</!option>
+                <!option @((int)Model.Task.RemindType == 1 ? "selected" : "") value="1">За 15 минут</!option>
+                <!option @((int)Model.Task.RemindType == 2 ? "selected" : "") value="2">За пол часа</!option>
+                <!option @((int)Model.Task.RemindType == 3 ? "selected" : "") value="3">За час</!option>
+                <!option @((int)Model.Task.RemindType == 4 ? "selected" : "") value="4">За 6 часов</!option>
+                <!option @((int)Model.Task.RemindType == 5 ? "selected" : "") value="5">За сутки</!option>
             </select>
         </div>
         <div class="setting">
             <label>Повторять?</label>
             <select name="repeat">
-                <option @((int)Model.Task.TaskType == 0 ? "selected" : "") value="0">Нет</option>
-                <option @((int)Model.Task.TaskType == 1 ? "selected" : "") value="1">Каждый день</option>
-                <option @((int)Model.Task.TaskType == 2 ? "selected" : "") value="2">Каждую неделю</option>
-                <option @((int)Model.Task.TaskType == 3 ? "selected" : "") value="3">Каждый месяц</option>
-                <option @((int)Model.Task.TaskType == 4 ? "selected" : "") value="4">Каждый год</option>
+                <!option @((int)Model.Task.TaskType == 0 ? "selected" : "") value="0">Нет</!option>
+                <!option @((int)Model.Task.TaskType == 1 ? "selected" : "") value="1">Каждый день</!option>
+                <!option @((int)Model.Task.TaskType == 2 ? "selected" : "") value="2">Каждую неделю</!option>
+                <!option @((int)Model.Task.TaskType == 3 ? "selected" : "") value="3">Каждый месяц</!option>
+                <!option @((int)Model.Task.TaskType == 4 ? "selected" : "") value="4">Каждый год</!option>
             </select>
         </div>
         <div class="setting">

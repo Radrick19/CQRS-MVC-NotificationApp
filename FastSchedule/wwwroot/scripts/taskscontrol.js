@@ -13,29 +13,31 @@ let manageWindow;
 let isLoading = false;
 let modalWindowOpened = false;
 const monthDictionary = {
-    1: 'Январь',
-    2: 'Февраль',
-    3: 'Март',
-    4: 'Апрель',
-    5: 'Май',
-    6: 'Июнь',
-    7: 'Июль',
-    8: 'Август',
-    9: 'Сентябрь',
-    10: 'Октябрь',
-    11: 'Ноябрь',
-    12: 'Декабрь',
+    1: "Январь",
+    2: "Февраль",
+    3: "Март",
+    4: "Апрель",
+    5: "Май",
+    6: "Июнь",
+    7: "Июль",
+    8: "Август",
+    9: "Сентябрь",
+    10: "Октябрь",
+    11: "Ноябрь",
+    12: "Декабрь",
 };
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
     let todayDate = new Date();
     nowDay = todayDate.getDate();
     nowMonth = todayDate.getMonth() + 1;
     nowYear = todayDate.getFullYear();
     calendarGrid = new CalendarGrid(nowYear, nowMonth, nowDay);
-    document.querySelector('.previous-year').addEventListener('click', function () {
+    document
+        .querySelector(".previous-year")
+        .addEventListener("click", function () {
         calendarGrid = new CalendarGrid(Number(calendarGrid.SelectedYear) - 1, 6);
     });
-    document.querySelector('.next-year').addEventListener('click', function () {
+    document.querySelector(".next-year").addEventListener("click", function () {
         calendarGrid = new CalendarGrid(Number(calendarGrid.SelectedYear) + 1, 6);
     });
 });
@@ -54,30 +56,30 @@ function TasksUpdateEvent(year, month, day) {
 function AsyncAjaxGet(url) {
     return new Promise((resolve, reject) => {
         $.ajax({
-            type: 'GET',
-            dataType: 'html',
+            type: "GET",
+            dataType: "html",
             url: url,
             success: function (data) {
                 return resolve(data);
             },
             error: function (err) {
                 return reject(err);
-            }
+            },
         });
     });
 }
 function AsyncAjaxPost(url) {
     return new Promise((resolve, reject) => {
         $.ajax({
-            type: 'POST',
+            type: "POST",
             url: url,
-            dataType: 'json',
+            dataType: "json",
             success: function (data) {
                 return resolve(data);
             },
             error: function (err) {
                 return reject(false);
-            }
+            },
         });
     });
 }

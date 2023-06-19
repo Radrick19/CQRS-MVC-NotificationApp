@@ -1,0 +1,89 @@
+.wrapper {
+    height: 100vh;
+    width: 100vw;
+    max-width: 1600px;
+    margin-right: auto;
+    margin-left: auto;
+
+    .content-wrapper {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        form {
+            min-width: 300px;
+
+            h1 {
+                text-align: center;
+                color: #37352f;
+                cursor: default;
+            }
+
+            .input-field-handler {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 20px;
+
+                label {
+                    margin-bottom: 5px;
+                    color: #969791;
+                }
+
+                input {
+                    border: 1px solid;
+                    border-color: #e0e0dd;
+                    background-color: #f7f7f4;
+                    border-radius: 3px;
+                    margin-bottom: 5px;
+                }
+
+                input[type=text], input[type=password] {
+                    height: 25px;
+                    padding: 5px 10px;
+
+                    &:hover {
+                        outline: 1px solid #b2d3f3;
+                    }
+
+                    &:focus {
+                        outline: 2px solid #b2d3f3;
+                    }
+                }
+
+                input[type=submit] {
+                    min-height: 40px;
+                    font-size: 18px;
+                    font-weight: 600;
+                    color: #37352f;
+                    cursor: pointer;
+                    outline: 0;
+
+                    &:hover {
+                        filter: brightness(97%);
+                    }
+                }
+
+                span {
+                    color: #ff3333;
+                }
+            }
+        }
+
+        small {
+            margin: 10px 0px;
+
+            a {
+                font-size: 16px;
+                color: #7d7c77;
+                text-decoration: underline;
+
+                &:hover {
+                    filter: brightness(130%);
+                }
+            }
+        }
+    }
+}

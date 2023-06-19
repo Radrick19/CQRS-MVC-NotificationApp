@@ -38,21 +38,26 @@ class CalendarGrid {
         }
     }
     constructor(year, month, day) {
-        this.Dates = new Array;
-        let oldElementsWithListeners = document.querySelector('.calendar-grid');
+        this.Dates = new Array();
+        let oldElementsWithListeners = document.querySelector(".calendar-grid");
         let newElement = oldElementsWithListeners.cloneNode(true);
         oldElementsWithListeners.parentNode.replaceChild(newElement, oldElementsWithListeners);
-        this.CalendarHandler = document.querySelector('.calendar-grid');
+        this.CalendarHandler = document.querySelector(".calendar-grid");
         this.GetStartedMonthes(year, month, day);
     }
     OnScrollCheck() {
         return __awaiter(this, void 0, void 0, function* () {
-            if (this.maxOpenedMonth < 12 && isLoading == false && this.CalendarHandler.scrollTop >= this.CalendarHandler.scrollHeight - window.innerHeight - 150) {
+            if (this.maxOpenedMonth < 12 &&
+                isLoading == false &&
+                this.CalendarHandler.scrollTop >=
+                    this.CalendarHandler.scrollHeight - window.innerHeight - 150) {
                 this.maxOpenedMonth += 1;
                 yield this.AddMonth(this.SelectedYear, this.maxOpenedMonth, false);
                 this.OnScrollCheck();
             }
-            else if (this.minOpenedMonth > 1 && isLoading == false && this.CalendarHandler.scrollTop < 400) {
+            else if (this.minOpenedMonth > 1 &&
+                isLoading == false &&
+                this.CalendarHandler.scrollTop < 400) {
                 this.minOpenedMonth -= 1;
                 yield this.AddMonth(this.SelectedYear, this.minOpenedMonth, true);
                 this.OnScrollCheck();
@@ -66,7 +71,8 @@ class CalendarGrid {
                 month = nowMonth;
             }
             this.SelectedYear = year;
-            document.querySelector('.total-year').innerHTML = this.SelectedYear.toString();
+            document.querySelector(".total-year").innerHTML =
+                this.SelectedYear.toString();
             this.maxOpenedMonth = Number(month) + 1;
             this.minOpenedMonth = Number(month) - 1;
             this.CalendarHandler.innerHTML = "";
@@ -78,14 +84,14 @@ class CalendarGrid {
                 yield this.AddMonth(year, this.maxOpenedMonth, false);
             }
             if (day != null) {
-                let selectedDay = this.Dates.find(date => date.Year == year && date.Month == month && date.Day == day).Element;
+                let selectedDay = this.Dates.find((date) => date.Year == year && date.Month == month && date.Day == day).Element;
                 if (selectedDay != null) {
                     yield this.SelectDay(selectedDay);
                 }
             }
             this.CalendarHandler.scrollTop = this.CalendarHandler.scrollHeight / 4;
             let self = this;
-            this.CalendarHandler.addEventListener('scroll', function () {
+            this.CalendarHandler.addEventListener("scroll", function () {
                 self.OnScrollCheck();
             });
             isLoading = false;
@@ -98,11 +104,11 @@ class CalendarGrid {
             let url;
             if (isOnTop) {
                 try {
-                    for (var _g = true, _h = __asyncValues(document.querySelectorAll('.empty-grid')), _j; _j = yield _h.next(), _a = _j.done, !_a; _g = true) {
+                    for (var _g = true, _h = __asyncValues(document.querySelectorAll(".empty-grid")), _j; _j = yield _h.next(), _a = _j.done, !_a; _g = true) {
                         _c = _j.value;
                         _g = false;
                         const grid = _c;
-                        grid.classList.add('old-grid');
+                        grid.classList.add("old-grid");
                     }
                 }
                 catch (e_1_1) { e_1 = { error: e_1_1 }; }
@@ -112,10 +118,10 @@ class CalendarGrid {
                     }
                     finally { if (e_1) throw e_1.error; }
                 }
-                url = '/get/' + year + '/' + (Number(month)) + '/' + true;
+                url = "/get/" + year + "/" + Number(month) + "/" + true;
                 this.CalendarHandler.insertAdjacentHTML("afterbegin", yield AsyncAjaxGet(url));
                 try {
-                    for (var _k = true, _l = __asyncValues(document.querySelectorAll('.old-grid')), _m; _m = yield _l.next(), _d = _m.done, !_d; _k = true) {
+                    for (var _k = true, _l = __asyncValues(document.querySelectorAll(".old-grid")), _m; _m = yield _l.next(), _d = _m.done, !_d; _k = true) {
                         _f = _m.value;
                         _k = false;
                         const grid = _f;
@@ -131,27 +137,26 @@ class CalendarGrid {
                 }
             }
             else {
-                ;
-                url = '/get/' + year + '/' + (Number(month));
+                url = "/get/" + year + "/" + Number(month);
                 this.CalendarHandler.insertAdjacentHTML("beforeend", yield AsyncAjaxGet(url));
             }
             for (let day = 1; day <= this.DaysInMonth(year, month); day++) {
-                let gridToAdd = document.getElementById(year + '.' + month + '.' + day);
-                let dateGrid = new DateGrid(year, (month), day, gridToAdd);
+                let gridToAdd = document.getElementById(year + "." + month + "." + day);
+                let dateGrid = new DateGrid(year, month, day, gridToAdd);
                 $(gridToAdd).data("year", dateGrid.Year.toString());
                 $(gridToAdd).data("month", dateGrid.Month.toString());
                 $(gridToAdd).data("day", dateGrid.Day.toString());
                 this.Dates.push(dateGrid);
             }
-            for (const grid of document.querySelectorAll('.grid-item')) {
-                if (grid.getAttribute('listener') != 'true') {
+            for (const grid of document.querySelectorAll(".grid-item")) {
+                if (grid.getAttribute("listener") != "true") {
                     let self = this;
-                    grid.addEventListener('mouseover', function () {
+                    grid.addEventListener("mouseover", function () {
                         return __awaiter(this, void 0, void 0, function* () {
                             yield self.SelectDay(grid);
                         });
                     });
-                    grid.setAttribute('listener', 'true');
+                    grid.setAttribute("listener", "true");
                 }
             }
             isLoading = false;
@@ -159,29 +164,32 @@ class CalendarGrid {
     }
     SelectDay(grid) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (grid.id != '' && !modalWindowOpened) {
+            if (grid.id != "" && !modalWindowOpened) {
                 if (this.SelectedDayGrid != null) {
-                    this.SelectedDayGrid.querySelector('.manage-grid').style.visibility = 'hidden';
-                    this.SelectedDayGrid.classList.remove('selected-day');
+                    this.SelectedDayGrid.querySelector(".manage-grid").style.visibility =
+                        "hidden";
+                    this.SelectedDayGrid.classList.remove("selected-day");
                 }
-                grid.classList.add('selected-day');
-                grid.querySelector('.manage-grid').style.visibility = 'visible';
-                let manageGridButton = grid.querySelector('.manage-grid');
-                if (manageGridButton != null && manageGridButton.getAttribute('listener') !== 'true') {
-                    manageGridButton.addEventListener('click', function () {
+                grid.classList.add("selected-day");
+                grid.querySelector(".manage-grid").style.visibility = "visible";
+                let manageGridButton = grid.querySelector(".manage-grid");
+                if (manageGridButton != null &&
+                    manageGridButton.getAttribute("listener") !== "true") {
+                    manageGridButton.addEventListener("click", function () {
                         return __awaiter(this, void 0, void 0, function* () {
-                            let year = $(grid).data('year');
-                            let month = $(grid).data('month');
-                            let day = $(grid).data('day');
+                            let year = $(grid).data("year");
+                            let month = $(grid).data("month");
+                            let day = $(grid).data("day");
                             yield OpenManageWindow(year, month, day);
                         });
                     });
-                    manageGridButton.setAttribute('listener', 'true');
+                    manageGridButton.setAttribute("listener", "true");
                 }
                 this.SelectedDayGrid = grid;
                 let selectedDayYear = $(grid).data("year");
                 let selectedDayMonth = $(grid).data("month");
-                document.querySelector('.month-info').innerHTML = monthDictionary[selectedDayMonth];
+                document.querySelector(".month-info").innerHTML =
+                    monthDictionary[selectedDayMonth];
                 this.UpdateSelectedMonth(selectedDayYear, selectedDayMonth);
             }
         });
@@ -189,13 +197,13 @@ class CalendarGrid {
     UpdateSelectedMonth(selectedYear, selectedMonth) {
         var _a, e_3, _b, _c, _d, e_4, _e, _f;
         return __awaiter(this, void 0, void 0, function* () {
-            let selectedMonthGrids = this.Dates.filter(date => date.Month == selectedMonth && date.Year == selectedYear);
+            let selectedMonthGrids = this.Dates.filter((date) => date.Month == selectedMonth && date.Year == selectedYear);
             try {
-                for (var _g = true, _h = __asyncValues(document.querySelectorAll('.total-month')), _j; _j = yield _h.next(), _a = _j.done, !_a; _g = true) {
+                for (var _g = true, _h = __asyncValues(document.querySelectorAll(".total-month")), _j; _j = yield _h.next(), _a = _j.done, !_a; _g = true) {
                     _c = _j.value;
                     _g = false;
                     const oldMonthGrid = _c;
-                    oldMonthGrid.classList.remove('total-month');
+                    oldMonthGrid.classList.remove("total-month");
                 }
             }
             catch (e_3_1) { e_3 = { error: e_3_1 }; }
@@ -210,7 +218,7 @@ class CalendarGrid {
                     _f = selectedMonthGrids_1_1.value;
                     _k = false;
                     const selectedMonthGrid = _f;
-                    selectedMonthGrid.Element.classList.add('total-month');
+                    selectedMonthGrid.Element.classList.add("total-month");
                 }
             }
             catch (e_4_1) { e_4 = { error: e_4_1 }; }

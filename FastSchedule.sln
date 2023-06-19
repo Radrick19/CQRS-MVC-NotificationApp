@@ -10,6 +10,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastSchedule.Application", "FastSchedule.Application\FastSchedule.Application.csproj", "{08690D90-06E2-40CB-960D-EB3307F32106}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{93577C2D-6E8E-424B-8028-03A130CE9625}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		.prettierignore = .prettierignore
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4423DBDD-6D96-43D4-B36C-36151720F648}"
 EndProject

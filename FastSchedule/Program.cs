@@ -52,7 +52,7 @@ app.UseRouting();
 
 app.UseEndpoints(endponints =>
 {
-    endponints.MapControllerRoute("Default", "{controller=home}/{action=index}/{id?}");
+    endponints.MapControllerRoute("Default", "{controller=registration}/{action=index}");
 });
 
 app.UseStaticFiles();

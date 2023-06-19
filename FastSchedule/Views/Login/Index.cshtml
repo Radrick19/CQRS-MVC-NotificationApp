@@ -1,0 +1,34 @@
+﻿@using FastSchedule.MVC.ViewModels.LoginAndRegistration;
+@model LoginViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="http-equiv" content="Content-type: text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/scss/style.min.css" />
+    <title>Авторизация</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="content-wrapper">
+            <form>
+                <h1>Авторизация</h1>
+                <div class="input-field-handler">
+                    <label asp-for="EmailOrLogin"></label>
+                    <input asp-for="EmailOrLogin" type="text"/>
+                    <span asp-validation-for="EmailOrLogin"></span>
+                </div>
+                <div class="input-field-handler">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" type="password" />
+                    <span asp-validation-for="Password"></span>
+                </div>
+                <div class="input-field-handler">
+                    <input type="submit" value="Войти"/>
+                </div>
+            </form>
+            <small><a href="/registration">Регистрация</a></small>
+            <small><a>Забыли пароль?</a></small>
+        </div>
+    </div>
+</body>
+</html>
