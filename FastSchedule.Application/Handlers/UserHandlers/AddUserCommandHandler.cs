@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FastSchedule.Application.Commands;
 using FastSchedule.Application.Dto;
+using FastSchedule.Application.Services.PasswordService;
 using FastSchedule.Domain.Interfaces;
 using FastSchedule.Domain.Models;
 using MediatR;
@@ -15,31 +16,28 @@ namespace FastSchedule.Application.Handlers.UserHandlers
 {
     public class AddUserCommandHandler : IRequestHandler<AddUserCommand, UserDto>
     {
+        private readonly IPasswordService _passwordService;
         private readonly IRepository<User> _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public AddUserCommandHandler(IRepository<User> userRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public AddUserCommandHandler(IRepository<User> userRepository, IUnitOfWork unitOfWork, IMapper mapper, IPasswordService passwordService)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _passwordService = passwordService;
         }
 
         public async Task<UserDto> Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
-            string hash;
-            string salt = DateTime.Now.GetHashCode().ToString();
-            using (var shaAlg = Sha3.Sha3256())
-            {
-                string inputPassHash = Convert.ToBase64String(shaAlg.ComputeHash(Encoding.UTF8.GetBytes(request.Password)));
-                hash = Convert.ToBase64String(shaAlg.ComputeHash(Encoding.UTF8.GetBytes(inputPassHash + salt)));
-            }
+            string salt = _passwordService.GenerateSalt();
+            string hash = _passwordService.GetHash(request.Password, salt);
 
             var user = new UserDto
             {
-                Email = request.Email,
-                Login = request.Login,
+                Email = request.Email.ToLower(),
+                Login = request.Login.ToLower(),
                 Password = hash,
                 Salt = salt,
                 Guid = Guid.NewGuid(),

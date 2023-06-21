@@ -1,5 +1,6 @@
 using FastSchedule.Application.AutoMapper;
 using FastSchedule.Application.Dto;
+using FastSchedule.Application.Services.PasswordService;
 using FastSchedule.Application.Services.ScheduleMaker;
 using FastSchedule.Domain;
 using FastSchedule.Domain.Infrastucture;
@@ -36,6 +37,8 @@ builder.Services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
 builder.Services.AddTransient<IRepository<ScheduleTask>, TaskRepository>();
 
 builder.Services.AddTransient<IScheduleMaker, ScheduleMaker>();
+
+builder.Services.AddTransient<IPasswordService, PasswordService>();
 
 var app = builder.Build();
 
