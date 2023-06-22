@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace FastSchedule.Application.Queries
 {
-    public class GetUserByIdQuery : IRequest<UserDto>
+    public class GetUserByGuidQuery : IRequest<UserDto>
     {
-        public int UserId { get; set; }
+        public string UserGuid { get; set; }
 
-        public GetUserByIdQuery(int userId)
+        public GetUserByGuidQuery(string userGuid)
         {
-            UserId = userId;
+            UserGuid = userGuid;
         }
     }
 }

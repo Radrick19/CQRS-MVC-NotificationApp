@@ -12,20 +12,20 @@ using System.Threading.Tasks;
 
 namespace FastSchedule.Application.Handlers.UserHandlers
 {
-    public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, UserDto>
+    public class GetUserByGuidQueryHandler : IRequestHandler<GetUserByGuidQuery, UserDto>
     {
         private readonly IRepository<User> _userRepository;
         private readonly IMapper _mapper;
 
-        public GetUserByIdQueryHandler(IRepository<User> userRepository, IMapper mapper)
+        public GetUserByGuidQueryHandler(IRepository<User> userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
             _mapper = mapper;
         }
 
-        public async Task<UserDto> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
+        public async Task<UserDto> Handle(GetUserByGuidQuery request, CancellationToken cancellationToken)
         {
-            return _mapper.Map<UserDto>(await _userRepository.GetByIdAsync(request.UserId));
+            return _mapper.Map<UserDto>(await _userRepository.FirstOrDefaultAsync(user=> user.Guid == new Guid(request.UserGuid)));
         }
     }
 }

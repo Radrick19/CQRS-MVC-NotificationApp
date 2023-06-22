@@ -23,6 +23,14 @@ builder.Services.AddMediatR(cfg=> cfg.RegisterServicesFromAssembly(typeof(Applic
 
 builder.Services.AddAutoMapper(typeof(AppMappingProfile));
 
+builder.Services.AddAuthentication("Cookies")
+    .AddCookie(option =>
+    {
+        option.LoginPath = "/login";
+    });
+
+builder.Services.AddAuthorization();
+
 builder.Logging.ClearProviders();
 
 builder.Host.UseNLog();
@@ -40,6 +48,8 @@ builder.Services.AddTransient<IScheduleMaker, ScheduleMaker>();
 
 builder.Services.AddTransient<IPasswordService, PasswordService>();
 
+builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+
 var app = builder.Build();
 
 //app.UseSwagger();
@@ -50,8 +60,11 @@ var app = builder.Build();
 //    config.SwaggerEndpoint("swagger/v1/swagger.json", "Schedule API");
 //});
 
+app.UseAuthentication();
 
 app.UseRouting();
+
+app.UseAuthorization();
 
 app.UseEndpoints(endponints =>
 {
