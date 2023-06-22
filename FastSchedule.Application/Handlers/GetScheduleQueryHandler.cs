@@ -23,7 +23,7 @@ namespace FastSchedule.Application.Handlers
 
         public async Task<Schedule> Handle(GetScheduleQuery request, CancellationToken cancellationToken)
         {
-            return await _scheduleMaker.GetMonthlySchedule(request.Year, request.Month, request.UserId);
+            return await _scheduleMaker.GetMonthlySchedule(request.Year, request.Month, request.UserGuid);
         }
     }
 }

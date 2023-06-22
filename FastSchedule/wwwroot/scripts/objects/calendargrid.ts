@@ -140,6 +140,14 @@ class CalendarGrid {
         grid.addEventListener("mouseover", async function () {
           await self.SelectDay(grid);
         });
+          grid.addEventListener("click", async function () {
+              if ($(window).width() <= 1000) {
+                  let year = $(grid).data("year");
+                  let month = $(grid).data("month");
+                  let day = $(grid).data("day");
+                  await OpenManageWindow(year, month, day);
+              }
+          })
         grid.setAttribute("listener", "true");
       }
     }
@@ -173,7 +181,7 @@ class CalendarGrid {
       let selectedDayMonth = $(grid).data("month");
       document.querySelector(".month-info").innerHTML =
         monthDictionary[selectedDayMonth];
-      this.UpdateSelectedMonth(selectedDayYear, selectedDayMonth);
+        this.UpdateSelectedMonth(selectedDayYear, selectedDayMonth);
     }
   }
 

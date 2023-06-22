@@ -12,12 +12,12 @@ namespace FastSchedule.Application.Queries
     public class GetTaskByGuidQuery : IRequest<ScheduleTask>
     {
         public Guid Guid { get; set; }
-        public int UserId { get; set; }
+        public string UserGuid { get; set; }
 
-        public GetTaskByGuidQuery(Guid guid, int id)
+        public GetTaskByGuidQuery(Guid guid, string userGuid)
         {
             Guid = guid;
-            UserId = id;
+            UserGuid = userGuid;
         }
     }
 }

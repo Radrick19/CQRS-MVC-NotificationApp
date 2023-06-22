@@ -10,17 +10,17 @@ namespace FastSchedule.Application.Queries
 {
     public class GetDailyScheduleQuery : IRequest<Day>
     {
-        public GetDailyScheduleQuery(int year, int month, int day, int userId)
+        public GetDailyScheduleQuery(int year, int month, int day, string userGuid)
         {
             Year = year;
             Month = month;
             Day = day;
-            UserId = userId;
+            UserGuid = userGuid;
         }
 
         public int Year { get; set; }
         public int Month { get; set; }
         public int Day { get; set; }
-        public int UserId { get; set; }
+        public string UserGuid { get; set; }
     }
 }

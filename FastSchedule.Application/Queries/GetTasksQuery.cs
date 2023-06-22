@@ -11,11 +11,11 @@ namespace FastSchedule.Application.Queries
 {
     public class GetTasksQuery : IRequest<IEnumerable<ScheduleTaskDto>>
     {
-        public int UserId { get; set; }
+        public string UserGuid { get; set; }
 
-        public GetTasksQuery(int userId)
+        public GetTasksQuery(string userGuid)
         {
-            UserId = userId;
+            UserGuid = userGuid;
         }
     }
 }

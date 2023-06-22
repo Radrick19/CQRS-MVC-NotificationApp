@@ -29,10 +29,10 @@ namespace FastSchedule.Application.Services.ScheduleMaker
             _nowTime = TimeOnly.FromDateTime(DateTime.Now);
         }
 
-        public async Task<Schedule> GetMonthlySchedule(int year, int month, int userId)
+        public async Task<Schedule> GetMonthlySchedule(int year, int month, string userGuid)
         {
             DayOfWeek startDayOfWeek = new DateTime(year, month, 1).DayOfWeek;
-            var tasks = await _mediator.Send(new GetTasksQuery(userId));
+            var tasks = await _mediator.Send(new GetTasksQuery(userGuid));
 
             IEnumerable<DateOnly> daysOfMonth = Enumerable
                 .Range(1, DateTime.DaysInMonth(year, month))
@@ -47,9 +47,9 @@ namespace FastSchedule.Application.Services.ScheduleMaker
             return new Schedule(startDayOfWeek, days);
         }
 
-        public async Task<Day> GetDaySchedule(int year, int month, int day, int userId) 
+        public async Task<Day> GetDaySchedule(int year, int month, int day, string userGuid) 
         {
-            var tasks = await _mediator.Send(new GetTasksQuery(userId));
+            var tasks = await _mediator.Send(new GetTasksQuery(userGuid));
             var date = new DateOnly(year, month, day);
             return GetDay(tasks, date);
         }
@@ -103,7 +103,7 @@ namespace FastSchedule.Application.Services.ScheduleMaker
             // Просроченные задачи
             daySchedule.OverdueTasks
                 .AddRange(daySchedule.Tasks
-                .Where(task => (task.EventDate < _nowDate) || (task.EventDate == _nowDate && (task.EventTime < _nowTime || task.EventTime == null)))
+                .Where(task => (task.EventDate < _nowDate) || (task.EventDate == _nowDate && task.EventTime < _nowTime))
                 .OrderBy(task => task.EventTime == null)
                 .ThenBy(task => task.EventTime)
                 .ToList());

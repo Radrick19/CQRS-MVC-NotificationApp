@@ -13,11 +13,11 @@ namespace FastSchedule.Application.Queries
     {
         public int Year { get; set; }
         public int Month { get; set; }
-        public int UserId { get; set; }
+        public string UserGuid { get; set; }
 
-        public GetScheduleQuery(int year, int month, int userId)
+        public GetScheduleQuery(int year, int month, string userGuid)
         {
-            UserId = userId;
+            UserGuid = userGuid;
             Year = year;
             Month = month;
         }

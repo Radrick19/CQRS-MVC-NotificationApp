@@ -21,7 +21,7 @@ namespace FastSchedule.Application.Handlers
 
         public async Task<Day> Handle(GetDailyScheduleQuery request, CancellationToken cancellationToken)
         {
-            var daySchedule = await _scheduleMaker.GetDaySchedule(request.Year, request.Month, request.Day, request.UserId);
+            var daySchedule = await _scheduleMaker.GetDaySchedule(request.Year, request.Month, request.Day, request.UserGuid);
             return daySchedule;
         }
     }

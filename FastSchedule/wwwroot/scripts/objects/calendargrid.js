@@ -156,6 +156,16 @@ class CalendarGrid {
                             yield self.SelectDay(grid);
                         });
                     });
+                    grid.addEventListener("click", function () {
+                        return __awaiter(this, void 0, void 0, function* () {
+                            if ($(window).width() <= 1000) {
+                                let year = $(grid).data("year");
+                                let month = $(grid).data("month");
+                                let day = $(grid).data("day");
+                                yield OpenManageWindow(year, month, day);
+                            }
+                        });
+                    });
                     grid.setAttribute("listener", "true");
                 }
             }

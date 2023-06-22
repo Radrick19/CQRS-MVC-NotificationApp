@@ -356,6 +356,11 @@ body {
   font-weight: 100;
   font-size: 20px;
 }
+@media only screen and (max-width: 1000px) {
+  .calendar-handler .calendar-and-info .days-of-week-row p {
+    font-size: 40px;
+  }
+}
 .calendar-handler .calendar-and-info .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -373,7 +378,34 @@ body {
   margin: 0.5px;
   background-color: #f3f3f3;
   min-height: 150px;
-  max-height: 200px;
+}
+.calendar-handler .calendar-and-info .calendar-grid .grid-item .mobile-task-info {
+  height: 50px;
+  width: 50px;
+  display: none;
+}
+@media only screen and (max-width: 1000px) {
+  .calendar-handler .calendar-and-info .calendar-grid .grid-item {
+    margin: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .calendar-handler .calendar-and-info .calendar-grid .grid-item .mobile-task-info {
+    height: 25px;
+    width: 25px;
+    display: flex;
+    background-color: #3771c8;
+    margin-top: 25px;
+    border-radius: 50%;
+  }
+  .calendar-handler .calendar-and-info .calendar-grid .grid-item .mobile-task-info.overdue {
+    background-color: #c5221f;
+  }
+  .calendar-handler .calendar-and-info .calendar-grid .grid-item .mobile-task-info.completed {
+    background-color: #5eba7d;
+  }
 }
 .calendar-handler .calendar-and-info .calendar-grid .grid-item a {
   display: block;
@@ -396,6 +428,11 @@ body {
   font-weight: 400;
   cursor: default;
 }
+@media only screen and (max-width: 1000px) {
+  .calendar-handler .calendar-and-info .calendar-grid .grid-item .manage-and-date .date-and-symbol p {
+    font-size: 40px;
+  }
+}
 .calendar-handler .calendar-and-info .calendar-grid .grid-item .manage-and-date .date-and-symbol img {
   height: 25px;
   width: auto;
@@ -405,17 +442,32 @@ body {
   margin-left: 10px;
   cursor: default;
 }
+@media only screen and (max-width: 1000px) {
+  .calendar-handler .calendar-and-info .calendar-grid .grid-item .manage-and-date .date-and-symbol img {
+    display: none !important;
+  }
+}
 .calendar-handler .calendar-and-info .calendar-grid .grid-item .manage-and-date img {
   height: 30px;
   width: auto;
   cursor: pointer;
   visibility: hidden;
 }
+@media only screen and (max-width: 1000px) {
+  .calendar-handler .calendar-and-info .calendar-grid .grid-item .manage-and-date img {
+    display: none;
+  }
+}
 .calendar-handler .calendar-and-info .calendar-grid .grid-item .events {
   display: grid;
   grid-template-columns: 1fr;
   grid-row-gap: 10px;
   padding: 10px 5px;
+}
+@media only screen and (max-width: 1000px) {
+  .calendar-handler .calendar-and-info .calendar-grid .grid-item .events {
+    display: none;
+  }
 }
 .calendar-handler .calendar-and-info .calendar-grid .grid-item .events .small-block-of-tasks {
   margin-left: auto;
@@ -472,10 +524,17 @@ body {
 .manage-task-window-handler .edit-tasks-window {
   width: 80%;
   position: absolute;
-  top: 100px;
+  top: 10%;
   left: 10%;
   height: auto;
   background-color: white;
+}
+@media only screen and (max-width: 1000px) {
+  .manage-task-window-handler .edit-tasks-window {
+    width: 100%;
+    left: 0;
+    top: 10%;
+  }
 }
 .manage-task-window-handler .edit-tasks-window .content {
   display: block;
@@ -513,12 +572,24 @@ body {
   align-items: baseline;
   font-size: 20px;
 }
-.manage-task-window-handler .edit-tasks-window .content .top-bar .date-and-dayofweek h4 {
+.manage-task-window-handler .edit-tasks-window .content .top-bar .date-and-dayofweek h4, .manage-task-window-handler .edit-tasks-window .content .top-bar .date-and-dayofweek h3 {
   margin-left: 20px;
+}
+@media only screen and (max-width: 1000px) {
+  .manage-task-window-handler .edit-tasks-window .content .top-bar .date-and-dayofweek h4, .manage-task-window-handler .edit-tasks-window .content .top-bar .date-and-dayofweek h3 {
+    font-size: 40px;
+  }
 }
 .manage-task-window-handler .edit-tasks-window .content .top-bar img {
   height: 25px;
   width: auto;
+}
+@media only screen and (max-width: 1000px) {
+  .manage-task-window-handler .edit-tasks-window .content .top-bar img {
+    height: 55px;
+    width: 55px;
+    margin-top: 30px;
+  }
 }
 .manage-task-window-handler .edit-tasks-window .content .today-tasks {
   display: grid;
@@ -528,9 +599,14 @@ body {
   margin-bottom: 50px;
 }
 .manage-task-window-handler .edit-tasks-window .content .today-tasks h4 {
-  margin: 0px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  margin-top: 40px;
   font-size: 18px;
+}
+@media only screen and (max-width: 1000px) {
+  .manage-task-window-handler .edit-tasks-window .content .today-tasks h4 {
+    font-size: 45px;
+  }
 }
 .manage-task-window-handler .edit-tasks-window .content .today-tasks .task {
   display: flex;
@@ -542,11 +618,16 @@ body {
   margin-top: 5px;
   color: #726e6b;
 }
+@media only screen and (max-width: 1000px) {
+  .manage-task-window-handler .edit-tasks-window .content .today-tasks .task small {
+    font-size: 30px;
+  }
+}
 .manage-task-window-handler .edit-tasks-window .content .today-tasks .task .main-info {
   line-height: 30px;
   display: grid;
   grid-template-columns: 10fr 1fr 1fr;
-  align-items: center;
+  align-items: flex-end;
   max-width: 100%;
 }
 .manage-task-window-handler .edit-tasks-window .content .today-tasks .task .main-info .info {
@@ -554,6 +635,11 @@ body {
   align-items: center;
   justify-content: flex-start;
   font-size: 18px;
+}
+@media only screen and (max-width: 1000px) {
+  .manage-task-window-handler .edit-tasks-window .content .today-tasks .task .main-info .info {
+    font-size: 45px;
+  }
 }
 .manage-task-window-handler .edit-tasks-window .content .today-tasks .task .main-info .info a {
   text-decoration: none;
@@ -565,15 +651,32 @@ body {
 .manage-task-window-handler .edit-tasks-window .content .today-tasks .task .main-info .info .color-dot {
   margin-right: 20px;
 }
+@media only screen and (max-width: 1000px) {
+  .manage-task-window-handler .edit-tasks-window .content .today-tasks .task .main-info .info .color-dot {
+    height: 25px;
+    width: 25px;
+  }
+}
 .manage-task-window-handler .edit-tasks-window .content .today-tasks .task .main-info .info small {
   margin-left: 40px;
   font-size: 16px;
   color: #4772fa;
 }
+@media only screen and (max-width: 1000px) {
+  .manage-task-window-handler .edit-tasks-window .content .today-tasks .task .main-info .info small {
+    font-size: 40px;
+  }
+}
 .manage-task-window-handler .edit-tasks-window .content .today-tasks .task .main-info input {
   margin-right: 30px;
   height: 30px;
   width: 30px;
+}
+@media only screen and (max-width: 1000px) {
+  .manage-task-window-handler .edit-tasks-window .content .today-tasks .task .main-info input {
+    height: 55px;
+    width: 55px;
+  }
 }
 .manage-task-window-handler .edit-tasks-window .content .today-tasks .task .main-info .delete-selected-completed-day {
   margin-right: 30px;
@@ -583,6 +686,12 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   cursor: pointer;
+}
+@media only screen and (max-width: 1000px) {
+  .manage-task-window-handler .edit-tasks-window .content .today-tasks .task .main-info .delete-selected-completed-day {
+    height: 70px;
+    width: 70px;
+  }
 }
 .manage-task-window-handler .edit-tasks-window .content .today-tasks .task .main-info .delete-selected-completed-day:hover {
   background-image: url(/images/icons/open-bin.png);
@@ -595,6 +704,12 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   cursor: pointer;
+}
+@media only screen and (max-width: 1000px) {
+  .manage-task-window-handler .edit-tasks-window .content .today-tasks .task .main-info .delete-button {
+    height: 70px;
+    width: 70px;
+  }
 }
 .manage-task-window-handler .edit-tasks-window .content .today-tasks .task .main-info .delete-button:hover {
   background-image: url(/images/icons/open-bin.png);
@@ -649,14 +764,39 @@ body {
   align-items: flex-end;
   margin-bottom: 20px;
 }
+@media only screen and (max-width: 1000px) {
+  .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line {
+    flex-direction: column;
+  }
+  .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line .setting {
+    width: 100%;
+    min-height: 150px;
+  }
+  .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line .setting label {
+    font-size: 40px !important;
+  }
+}
 .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line input {
   background-color: white;
   min-height: 35px;
   padding: 10px;
   border: 1px solid black;
 }
+@media only screen and (max-width: 1000px) {
+  .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line input {
+    width: 100%;
+    font-size: 35px;
+    min-height: 75px;
+  }
+}
 .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line input[type=text] {
   width: 15vw;
+}
+@media only screen and (max-width: 1000px) {
+  .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line input[type=text] {
+    width: 100%;
+    min-height: 75px;
+  }
 }
 .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line input[type=time] {
   min-width: 100px;
@@ -670,11 +810,23 @@ body {
   align-items: center;
   justify-items: center;
 }
+@media only screen and (max-width: 1000px) {
+  .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line .color-picker {
+    height: 200px;
+    padding: 50px 0px;
+  }
+}
 .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line .color-picker .color {
   border-radius: 50px;
   border: 1px none black;
   height: 22px;
   width: 22px;
+}
+@media only screen and (max-width: 1000px) {
+  .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line .color-picker .color {
+    height: 40px;
+    width: 40px;
+  }
 }
 .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line .color-picker .color.purple {
   background-color: #d6b1e3;
@@ -697,11 +849,31 @@ body {
 .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line .setting.remind {
   display: none;
 }
+@media only screen and (max-width: 1000px) {
+  .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line .setting select {
+    width: 100%;
+    min-height: 75px;
+    font-size: 35px;
+  }
+}
+.manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line .setting select option {
+  font-size: 15px;
+}
 .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line .setting .add-button {
   display: block;
   width: 50px;
   height: 50px;
   border-radius: 50px;
+}
+.manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line .setting .add-button img {
+  width: 50px;
+  height: 50px;
+}
+@media only screen and (max-width: 1000px) {
+  .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line .setting .add-button img {
+    width: 125px;
+    height: 125px;
+  }
 }
 .manage-task-window-handler .edit-tasks-window .add-new-task .task-settings-line .setting .add-button:hover {
   background-color: #f3f3f3;
@@ -714,6 +886,11 @@ body {
   width: 100%;
   min-height: 100px;
   padding: 15px;
+}
+@media only screen and (max-width: 1000px) {
+  .manage-task-window-handler .edit-tasks-window .add-new-task .decription-line textarea {
+    font-size: 35px;
+  }
 }
 
 .wrapper {
@@ -819,17 +996,33 @@ body {
   margin-right: 30px;
   width: 100px;
 }
+@media only screen and (max-width: 1000px) {
+  .content .info .month-info {
+    display: none;
+  }
+}
 .content .info .year-info {
   display: flex;
+  align-items: center;
   margin-right: 20px;
-  width: 140px;
+  width: 200px;
 }
 .content .info .year-info p {
   margin: 0px 15px;
 }
+@media only screen and (max-width: 1000px) {
+  .content .info .year-info p {
+    font-size: 4rem;
+  }
+}
 .content .info .year-info img {
   height: 17px;
   width: auto;
+}
+@media only screen and (max-width: 1000px) {
+  .content .info .year-info img {
+    height: 40px;
+  }
 }
 .content .info .year-info .next-year img {
   transform: rotate(180deg);
@@ -842,6 +1035,11 @@ header {
   z-index: 2;
   border: 2px solid #f3f3f3;
 }
+@media only screen and (max-width: 1000px) {
+  header {
+    padding: 50px 0px;
+  }
+}
 header .account-data {
   display: flex;
   align-items: center;
@@ -853,6 +1051,11 @@ header .account-data p {
   margin-left: 10px;
   font-size: 16px;
   color: black;
+}
+@media only screen and (max-width: 1000px) {
+  header .account-data p {
+    font-size: 4rem;
+  }
 }
 header .account-data img {
   height: 35px;

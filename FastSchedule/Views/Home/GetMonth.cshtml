@@ -16,13 +16,33 @@
         <div id="@day.Date.Year.@day.Date.Month.@day.Date.Day" class="grid-item @((int)day.Date.DayOfWeek == 6 || (int)day.Date.DayOfWeek == 0 ? "weekend-day" : "")">
             <div class="manage-and-date">
                 <div class="date-and-symbol">
-                    <p style="@(Model.TodayDate == day.Date ? "font-weight: 600;" : "")">@day.Date.Day</p>
+                    @if(day.Date.Day == 1)
+                    {
+                        <p style="@(Model.TodayDate == day.Date ? "font-weight: 600;" : "")">@day.Date.Day.ToString("00")</p>
+                        <p style="@(Model.TodayDate == day.Date ? "font-weight: 800;" : "")">.@day.Date.Month.ToString("00")</p>
+                    }
+                    else
+                    {
+                        <p style="@(Model.TodayDate == day.Date ? "font-weight: 600;" : "")">@day.Date.Day</p>
+                    }
                     <img style="@(day.OverdueTasks != null && day.OverdueTasks.Count() != 0 ? "display: block;" : "")" class="day-symbol" src="~/images/icons/overdue.png"/>
                     <img style="@(day.IsDayComplete ? "display: block;" : "")" class="day-symbol" src="~/images/icons/complete.png" />
                 </div>
                 <img class="manage-grid" src="/images/icons/info.png" />
             </div>
             @await Html.PartialAsync("TasksList", day)
+            @if (day.OverdueTasks != null && day.OverdueTasks.Count > 0)
+            {
+                <a class="mobile-task-info overdue"></a>
+            }
+            else if (day.Tasks != null && day.Tasks.Count > 0)
+            {
+                <a class="mobile-task-info"></a>
+            }
+            else if (day.IsDayComplete)
+            {
+                <a class="mobile-task-info completed"></a>
+            }
         </div>
     }
 }

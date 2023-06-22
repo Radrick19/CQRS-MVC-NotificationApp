@@ -3,18 +3,11 @@ using FastSchedule.Application.Dto;
 using FastSchedule.Application.Queries;
 using FastSchedule.Application.Services.ScheduleMaker.Models;
 using FastSchedule.Domain.Infrastucture.Enums;
-using FastSchedule.Domain.Interfaces;
-using FastSchedule.Domain.Models;
-using FastSchedule.Domain.Models.Tasks;
 using FastSchedule.MVC.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.EntityFrameworkCore.Query;
-using Microsoft.Identity.Client;
 using System.Security.Claims;
-using System.Transactions;
 
 namespace FastSchedule.MVC.Controllers
 {
@@ -33,8 +26,7 @@ namespace FastSchedule.MVC.Controllers
         public async Task<IActionResult> GetMonth(int year, int month, bool isStartMonth = false)
         {
             var userGuid = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Sid).Value;
-            var user = await _mediator.Send(new GetUserByGuidQuery(userGuid));
-            Schedule schedule = await _mediator.Send(new GetScheduleQuery(year, month, user.Id));
+            Schedule schedule = await _mediator.Send(new GetScheduleQuery(year, month, userGuid));
             int? weekGap = null;
             if (isStartMonth)
                 weekGap = schedule.StartDayOfWeek == 0 ? 6 : (int)schedule.StartDayOfWeek - 1;
@@ -52,8 +44,7 @@ namespace FastSchedule.MVC.Controllers
         public async Task<IActionResult> TasksWindow(int year, int month, int day)
         {
             var userGuid = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Sid).Value;
-            var user = await _mediator.Send(new GetUserByGuidQuery(userGuid));
-            Day daySchdule = await _mediator.Send(new GetDailyScheduleQuery(year,month, day, user.Id));
+            Day daySchdule = await _mediator.Send(new GetDailyScheduleQuery(year, month, day, userGuid));
 
             return PartialView(daySchdule);
         }
@@ -62,9 +53,8 @@ namespace FastSchedule.MVC.Controllers
         public async Task<IActionResult> UpdateTaskWindow(string guid)
         {
             var userGuid = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Sid).Value;
-            var user = await _mediator.Send(new GetUserByGuidQuery(userGuid));
-            var tasks = await _mediator.Send(new GetTasksQuery(user.Id));
-            var task = tasks.FirstOrDefault(task=> task.Guid == new Guid(guid));
+            var tasks = await _mediator.Send(new GetTasksQuery(userGuid));
+            var task = tasks.FirstOrDefault(task => task.Guid == new Guid(guid));
             var viewModel = new ModalWindowViewModel(task, isAddWindow: false);
             return PartialView(viewModel);
         }
@@ -77,12 +67,11 @@ namespace FastSchedule.MVC.Controllers
             string? description = null, string? time = null)
         {
             var userGuid = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Sid).Value;
-            var user = await _mediator.Send(new GetUserByGuidQuery(userGuid));
             try
             {
-                var task = await _mediator.Send(new GetTaskByGuidQuery(new Guid(guid),user.Id));
+                var task = await _mediator.Send(new GetTaskByGuidQuery(new Guid(guid), userGuid));
                 task.Label = label;
-                if(task.TaskType != (TaskType)repeat)
+                if (task.TaskType != (TaskType)repeat)
                 {
                     task.EventDate = new DateOnly(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(day));
                 }
@@ -129,7 +118,7 @@ namespace FastSchedule.MVC.Controllers
         [HttpPost("add/{year}/{month}/{day}/{label}/{reminder}/{repeat}/{color}/{time}")]
         [HttpPost("addwithdesc/{year}/{month}/{day}/{label}/{reminder}/{repeat}/{color}/{description}")]
         [HttpPost("addwithdesc/{year}/{month}/{day}/{label}/{reminder}/{repeat}/{color}/{description}/{time}")]
-        public async Task<bool> AddTask(int year, int month, int day, string label, int reminder, int repeat, string color, 
+        public async Task<bool> AddTask(int year, int month, int day, string label, int reminder, int repeat, string color,
             string? description = null, string? time = null)
         {
             var userGuid = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Sid).Value;
@@ -156,15 +145,15 @@ namespace FastSchedule.MVC.Controllers
                 RemindType remindType = (RemindType)reminder;
                 task.RemindType = remindType;
 
-                if(remindType == RemindType.FifteenMinutes)
+                if (remindType == RemindType.FifteenMinutes)
                 {
                     task.PreNotifyTime = TimeSpan.FromMinutes(15);
                 }
-                else if(remindType == RemindType.HalfHour)
+                else if (remindType == RemindType.HalfHour)
                 {
                     task.PreNotifyTime = TimeSpan.FromMinutes(30);
                 }
-                else if(remindType == RemindType.Hour)
+                else if (remindType == RemindType.Hour)
                 {
                     task.PreNotifyTime = TimeSpan.FromHours(1);
                 }
@@ -190,10 +179,9 @@ namespace FastSchedule.MVC.Controllers
         public async Task<bool> AddCompletedDay(string guid, int year, int month, int day)
         {
             var userGuid = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Sid).Value;
-            var user = await _mediator.Send(new GetUserByGuidQuery(userGuid));
             try
             {
-                var task = await _mediator.Send(new GetTaskByGuidQuery(new Guid(guid), user.Id));
+                var task = await _mediator.Send(new GetTaskByGuidQuery(new Guid(guid), userGuid));
                 var date = new DateOnly(year, month, day);
                 List<DateOnly> completedDays;
                 if (task.CompletedDays != null)
@@ -216,10 +204,9 @@ namespace FastSchedule.MVC.Controllers
         public async Task<bool> RemoveCompletedDay(string guid, int year, int month, int day)
         {
             var userGuid = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Sid).Value;
-            var user = await _mediator.Send(new GetUserByGuidQuery(userGuid));
             try
             {
-                var task = await _mediator.Send(new GetTaskByGuidQuery(new Guid(guid), user.Id));
+                var task = await _mediator.Send(new GetTaskByGuidQuery(new Guid(guid), userGuid));
                 var date = new DateOnly(year, month, day);
                 List<DateOnly> completedDays = task.CompletedDays.ToList();
                 completedDays.Remove(date);
@@ -237,10 +224,9 @@ namespace FastSchedule.MVC.Controllers
         public async Task<bool> DeleteDay(string guid, int year, int month, int day)
         {
             var userGuid = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Sid).Value;
-            var user = await _mediator.Send(new GetUserByGuidQuery(userGuid));
             try
             {
-                var task = await _mediator.Send(new GetTaskByGuidQuery(new Guid(guid), user.Id));
+                var task = await _mediator.Send(new GetTaskByGuidQuery(new Guid(guid), userGuid));
                 var date = new DateOnly(year, month, day);
                 List<DateOnly> deletedDays;
                 if (task.DeletedDays != null)
@@ -263,10 +249,9 @@ namespace FastSchedule.MVC.Controllers
         public async Task<bool> DeleteTask(string guid)
         {
             var userGuid = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Sid).Value;
-            var user = await _mediator.Send(new GetUserByGuidQuery(userGuid));
             try
             {
-                var task = await _mediator.Send(new GetTaskByGuidQuery(new Guid(guid), user.Id));
+                var task = await _mediator.Send(new GetTaskByGuidQuery(new Guid(guid), userGuid));
                 task.IsDeleted = true;
                 await _mediator.Send(new UpdateTaskCommand(task));
                 return true;

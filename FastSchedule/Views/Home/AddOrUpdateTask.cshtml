@@ -53,15 +53,19 @@
         <div class="setting">
             @if (Model.IsAddWindow)
             {
-                <img src="~/images/icons/add.png" class="add-button" />
+                <a class="add-button">
+                    <img src="~/images/icons/add.png" />
+                </a>
             }
             else
             {
-                <img src="~/images/icons/refresh.png" class="update-button" />
+                <a class="update-button">
+                    <img src="~/images/icons/refresh.png" />
+                </a>
             }
         </div>
     </div>
     <div class="decription-line">
-        <textarea name="description">@Model.Task.Description</textarea>
+        <textarea name="description" placeholder="Описание">@Model.Task.Description</textarea>
     </div>
 </div>

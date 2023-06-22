@@ -30,11 +30,11 @@
             {
                 @await Html.PartialAsync("DetailsTasksList", new TasksListViewModel(Model.OverdueTasks, TasksCondition.Overdue))
             }
-            @if (Model.Tasks != null)
+            @if (Model.Tasks != null && Model.Tasks.Count() > 0)
             {
                 @await Html.PartialAsync("DetailsTasksList", new TasksListViewModel(Model.Tasks, TasksCondition.InProgress))
             }
-            @if(Model.CompletedTasks != null)
+            @if(Model.CompletedTasks != null && Model.CompletedTasks.Count() > 0)
             {
                 @await Html.PartialAsync("DetailsTasksList", new TasksListViewModel(Model.CompletedTasks, TasksCondition.Completed))
             }

@@ -68,7 +68,7 @@ app.UseAuthorization();
 
 app.UseEndpoints(endponints =>
 {
-    endponints.MapControllerRoute("Default", "{controller=registration}/{action=index}");
+    endponints.MapControllerRoute("Default", "{controller=home}/{action=index}");
 });
 
 app.UseStaticFiles();

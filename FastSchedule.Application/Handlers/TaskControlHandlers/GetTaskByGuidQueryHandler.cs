@@ -25,7 +25,7 @@ namespace FastSchedule.Application.Handlers.TaskControlHandlers
 
         public async Task<ScheduleTask> Handle(GetTaskByGuidQuery request, CancellationToken cancellationToken)
         {
-            return await _taskRepository.FirstOrDefaultAsync(task=> task.Guid == request.Guid && task.UserId == request.UserId);
+            return await _taskRepository.FirstOrDefaultAsync(task=> task.Guid == request.Guid && task.User.Guid == new Guid(request.UserGuid));
         }
     }
 }

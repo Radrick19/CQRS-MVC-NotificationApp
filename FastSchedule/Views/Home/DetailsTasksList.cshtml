@@ -1,4 +1,5 @@
 ﻿@using FastSchedule.Application.Infrastructure.Enums;
+@using FastSchedule.Domain.Infrastucture.Enums;
 @using FastSchedule.MVC.ViewModels;
 @model TasksListViewModel
 @{
@@ -23,7 +24,7 @@
                     }
                 </div>
                 <input class="@(Model.Status == TasksCondition.Completed ? "uncomplete-task" : "complete-task")" value="@task.Guid" type="checkbox" @(Model.Status == TasksCondition.Completed ? "checked" : "") />
-                @if (task.TaskType == FastSchedule.Domain.Infrastucture.Enums.TaskType.Onetime)
+                @if (task.TaskType == TaskType.Onetime)
                 {
                     <div id="@task.Guid" class="delete-selected-completed-day">
                     </div>

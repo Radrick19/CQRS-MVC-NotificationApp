@@ -23,7 +23,7 @@ namespace FastSchedule.Application.Dto
         public IEnumerable<DateOnly>? DeletedDays { get; set; } = null;
         public bool IsDeleted { get; set; } = false;
         [ForeignKey("UserId")]
-        public User? User { get; set; }
+        public User User { get; set; }
         public string? Description { get; set; }
         public TimeOnly? EventTime { get; set; }
         public TimeSpan? PreNotifyTime { get; set; }

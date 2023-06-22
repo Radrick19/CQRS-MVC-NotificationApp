@@ -28,7 +28,7 @@ namespace FastSchedule.Application.Handlers.TaskControlHandlers
         {
             return await Task.FromResult(_tasksRepository
                 .Get()
-                .Where(task=> task.UserId == request.UserId)
+                .Where(task=> task.User.Guid == new Guid(request.UserGuid))
                 .Select(task => _mapper.Map<ScheduleTaskDto>(task)));
         }
     }
