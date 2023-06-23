@@ -11,15 +11,13 @@ namespace FastSchedule.Domain.Models
     {
         public Guid Guid { get; set; }
         public string Login { get; set; }
-        public string Email { get; set; }
         public string Password { get; set; }
         public string Salt { get; set; }
 
-        public User(Guid guid, string login, string email, string password, string salt)
+        public User(Guid guid, string login, string password, string salt)
         {
             Guid = guid;
             Login = login;
-            Email = email;
             Password = password;
             Salt = salt;
         }

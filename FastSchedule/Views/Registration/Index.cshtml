@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="http-equiv" content="Content-type: text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" href="/scss/style.min.css" />
     <title>Регистрация</title>
@@ -16,11 +17,6 @@
                     <label asp-for="Login"></label>
                     <input required asp-for="Login" type="text" />
                     <span asp-validation-for="Login"></span>
-                </div>
-                <div class="input-field-handler">
-                    <label asp-for="Email"></label>
-                    <input required asp-for="Email" type="text" />
-                    <span asp-validation-for="Email"></span>
                 </div>
                 <div class="input-field-handler">
                     <label asp-for="Password"></label>

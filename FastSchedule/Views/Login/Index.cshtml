@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="http-equiv" content="text/html" charset="UTF-8" />
     <link rel="stylesheet" type="text/css" href="/scss/style.min.css" />
     <title>Авторизация</title>
@@ -14,9 +15,9 @@
                 <h1>Авторизация</h1>
                 <div class="validation" asp-validation-summary="ModelOnly"></div>
                 <div class="input-field-handler">
-                    <label asp-for="EmailOrLogin"></label>
-                    <input required asp-for="EmailOrLogin" type="text"/>
-                    <span asp-validation-for="EmailOrLogin"></span>
+                    <label asp-for="Login"></label>
+                    <input required asp-for="Login" type="text"/>
+                    <span asp-validation-for="Login"></span>
                 </div>
                 <div class="input-field-handler">
                     <label asp-for="Password"></label>

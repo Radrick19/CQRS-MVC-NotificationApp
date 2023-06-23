@@ -1,0 +1,40 @@
+version: "3.9"
+networks:
+  fast-schedule-dev:
+    driver: bridge
+services:
+  app:
+    container_name: fast-schedule
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=postgres_db;Port=5432;Database=qlouni;Username=postgres;Password=259;
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "8080:80"
+    networks:
+      - fast-schedule-dev
+    depends_on:
+      - ms-sql
+    volumes:
+      - fast-schedule-images:/app/wwwroot/images
+      - fast-schedule-logs:/app/logs/
+  ms-sql_db:
+    container_name: ms-sql
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=259
+      - POSTGRES_DB=qlouni
+    ports:
+      - "5433:5432"
+    restart: always
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    networks:
+      - qlouni-store-dev
+volumes:
+  fast-schedule-images:
+  fast-schedule-logs:
+  ms-data:

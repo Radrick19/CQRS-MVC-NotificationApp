@@ -10,10 +10,9 @@ namespace FastSchedule.Application.Commands
 {
     public class AddUserCommand : IRequest<UserDto>
     {
-        public AddUserCommand(string login, string email, string password)
+        public AddUserCommand(string login, string password)
         {
             Login = login;
-            Email = email;
             Password = password;
         }
 

@@ -7,9 +7,9 @@ namespace FastSchedule.MVC.ViewModels.LoginAndRegistration
 {
     public class LoginViewModel
     {
-        [DisplayName("Почта/Логин")]
+        [DisplayName("Логин")]
         [StringLength(64)]
-        public string EmailOrLogin { get; set; }
+        public string Login { get; set; }
 
         [DisplayName("Пароль")]
         [StringLength(64)]

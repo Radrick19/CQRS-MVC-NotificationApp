@@ -39,7 +39,7 @@ body {
                 font-size: 20px;
 
                 @media only screen and (max-width: $start-mobile-width) {
-                    font-size: 40px;
+                    font-size: 25px;
                 }
             }
         }
@@ -65,6 +65,10 @@ body {
                 background-color: #f3f3f3;
                 min-height: 150px;
 
+                @media only screen and (max-width: $start-mobile-width) {
+                    min-height: 70px;
+                }
+
                 .mobile-task-info {
                     height: 50px;
                     width: 50px;
@@ -72,18 +76,18 @@ body {
                 }
 
                 @media only screen and (max-width: $start-mobile-width) {
-                    margin: 0px;
                     display: flex;
-                    justify-content: center;
+                    justify-content: flex-start;
                     align-items: center;
                     flex-direction: column;
+                    padding-top: 20px;
 
                     .mobile-task-info {
-                        height: 25px;
-                        width: 25px;
+                        height: 13px;
+                        width: 13px;
                         display: flex;
                         background-color: #3771c8;
-                        margin-top: 25px;
+                        margin-top: 10px;
                         border-radius: 50%;
 
                         &.overdue {
@@ -110,6 +114,10 @@ body {
                     padding: 10px 15px 0px 10px;
                     line-height: 20px;
 
+                    @media only screen and (max-width: $start-mobile-width) {
+                        padding: 2px;
+                    }
+
                     .date-and-symbol {
                         display: flex;
 
@@ -120,7 +128,19 @@ body {
                             cursor: default;
 
                             @media only screen and (max-width: $start-mobile-width) {
-                                font-size: 40px;
+                                font-size: 24px;
+                            }
+
+                            @media only screen and (max-width: 450px) {
+                                font-size: 22px;
+                            }
+
+                            @media only screen and (max-width: 400px) {
+                                font-size: 20px;
+                            }
+
+                            @media only screen and (max-width: 300px) {
+                                font-size: 14px;
                             }
                         }
 
@@ -154,7 +174,7 @@ body {
                 .events {
                     display: grid;
                     grid-template-columns: 1fr;
-                    grid-row-gap: 10px;
+                    grid-row-gap: 5px;
                     padding: 10px 5px;
 
                     @media only screen and (max-width: $start-mobile-width) {
@@ -188,6 +208,7 @@ body {
                         grid-template-columns: 3fr 1fr;
                         align-items: baseline;
                         line-height: 16px;
+                        border-radius: 3px;
 
                         .event-label {
                             font-weight: 400;
@@ -229,21 +250,34 @@ body {
     .edit-tasks-window {
         width: 80%;
         position: absolute;
-        top: 10%;
+        top: 10vh;
         left: 10%;
         height: auto;
         background-color: white;
 
         @media only screen and (max-width: $start-mobile-width) {
-            width: 100%;
+            position: absolute;
             left: 0;
-            top: 10%;
+            width: 100%;
+            min-height: 100vh;
+            height: auto;
+        }
+
+        @media only screen and (max-height: 500px) {
+            position: absolute;
+            left: 0;
+            top: 20vh;
+            width: 100%;
         }
 
         .content {
             display: block;
             margin: 0px;
             padding: 20px 40px;
+
+            @media only screen and (max-width: $start-mobile-width) {
+                padding: 10px;
+            }
 
             p {
                 font-size: 20px;
@@ -276,16 +310,26 @@ body {
                 justify-content: space-between;
                 margin-bottom: 25px;
 
+
+                @media only screen and (max-width: $start-mobile-width) {
+                    margin: 10px 0px;
+                }
+
                 .date-and-dayofweek {
                     display: flex;
                     align-items: baseline;
                     font-size: 20px;
 
+                    @media only screen and (max-width: $start-mobile-width) {
+                        flex-direction: column;
+                    }
+
                     h4, h3 {
                         margin-left: 20px;
 
                         @media only screen and (max-width: $start-mobile-width) {
-                            font-size: 40px;
+                            font-size: 25px;
+                            margin: 0px;
                         }
                     }
                 }
@@ -295,9 +339,8 @@ body {
                     width: auto;
 
                     @media only screen and (max-width: $start-mobile-width) {
-                        height: 55px;
-                        width: 55px;
-                        margin-top: 30px;
+                        height: 25px;
+                        width: 25px;
                     }
                 }
             }
@@ -311,11 +354,12 @@ body {
 
                 h4 {
                     margin-bottom: 10px;
-                    margin-top: 40px;
+                    margin-top: 20px;
                     font-size: 18px;
 
                     @media only screen and (max-width: $start-mobile-width) {
-                        font-size: 45px;
+                        font-size: 25px;
+                        margin-top: 5px;
                     }
                 }
 
@@ -330,7 +374,7 @@ body {
                         color: $dark-font-color;
 
                         @media only screen and (max-width: $start-mobile-width) {
-                            font-size: 30px;
+                            font-size: 16px;
                         }
                     }
 
@@ -341,6 +385,10 @@ body {
                         align-items: flex-end;
                         max-width: 100%;
 
+                        @media only screen and (max-width: $start-mobile-width) {
+                            align-items: center;
+                        }
+
                         .info {
                             display: flex;
                             align-items: center;
@@ -348,7 +396,8 @@ body {
                             font-size: 18px;
 
                             @media only screen and (max-width: $start-mobile-width) {
-                                font-size: 45px;
+                                font-size: 20px;
+                                margin-right: 10px;
                             }
 
                             a {
@@ -364,8 +413,8 @@ body {
                                 margin-right: 20px;
 
                                 @media only screen and (max-width: $start-mobile-width) {
-                                    height: 25px;
-                                    width: 25px;
+                                    height: 10px;
+                                    width: 10px;
                                 }
                             }
 
@@ -375,7 +424,8 @@ body {
                                 color: #4772fa;
 
                                 @media only screen and (max-width: $start-mobile-width) {
-                                    font-size: 40px;
+                                    font-size: 20px;
+                                    margin-left: 10px;
                                 }
                             }
                         }
@@ -386,8 +436,8 @@ body {
                             width: 30px;
 
                             @media only screen and (max-width: $start-mobile-width) {
-                                height: 55px;
-                                width: 55px;
+                                height: 30px;
+                                width: 30px;
                             }
                         }
 
@@ -401,8 +451,8 @@ body {
                             cursor: pointer;
 
                             @media only screen and (max-width: $start-mobile-width) {
-                                height: 70px;
-                                width: 70px;
+                                height: 30px;
+                                width: 30px;
                             }
 
                             &:hover {
@@ -421,8 +471,8 @@ body {
 
 
                             @media only screen and (max-width: $start-mobile-width) {
-                                height: 70px;
-                                width: 70px;
+                                height: 30px;
+                                width: 30px;
                             }
 
                             &:hover {
@@ -502,10 +552,10 @@ body {
 
                     .setting {
                         width: 100%;
-                        min-height: 150px;
+                        min-height: 75px;
 
                         label {
-                            font-size: 40px !important;
+                            font-size: 23px !important;
                         }
                     }
                 }
@@ -518,9 +568,9 @@ body {
                     border: 1px solid black;
 
                     @media only screen and (max-width: $start-mobile-width) {
-                        width: 100%;
-                        font-size: 35px;
-                        min-height: 75px;
+                        padding: 5px;
+                        height: 100%;
+                        font-size: 10px;
                     }
                 }
 
@@ -528,13 +578,18 @@ body {
                     width: 15vw;
 
                     @media only screen and (max-width: $start-mobile-width) {
-                        width: 100%;
-                        min-height: 75px;
+                        width: 90vw;
+                        font-size: 20px;
                     }
                 }
 
                 input[type="time"] {
                     min-width: 100px;
+
+                    @media only screen and (max-width: $start-mobile-width) {
+                        width: 90vw;
+                        font-size: 30px;
+                    }
                 }
 
                 .color-picker {
@@ -547,8 +602,8 @@ body {
                     justify-items: center;
 
                     @media only screen and (max-width: $start-mobile-width) {
-                        height: 200px;
-                        padding: 50px 0px;
+                        height: 120px;
+                        padding: 20px 0px;
                     }
 
                     .color {
@@ -589,15 +644,17 @@ body {
                 }
 
                 .setting {
+   
+
                     &.remind {
                         display: none;
                     }
 
                     select {
                         @media only screen and (max-width: $start-mobile-width) {
-                            width: 100%;
-                            min-height: 75px;
-                            font-size: 35px;
+                            width: 90vw;
+                            font-size: 30px;
+                            font-size: 20px;
                         }
 
                         option {
@@ -606,18 +663,19 @@ body {
                     }
 
                     .add-button {
-                        display: block;
+                        display: flex;
                         width: 50px;
                         height: 50px;
                         border-radius: 50px;
+
 
                         img {
                             width: 50px;
                             height: 50px;
 
                             @media only screen and (max-width: $start-mobile-width) {
-                                width: 125px;
-                                height: 125px;
+                                width: 75px;
+                                height: 75px;
                             }
                         }
 
@@ -641,7 +699,9 @@ body {
                     padding: 15px;
 
                     @media only screen and (max-width: $start-mobile-width) {
-                        font-size: 35px;
+                        font-size: 20px;
+                        width: 90vw;
+                        padding: 5px;
                     }
                 }
             }

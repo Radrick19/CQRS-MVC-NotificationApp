@@ -27,7 +27,7 @@ namespace FastSchedule.MVC.Controllers
             {
                 return View("Index",viewModel);
             }
-            await _mediator.Send(new AddUserCommand(viewModel.Login, viewModel.Email, viewModel.Password));
+            await _mediator.Send(new AddUserCommand(viewModel.Login, viewModel.Password));
             return Ok();
         }
 
@@ -37,11 +37,6 @@ namespace FastSchedule.MVC.Controllers
             if(await _mediator.Send(new IsUserLoginExistQuery(viewModel.Login)))
             {
                 ModelState.AddModelError(nameof(viewModel.Login), "Данный логин уже занят");
-            }
-            // Почта уже занята
-            if(await _mediator.Send(new IsUserEmailExistQuery(viewModel.Email))) 
-            {
-                ModelState.AddModelError(nameof(viewModel.Email), "Данная почта уже занята");
             }
             return ModelState.IsValid;
         }

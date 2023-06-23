@@ -6,12 +6,20 @@ body {
 }
 
 .content {
-    padding: 0px 70px;
+    padding: 0px 60px;
     margin-left: auto;
     margin-right: auto;
     display: grid;
-    grid-template-columns: 1fr 7fr;
+    grid-template-columns: 1fr 7fr 1fr;
     justify-content: space-between;
+    align-items: center;
+
+    @media only screen and (max-width: $start-mobile-width) {
+        padding: 0px 10px;
+        display: flex;
+        justify-content: center;
+        margin: 0px;
+    }
 
     .info {
         display: flex;
@@ -20,6 +28,7 @@ body {
         font-size: 25px;
         padding: 10px 0px;
         line-height: 30px;
+
 
         .month-info {
             display: flex;
@@ -37,13 +46,20 @@ body {
             display: flex;
             align-items: center;
             margin-right: 20px;
-            width: 200px;
+            width: auto;
+
+
+            @media only screen and (max-width: $start-mobile-width) {
+                width: auto;
+                margin-left: 20px;
+            }
 
             p {
                 margin: 0px 15px;
 
                 @media only screen and (max-width: $start-mobile-width) {
-                    font-size: 4rem;
+                    font-size: 1rem;
+                    margin: 0px 5px;
                 }
             }
 
@@ -52,7 +68,7 @@ body {
                 width: auto;
 
                 @media only screen and (max-width: $start-mobile-width) {
-                    height: 40px;
+                    height: 15px;
                 }
             }
 
@@ -73,13 +89,44 @@ header {
     border: 2px solid #f3f3f3;
 
     @media only screen and (max-width: $start-mobile-width) {
-        padding: 50px 0px;
+        padding: 10px 0px;
     }
 
     .account-data {
-        display: flex;
-        align-items: center;
-        line-height: 10px;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+
+        .logout-panel-button {
+            display: flex;
+            align-items: center;
+            line-height: 10px;
+            padding: 10px;
+            border-radius: 10px 10px 0px 0px;
+        }
+
+        .logout-panel {
+            position: absolute;
+            display: none;
+            justify-content: center;
+            background-color: #454545;
+            width: 200px;
+            padding: 5px 5px 15px 5px;
+            border-radius: 0px 10px 10px 10px;
+
+            a {
+                font-size: 18px;
+                color: white;
+                margin-top: 10px;
+
+                &:hover {
+                    color: lightgray;
+                }
+            }
+        }
 
         p {
             display: flex;
@@ -89,7 +136,7 @@ header {
             color: black;
 
             @media only screen and (max-width: $start-mobile-width) {
-                font-size: 4rem;
+                font-size: 1rem;
             }
         }
 
@@ -97,7 +144,26 @@ header {
             height: $header-avatar-size;
             width: $header-avatar-size;
             border-radius: 50px;
+        }
+    }
 
+    .today-button {
+        a {
+            color: #000000;
+            font-weight: 600;
+            font-size: 20px;
+            text-decoration: none;
+            border: 2px solid black;
+            border-width: 0px 0px 2px 0px;
+
+            &:hover{
+                color: dimgray;
+                border-color: dimgray;
+            }
+
+            @media only screen and (max-width: $start-mobile-width) {
+                font-size: 16px;
+            }
         }
     }
 }

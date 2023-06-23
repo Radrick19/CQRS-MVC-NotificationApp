@@ -4,7 +4,9 @@ using FastSchedule.Application.Queries;
 using FastSchedule.MVC.ViewModels.LoginAndRegistration;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace FastSchedule.MVC.Controllers
@@ -27,10 +29,8 @@ namespace FastSchedule.MVC.Controllers
         public async Task<IActionResult> Login(LoginViewModel viewModel)
         {
             UserDto? user = null;
-            if(await _mediator.Send(new IsUserLoginExistQuery(viewModel.EmailOrLogin)))
-                user = await _mediator.Send(new GetUserByLoginPasswordQuery(viewModel.EmailOrLogin, viewModel.Password));
-            else if(await _mediator.Send(new IsUserEmailExistQuery(viewModel.EmailOrLogin)))
-                user = await _mediator.Send(new GetUserByEmailPasswordQuery(viewModel.EmailOrLogin, viewModel.Password));
+            if(await _mediator.Send(new IsUserLoginExistQuery(viewModel.Login)))
+                user = await _mediator.Send(new GetUserByLoginPasswordQuery(viewModel.Login, viewModel.Password));
 
             if (user == null)
             {
@@ -45,6 +45,13 @@ namespace FastSchedule.MVC.Controllers
             ClaimsIdentity identity = new ClaimsIdentity(claims, "Cookies");
             await HttpContext.SignInAsync(new ClaimsPrincipal(identity));
             return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            var route = HttpContext.Request.Headers["Referer"].ToString();
+            return Redirect("/login");
         }
     }
 }

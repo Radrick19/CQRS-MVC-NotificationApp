@@ -36,7 +36,6 @@ namespace FastSchedule.Application.Handlers.UserHandlers
 
             var user = new UserDto
             {
-                Email = request.Email.ToLower(),
                 Login = request.Login.ToLower(),
                 Password = hash,
                 Salt = salt,
