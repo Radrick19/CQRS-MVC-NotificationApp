@@ -16,6 +16,13 @@
         form {
             min-width: 300px;
 
+            .validation-summary-errors {
+                ul {
+                    list-style-type: none;
+                    color: #ff3333;
+                }
+            }
+
             h1 {
                 text-align: center;
                 color: #37352f;
