@@ -11,7 +11,7 @@ services:
         context: .
         dockerfile: Dockerfile
     environment:
-        - ConnectionStrings__DefaultConnection=Server=postgres_db;Port=5432;Database=qlouni;Username=postgres;Password=259;
+        - ConnectionStrings__DefaultConnection=Server=postgres_db;Port=5432;Database=calendar;Username=postgres;Password=3c130ea5d8d2d;
         - ASPNETCORE_URLS=http://+:80
     ports:
         - "8080:80"
@@ -25,7 +25,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=3c130ea5d8d2d
-      - POSTGRES_DB=notificationApp
+      - POSTGRES_DB=calendar
     ports:
       - "5433:5432"
     restart: always
