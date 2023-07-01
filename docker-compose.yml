@@ -1,40 +1,38 @@
-version: "3.9"
+version: '3.9'
+
 networks:
-  fast-schedule-dev:
+  notification-app-dev:
     driver: bridge
+
 services:
   app:
-    container_name: fast-schedule
+    container_name: notification-app
     build:
-      context: .
-      dockerfile: Dockerfile
+        context: .
+        dockerfile: Dockerfile
     environment:
-      - ConnectionStrings__DefaultConnection=Server=postgres_db;Port=5432;Database=qlouni;Username=postgres;Password=259;
-      - ASPNETCORE_URLS=http://+:80
+        - ConnectionStrings__DefaultConnection=Server=postgres_db;Port=5432;Database=qlouni;Username=postgres;Password=259;
+        - ASPNETCORE_URLS=http://+:80
     ports:
-      - "8080:80"
+        - "8080:80"
     networks:
-      - fast-schedule-dev
+        - "notification-app-dev"
     depends_on:
-      - ms-sql
-    volumes:
-      - fast-schedule-images:/app/wwwroot/images
-      - fast-schedule-logs:/app/logs/
-  ms-sql_db:
-    container_name: ms-sql
+      - postgres_db
+  postgres_db:
+    container_name: postgres
     image: postgres:latest
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=259
-      - POSTGRES_DB=qlouni
+      - POSTGRES_PASSWORD=3c130ea5d8d2d
+      - POSTGRES_DB=notificationApp
     ports:
       - "5433:5432"
     restart: always
     volumes:
-      - pg-data:/var/lib/postgresql/data
+      - sql-data:/var/lib/postgresql/data
     networks:
-      - qlouni-store-dev
+      - notification-app-dev
+
 volumes:
-  fast-schedule-images:
-  fast-schedule-logs:
-  ms-data:
+    sql-data:

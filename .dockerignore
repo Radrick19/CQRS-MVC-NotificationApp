@@ -16,6 +16,10 @@
 **/charts
 **/docker-compose*
 **/Dockerfile*
+**/.scss
+**/.ts
+**/compilerconfig*
+**/compilerconfig.json*
 **/node_modules
 **/npm-debug.log
 **/obj

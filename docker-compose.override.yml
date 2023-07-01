@@ -1,13 +1,38 @@
-version: '3.4'
+version: '3.9'
+
+networks:
+  notification-app-dev:
+    driver: bridge
 
 services:
-  fastschedule.mvc:
+  app:
+    container_name: notification-app
+    build:
+        context: .
+        dockerfile: Dockerfile
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+        - ConnectionStrings__DefaultConnection=Server=postgres_db;Port=5432;Database=qlouni;Username=postgres;Password=259;
+        - ASPNETCORE_URLS=http://+:80
     ports:
-      - "80"
-      - "443"
+        - "8080:80"
+    networks:
+        - "notification-app-dev"
+    depends_on:
+      - postgres_db
+  postgres_db:
+    container_name: postgres
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=3c130ea5d8d2d
+      - POSTGRES_DB=notificationApp
+    ports:
+      - "5433:5432"
+    restart: always
     volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - sql-data:/var/lib/postgresql/data
+    networks:
+      - notification-app-dev
+
+volumes:
+    sql-data:

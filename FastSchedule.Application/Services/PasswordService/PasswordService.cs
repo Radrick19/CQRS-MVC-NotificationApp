@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using SHA3.Net;
+﻿using SHA3.Net;
 using System;
 using System.Collections.Generic;
 using System.Linq;

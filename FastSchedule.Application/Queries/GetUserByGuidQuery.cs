@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using FastSchedule.Application.Dto;
+﻿using FastSchedule.Application.Dto;
 using FastSchedule.Domain.Models;
 using MediatR;
 using System;
