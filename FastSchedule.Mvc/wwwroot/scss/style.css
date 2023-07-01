@@ -1031,6 +1031,10 @@ body {
 .wrapper .content-wrapper form {
   min-width: 300px;
 }
+.wrapper .content-wrapper form .validation-summary-errors ul {
+  list-style-type: none;
+  color: #ff3333;
+}
 .wrapper .content-wrapper form h1 {
   text-align: center;
   color: #37352f;
